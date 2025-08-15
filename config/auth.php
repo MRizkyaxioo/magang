@@ -40,6 +40,10 @@ return [
         'driver' => 'session',
         'provider' => 'pengadu',
     ],
+        'admin' => [
+        'driver' => 'session',
+        'provider' => 'admin',
+    ],
 
         'web' => [
             'driver' => 'session',
@@ -68,6 +72,11 @@ return [
             'pengadu' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pengadu::class,
+        ],
+
+            'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         'users' => [

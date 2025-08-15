@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthPengaduController;
+use App\Http\Middleware\RedirectIfNotAdmin;
 use App\Http\Middleware\RedirectIfNotPengadu;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +31,14 @@ Route::get('/dashboard-pengadu', function () {
     return view('pengadu.dashboard');
 })->middleware(RedirectIfNotPengadu::class)
   ->name('pengadu.dashboard');
+
+Route::get('/login-admin', [AuthAdminController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/login-admin', [AuthAdminController::class, 'login']);
+
+Route::post('/logout-admin', [AuthPengaduController::class, 'logout'])->name('admin.logout');
+
+Route::get('/dashboard-admin', function () {
+    return view('admin.dashboard');
+})->middleware(RedirectIfNotAdmin::class)
+  ->name('admin.dashboard');
 

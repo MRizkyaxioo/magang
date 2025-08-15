@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+
+class HasilPengaduan extends Model
+{
+    use HasFactory, Notifiable;
+
+    protected $table = 'hasil_pengaduan';
+    protected $primaryKey = 'id_hasil';
+    public $incrementing = true;
+    protected $keyType = 'int';
+
+    protected $fillable = [
+        'id_pengadu',
+        'id_pengaduan',
+        'kabupaten_kota',
+        'bukti_foto',
+        'status',
+        'deskripsi',
+    ];
+
+    // Relasi ke admin
+    public function admin()
+    {
+        return $this->hasMany(Admin::class, 'id_hasil', 'id_hasil');
+    }
+
+    // Relasi ke pengadu
+    public function pengadu()
+    {
+        return $this->belongsTo(Pengadu::class, 'id_pengadu', 'id_pengadu');
+    }
+
+    // Relasi ke pengaduan
+    public function pengaduan()
+    {
+        return $this->belongsTo(Pengaduan::class, 'id_pengaduan', 'id_pengaduan');
+    }
+}
