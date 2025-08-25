@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\HasilPengaduan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,4 +28,10 @@ class Pengadu extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function hasilPengaduan()
+{
+    return $this->hasMany(hasilPengaduan::class, 'id_pengadu', 'id_pengadu');
+}
+
 }

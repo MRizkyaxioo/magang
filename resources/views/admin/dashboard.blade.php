@@ -15,6 +15,10 @@
             <h4>Welcome, Admin 🎉</h4>
             <p class="text-muted">Senang melihat Anda di sini!</p>
 
+             <a href="{{ route('pengaduan.index') }}" class="btn btn-primary mb-3">Kelola Kategori Pengaduan</a>
+
+              <a href="{{ route('pengaduan.index') }}" class="btn btn-primary mb-3">Lihat Riwayat Pengaduan</a>
+
             <form method="POST" action="{{ route('admin.logout') }}">
                 @csrf
                 <button type="submit" class="btn btn-danger">Logout</button>

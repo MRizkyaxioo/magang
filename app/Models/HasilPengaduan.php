@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Pengadu;
+use App\Models\Pengaduan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +20,8 @@ class HasilPengaduan extends Model
     protected $fillable = [
         'id_pengadu',
         'id_pengaduan',
-        'kabupaten_kota',
+        'lokasi_kejadian',
+        'tanggal_kejadian',
         'bukti_foto',
         'status',
         'deskripsi',

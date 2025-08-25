@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('pengaduan', function (Blueprint $table) {
         $table->id('id_pengaduan');
         $table->string('kategori');
-        $table->text('deskripsi_pengaduan');
-        $table->string('foto_illustrasi')->nullable();
         $table->timestamps();
         });
     }

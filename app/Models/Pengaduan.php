@@ -17,8 +17,6 @@ class Pengaduan extends Model
 
     protected $fillable = [
         'kategori',
-        'deskripsi_pengaduan',
-        'foto_illustrasi',
     ];
 
     // Relasi ke hasil_pengaduan

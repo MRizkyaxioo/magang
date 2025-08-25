@@ -26,9 +26,10 @@ return new class extends Migration
               ->on('pengaduan')
               ->onDelete('cascade');
 
-        $table->string('kabupaten_kota');
+        $table->string('lokasi_kejadian');
+        $table->date('tanggal_kejadian');
         $table->string('bukti_foto')->nullable();
-        $table->string('status');
+         $table->enum('status', ['pending', 'sedang dikerjakan', 'selesai'])->default('pending');
         $table->text('deskripsi')->nullable();
         $table->timestamps();
         });
