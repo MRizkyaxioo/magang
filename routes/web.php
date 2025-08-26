@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardPengaduController;
 use App\Http\Controllers\HasilPengaduanController;
 use App\Http\Controllers\AuthAdminController;
@@ -51,16 +52,17 @@ Route::middleware(RedirectIfNotPengadu::class)->group(function () {
 
 
 
-
+// login admin
 Route::get('/login-admin', [AuthAdminController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/login-admin', [AuthAdminController::class, 'login']);
 
+// logout admin
 Route::post('/logout-admin', [AuthAdminController::class, 'logout'])->name('admin.logout');
 
-Route::get('/dashboard-admin', function () {
-    return view('admin.dashboard');
-})->middleware(RedirectIfNotAdmin::class)
-  ->name('admin.dashboard');
+// Route::get('/dashboard-admin', function () {
+//     return view('admin.dashboard');
+// })->middleware(RedirectIfNotAdmin::class)
+//   ->name('admin.dashboard');
 
 Route::get('/form-pengadu', [HasilPengaduanController::class, 'create'])
     ->middleware(RedirectIfNotPengadu::class)
@@ -76,5 +78,10 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     Route::delete('/kategori/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
 });
 
+Route::middleware(RedirectIfNotAdmin::class)->group(function () {
+Route::get('/dashboard-admin', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+Route::post('/admin/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.updateStatus');
+Route::get('/admin/{id}', [DashboardAdminController::class, 'show'])->name('admin.show');
+});
 
 
