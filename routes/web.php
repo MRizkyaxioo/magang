@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardPengaduController;
 use App\Http\Controllers\HasilPengaduanController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthPengaduController;
@@ -43,6 +44,11 @@ Route::post('/logout-pengadu', [AuthPengaduController::class, 'logout'])->name('
     Route::post('/pengaduan/store', [App\Http\Controllers\HasilPengaduanController::class, 'store'])
         ->name('pengadu.pengaduan.store');
 });
+
+Route::middleware(RedirectIfNotPengadu::class)->group(function () {
+    Route::get('/riwayat', [DashboardPengaduController::class, 'history'])->name('pengadu.riwayat');
+});
+
 
 
 

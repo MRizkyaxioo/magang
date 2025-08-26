@@ -41,6 +41,6 @@ class HasilPengaduanController extends Controller
 
         HasilPengaduan::create($data);
 
-        return redirect()->route('pengadu.dashboard')->with('success', 'Pengaduan berhasil dikirim!');
+        return redirect()->route('pengadu.riwayat')->with('success', 'Pengaduan berhasil dikirim!');
     }
 }

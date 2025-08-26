@@ -458,7 +458,10 @@
                     @endforeach
                 </div>
                <button class="complaint-button" onclick="window.location.href='{{ route('pengadu.form') }}'">
-                    📝 Tombol Pengaduan
+                    📝 Ajukan Pengaduan
+                </button>
+                <button class="complaint-button" onclick="window.location.href='{{ route('pengadu.riwayat') }}'">
+                    📝 Riwayat Pengaduan
                 </button>
             </aside>
         </main>
@@ -494,7 +497,6 @@
         }
 
         // Complaint Form Function
-        function openComplaintForm() {
         function openComplaintForm(url) {
             const button = document.querySelector('.complaint-button');
             const originalText = button.innerHTML;
