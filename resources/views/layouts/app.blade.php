@@ -23,12 +23,6 @@
                         <a class="nav-link" href="{{ route('pengaduan.index') }}">Data Kategori</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pengaduan.create') }}">Tambah Kategori</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/') }}">Hasil Pengaduan</a>
-                    </li>
-                    <li class="nav-item">
                         <form method="POST" action="{{ route('admin.logout') }}">
                         @csrf
                         <button type="submit" class="btn btn-danger">Logout</button>

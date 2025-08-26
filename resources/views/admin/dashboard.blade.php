@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Daftar Hasil Pengaduan</h2>
+    <a href="{{ route('pengaduan.index') }}" class="btn btn-primary mb-3">Kelola Kategori Pengaduan</a>
 
     <table class="table table-bordered table-striped">
         <thead>
