@@ -225,6 +225,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+            margin-bottom: 15px;  /* ✅ ini yang bikin jarak */
         }
 
         .complaint-button:hover {
@@ -410,10 +411,10 @@
 
                     <div class="faq-item">
                         <div class="faq-dropdown" onclick="toggleFAQ(0)">
-                            Apa itu SIMARA?
+                            Berapa lama waktu pengaduan untuk ditindaklanjuti?
                         </div>
                         <div class="faq-answer" id="faq-answer-0">
-                            SIMARA (Sistem Informasi Masyarakat Raya) adalah platform digital Pemerintah Kota Banjarmasin yang memungkinkan masyarakat untuk menyampaikan aspirasi, keluhan, saran, dan laporan terkait pelayanan publik secara online. Platform ini bertujuan untuk meningkatkan kualitas pelayanan dan transparansi pemerintahan.
+                            Pengaduan akan di proses paling lama 4 hari, jika tidak ada info lebih lanjut pengadu bisa melakukan pengaduan ulang atau bisa hubungi nomor ini 081234567891
                         </div>
                     </div>
 
@@ -422,7 +423,7 @@
                             Apakah identitas pelapor akan dirahasiakan?
                         </div>
                         <div class="faq-answer" id="faq-answer-1">
-                            Ya, identitas pelapor akan dijaga kerahasiaannya sesuai dengan kebijakan privasi yang berlaku. Namun, untuk keperluan verifikasi dan tindak lanjut, tim SIMARA mungkin perlu menghubungi pelapor melalui kontak yang disediakan.
+                            Ya, identitas pelapor akan dijaga kerahasiaannya sesuai dengan kebijakan privasi yang berlaku. Namun, untuk keperluan verifikasi dan tindak lanjut, tim SIMARA mungkin perlu menghubungi pelapor melalui nomor kontak pelapor.
                         </div>
                     </div>
 
@@ -431,7 +432,7 @@
                             Bagaimana cara melaporkan pungutan liar?
                         </div>
                         <div class="faq-answer" id="faq-answer-2">
-                            Untuk melaporkan pungutan liar, Anda dapat menggunakan form pengaduan dengan memilih kategori "Pungutan Liar". Sertakan informasi detail seperti lokasi, waktu kejadian, pihak yang terlibat, dan bukti pendukung (foto/video) jika ada.
+                            Untuk melaporkan pungutan liar, Anda dapat menggunakan form pengaduan dengan memilih kategori "Pungutan Liar". Sertakan informasi detail seperti lokasi, waktu kejadian, dan bukti pendukung (foto) jika ada.
                         </div>
                     </div>
 
@@ -440,7 +441,7 @@
                             Apakah laporan saya akan segera ditindaklanjuti?
                         </div>
                         <div class="faq-answer" id="faq-answer-3">
-                            Setiap laporan yang masuk akan diverifikasi terlebih dahulu oleh tim SIMARA. Laporan yang valid akan diteruskan ke instansi terkait untuk ditindaklanjuti. Anda akan mendapatkan notifikasi mengenai status dan perkembangan laporan melalui nomor tiket yang diberikan.
+                            Setiap laporan yang masuk akan diverifikasi terlebih dahulu oleh tim SIMARA. Anda akan dihubungi oleh pihak terkait untuk ditindaklanjuti. Status laporan dapat dilihat pada riwayat pengaduan.
                         </div>
                     </div>
                 </section>
@@ -461,7 +462,7 @@
                     📝 Ajukan Pengaduan
                 </button>
                 <button class="complaint-button" onclick="window.location.href='{{ route('pengadu.riwayat') }}'">
-                    📝 Riwayat Pengaduan
+                    ⌛ Riwayat Pengaduan
                 </button>
             </aside>
         </main>
