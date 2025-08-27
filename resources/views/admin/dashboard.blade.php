@@ -511,10 +511,20 @@
 
 <div class="dashboard-container">
     <!-- Header -->
-    <div class="dashboard-header">
-        <h1 class="dashboard-title">📋 Dashboard Pengaduan</h1>
-        <p class="dashboard-subtitle">Sistem Informasi Masyarakat Raya (SIMARA)</p>
-    </div>
+<div class="dashboard-header" style="position: relative;">
+    <h1 class="dashboard-title">📋 Dashboard Pengaduan</h1>
+    <p class="dashboard-subtitle">Sistem Informasi Masyarakat Raya (SIMARA)</p>
+
+    <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0; position: absolute; top: 20px; right: 30px;">
+        @csrf
+        <button type="submit" class="logout-btn" style="width:auto; padding:10px 20px; border-radius:8px;">
+            <span>🚪</span>
+            Logout
+        </button>
+    </form>
+</div>
+
+
 
     <!-- Stats Section -->
     <div class="stats-section">
@@ -637,15 +647,15 @@
                     <span>🏢</span>
                     Kelola Kategori Pengaduan
                 </a>
-                
+
                 <!-- Logout Button - Moved here -->
-                <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
+                {{-- <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
                     @csrf
                     <button type="submit" class="logout-btn" >
                         <span>🚪</span>
                         Logout
                     </button>
-                </form>
+                </form> --}}
             </div>
         </div>
     </div>
