@@ -14,6 +14,23 @@
         min-height: 100vh;
     }
 
+    /* Hide default header/navbar */
+    .navbar,
+    .header,
+    nav,
+    .top-bar,
+    .main-header,
+    header {
+        display: none !important;
+    }
+
+    /* Hide any dark header elements */
+    .bg-dark,
+    .navbar-dark,
+    .header-dark {
+        display: none !important;
+    }
+
     .dashboard-container {
         max-width: 1400px;
         margin: 0 auto;
@@ -374,6 +391,34 @@
         text-decoration: none;
     }
 
+    /* Logout Button - Special styling */
+    .logout-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%);
+        color: white;
+        border: 2px solid #FF3742;
+        padding: 15px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .logout-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
+        background: linear-gradient(135deg, #FF4757 0%, #FF3742 100%);
+        color: white;
+        text-decoration: none;
+    }
+
     /* Empty State */
     .empty-state {
         text-align: center;
@@ -592,6 +637,15 @@
                     <span>🏢</span>
                     Kelola Kategori Pengaduan
                 </a>
+                
+                <!-- Logout Button - Moved here -->
+                <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="logout-btn" >
+                        <span>🚪</span>
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </div>

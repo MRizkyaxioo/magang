@@ -14,6 +14,23 @@
         min-height: 100vh;
     }
 
+    /* Hide default header/navbar */
+.navbar,
+.header,
+nav,
+.top-bar,
+.main-header,
+header {
+    display: none !important;
+}
+
+/* Hide any dark header elements */
+.bg-dark,
+.navbar-dark,
+.header-dark {
+    display: none !important;
+}
+
     .kategori-container {
         max-width: 1200px;
         margin: 0 auto;
