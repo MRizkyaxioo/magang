@@ -8,7 +8,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container">
             <!-- Judul / Brand -->
-            <a class="navbar-brand" href="{{ url('/') }}">Pengaduan Masyarakat</a>
+            <a class="navbar-brand" href="">Pengaduan Masyarakat</a>
 
             <!-- Tombol toggle untuk mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -19,9 +19,7 @@
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto"> <!-- ms-auto = menu ke kanan -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pengaduan.index') }}">Data Kategori</a>
-                    </li>
+
                     <li class="nav-item">
                         <form method="POST" action="{{ route('admin.logout') }}">
                         @csrf
