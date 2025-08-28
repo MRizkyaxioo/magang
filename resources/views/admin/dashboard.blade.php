@@ -512,7 +512,7 @@
 <div class="dashboard-container">
     <!-- Header -->
 <div class="dashboard-header" style="position: relative;">
-    <h1 class="dashboard-title">📋 Dashboard Pengaduan</h1>
+    <h1 class="dashboard-title">📋 Dashboard Admin</h1>
     <p class="dashboard-subtitle">Sistem Informasi Masyarakat (SIMARA)</p>
 
     <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0; position: absolute; top: 20px; right: 30px;">
