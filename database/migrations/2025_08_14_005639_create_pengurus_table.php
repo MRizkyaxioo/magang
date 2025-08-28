@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('pengurus', function (Blueprint $table) {
         $table->id('id_pengurus');
-        // Relasi ke tabel hasil_pengaduan
-        $table->foreignId('id_hasil')
-              ->references('id_hasil')
-              ->on('hasil_pengaduan')
+        // Relasi ke tabel pengaduan
+        $table->foreignId('id_pengaduan')
+              ->references('id_pengaduan')
+              ->on('pengaduan')
               ->onDelete('cascade');
         $table->string('instansi_pemerintahan');
         $table->string('email')->unique();

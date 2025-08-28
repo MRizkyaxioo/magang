@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardPengaduController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\HasilPengaduanController;
 use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthPengaduController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\AuthPengurusController;
+use App\Http\Middleware\RedirectIfNotPengurus;
 use App\Http\Middleware\RedirectIfNotAdmin;
 use App\Http\Middleware\RedirectIfNotPengadu;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +62,20 @@ Route::post('/login-admin', [AuthAdminController::class, 'login']);
 // logout admin
 Route::post('/logout-admin', [AuthAdminController::class, 'logout'])->name('admin.logout');
 
+
+// login pengurus
+Route::get('/login-pengurus', [AuthPengurusController::class, 'showLoginForm'])->name('pengurus.login');
+Route::post('/login-pengurus', [AuthPengurusController::class, 'login']);
+
+// logout pengurus
+Route::post('/logout-pengurus', [AuthPengurusController::class, 'logout'])->name('pengurus.logout');
+
+Route::middleware(RedirectIfNotPengurus::class)->group(function () {
+Route::get('/dashboard-pengurus', [PengurusController::class, 'index'])->name('pengurus.dashboard');
+
+});
+
+
 // Route::get('/dashboard-admin', function () {
 //     return view('admin.dashboard');
 // })->middleware(RedirectIfNotAdmin::class)
@@ -76,6 +93,10 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     Route::get('/kategori/{id}/edit', [PengaduanController::class, 'edit'])->name('pengaduan.edit');
     Route::put('/kategori/{id}', [PengaduanController::class, 'update'])->name('pengaduan.update');
     Route::delete('/kategori/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
+
+    Route::get('/pengurus', [AuthPengurusController::class, 'index'])->name('pengurus.index');
+    Route::get('/pengurus/create', [AuthPengurusController::class, 'create'])->name('pengurus.create');
+    Route::post('/pengurus', [AuthPengurusController::class, 'store'])->name('pengurus.store');
 });
 
 Route::middleware(RedirectIfNotAdmin::class)->group(function () {

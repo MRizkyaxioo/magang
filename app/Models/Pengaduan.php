@@ -24,4 +24,10 @@ class Pengaduan extends Model
     {
         return $this->hasMany(HasilPengaduan::class, 'id_pengaduan', 'id_pengaduan');
     }
+
+    // Relasi ke pengurus
+    public function pengurus()
+    {
+        return $this->hasMany(Pengurus::class, 'id_pengaduan', 'id_pengaduan');
+    }
 }

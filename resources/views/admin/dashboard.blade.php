@@ -648,6 +648,11 @@
                     Kelola Kategori Pengaduan
                 </a>
 
+                <a href="{{ route('pengurus.create') }}" class="action-btn">
+                    <span>🏢</span>
+                    Buat Akun Pengurus
+                </a>
+
                 <!-- Logout Button - Moved here -->
                 {{-- <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
                     @csrf

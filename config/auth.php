@@ -44,6 +44,10 @@ return [
         'driver' => 'session',
         'provider' => 'admin',
     ],
+        'pengurus' => [
+        'driver' => 'session',
+        'provider' => 'pengurus',
+    ],
 
         'web' => [
             'driver' => 'session',
@@ -77,6 +81,11 @@ return [
             'admin' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+
+        'pengurus' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Pengurus::class,
         ],
 
         'users' => [
