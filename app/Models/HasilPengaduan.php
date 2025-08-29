@@ -48,6 +48,6 @@ class HasilPengaduan extends Model
     // Relasi ke pengurus
     public function pengurus()
     {
-        return $this->hasMany(Pengurus::class, 'id_pengaduan', 'id_pengaduan');
+        return $this->belongsTo(Pengurus::class, 'id_pengaduan', 'id_pengaduan');
     }
 }

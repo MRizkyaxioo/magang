@@ -3,11 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\HasilPengaduan;
 
 class PengurusController extends Controller
-
 {
-    public function index() {
-    return view('pengurus.dashboard');
+    public function index()
+    {
+        // Ambil pengurus yang login
+        $pengurus = auth('pengurus')->user();
+
+        // Ambil id_pengaduan yang dimiliki pengurus (kategori yang dia handle)
+        $idPengaduan = $pengurus->id_pengaduan;
+
+        // Ambil semua hasil pengaduan sesuai kategori
+        $hasilPengaduan = HasilPengaduan::where('id_pengaduan', $idPengaduan)->get();
+
+        return view('pengurus.dashboard', compact('hasilPengaduan'));
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,sedang dikerjakan,selesai'
+        ]);
+
+        $pengurus = auth('pengurus')->user();
+
+
+        // Cari pengaduan yang sesuai dengan kategori milik pengurus
+        $pengaduan = HasilPengaduan::where('id_hasil', $id)
+            ->where('id_pengaduan', $pengurus->id_pengaduan)
+            ->firstOrFail();
+
+        // Update status
+        $pengaduan->update([
+            'status' => $request->status
+        ]);
+
+        return redirect()->route('pengurus.dashboard')->with('success', 'Status berhasil diperbarui');
     }
 }

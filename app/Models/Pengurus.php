@@ -28,7 +28,7 @@ class Pengurus extends Authenticatable
     // Relasi ke hasil_pengaduan
     public function hasilPengaduan()
     {
-        return $this->belongsTo(HasilPengaduan::class, 'id_hasil', 'id_hasil');
+        return $this->hasMany(HasilPengaduan::class, 'id_pengaduan', 'id_pengaduan');
     }
 
     // Relasi ke pengaduan

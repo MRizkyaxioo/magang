@@ -115,7 +115,7 @@
     <!-- Kiri -->
     <div class="left">
       <img src="{{ asset('images/logo_pemko.jpeg') }}" alt="Logo" width="200">
-      <h2>Selamat Datang ADMIN SIMARA</h2>
+      <h2>Selamat Datang PENGURUS</h2>
        @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">
