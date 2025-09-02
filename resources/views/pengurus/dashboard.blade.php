@@ -1,5 +1,4 @@
  <h4>Selamat Datang, {{ Auth::guard('pengurus')->user()->instansi_pemerintahan }} 🎉</h4>
-<h2>Daftar Pengaduan Kategori Infrastruktur</h2>
  <form method="POST" action="{{ route('pengurus.logout') }}">
                 @csrf
                 <button type="submit" class="btn btn-danger">Logout</button>
@@ -14,6 +13,7 @@
         <th>Bukti Foto</th>
         <th>Status</th>
         <th>Aksi</th>
+        <th>Detail</th>
     </tr>
     @foreach($hasilPengaduan as $pengaduan)
     <tr>
@@ -41,6 +41,12 @@
     <button type="submit" class="btn btn-primary mt-2">Update</button>
 </form>
 
+        </td>
+        <td>
+                    <a href="{{ route('pengurus.show', $pengaduan->id_hasil) }}" class="detail-btn">
+                        <span>👁️</span>
+                        Lihat Detail
+                    </a>
         </td>
     </tr>
     @endforeach

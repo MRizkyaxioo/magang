@@ -74,6 +74,7 @@ Route::middleware(RedirectIfNotPengurus::class)->group(function () {
 Route::get('/dashboard-pengurus', [PengurusController::class, 'index'])->name('pengurus.dashboard');
 Route::put('/pengurus/update-status/{id}', [PengurusController::class, 'updateStatus'])
     ->name('pengurus.updateStatus');
+Route::get('/pengurus/{id}', [PengurusController::class, 'show'])->name('pengurus.show');
 
 });
 

@@ -42,4 +42,10 @@ class PengurusController extends Controller
 
         return redirect()->route('pengurus.dashboard')->with('success', 'Status berhasil diperbarui');
     }
+
+    public function show($id)
+    {
+        $hasil = HasilPengaduan::with(['pengadu', 'pengaduan'])->findOrFail($id);
+        return view('pengurus.show', compact('hasil'));
+    }
 }
