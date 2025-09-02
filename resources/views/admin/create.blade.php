@@ -48,7 +48,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Buat Akun</button>
-        <a href="{{ route('pengurus.index') }}" class="btn btn-light">Batal</a>
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-light">Kembali</a>
     </form>
 </div>
 @endsection

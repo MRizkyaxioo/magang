@@ -43,7 +43,7 @@
 
         </td>
         <td>
-                    <a href="{{ route('pengurus.show', $pengaduan->id_hasil) }}" class="detail-btn">
+                    <a href="{{ route('pengurus.hasil.detail', $pengaduan->id_hasil) }}" class="detail-btn">
                         <span>👁️</span>
                         Lihat Detail
                     </a>

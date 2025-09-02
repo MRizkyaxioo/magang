@@ -44,8 +44,17 @@ class PengurusController extends Controller
     }
 
     public function show($id)
-    {
-        $hasil = HasilPengaduan::with(['pengadu', 'pengaduan'])->findOrFail($id);
-        return view('pengurus.show', compact('hasil'));
-    }
+{
+    $pengurus = auth('pengurus')->user();
+
+    // Cari hasil pengaduan berdasarkan id dan kategori yang sesuai
+    $hasilPengaduan = HasilPengaduan::with(['pengadu', 'pengaduan'])
+        ->where('id_hasil', $id)
+        ->where('id_pengaduan', $pengurus->id_pengaduan)
+        ->firstOrFail();
+
+    return view('pengurus.show', compact('hasilPengaduan'));
+}
+
+
 }

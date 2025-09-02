@@ -27,4 +27,5 @@ class DashboardAdminController extends Controller
         $hasil = HasilPengaduan::with(['pengadu', 'pengaduan'])->findOrFail($id);
         return view('admin.show', compact('hasil'));
     }
+
 }
