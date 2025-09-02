@@ -46,26 +46,16 @@
         }
 
         .logo {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #FFD700 0%, #FFA500 50%, #228B22 100%);
-            border-radius: 50%;
+            width: 150px;
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 10px;
-            text-align: center;
-            line-height: 1.1;
-            color: white;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            border: 3px solid #B8860B;
             position: relative;
             overflow: hidden;
         }
 
         .logo::before {
-            content: '🏛️';
             font-size: 20px;
             margin-bottom: 2px;
         }
@@ -413,11 +403,7 @@
         <header class="header">
             <div class="logo-section">
                 <div class="logo">
-                    <div style="text-align: center; line-height: 1.2;">
-                        <div style="font-size: 8px;">BANJARMASIN</div>
-                        <div style="font-size: 6px; margin: 2px 0;">KOTAKU</div>
-                        <div style="font-size: 6px;">KOTAKU CANTIK</div>
-                    </div>
+<img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
                 </div>
                 <div class="title-section">
                     <h1 class="title">Selamat Datang, {{ Auth::guard('pengurus')->user()->instansi_pemerintahan }} 🎉</h1>
