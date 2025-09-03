@@ -171,7 +171,7 @@
             border-bottom: 1px solid #FFF8DC;
             color: #8B4513;
             font-size: 14px;
-            vertical-align: middle;
+            vertical-align: top;
         }
 
         .data-table tbody tr {
@@ -223,11 +223,20 @@
             border: 1px solid #DAA520;
         }
 
-        /* Action Buttons */
+        /* Action Section - Layout Baru */
         .action-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+            min-width: 300px;
+        }
+
+        .form-row {
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .status-dropdown {
@@ -240,6 +249,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             min-width: 140px;
+            flex: 1;
         }
 
         .status-dropdown:hover {
@@ -257,12 +267,38 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .update-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
             background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+        }
+
+        .keterangan-textarea {
+            width: 100%;
+            min-height: 60px;
+            border-radius: 8px;
+            border: 2px solid #F0E68C;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #8B4513;
+            resize: vertical;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .keterangan-textarea:focus {
+            border-color: #FFD700;
+            background: #FFFACD;
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+        }
+
+        .keterangan-textarea::placeholder {
+            color: #B8860B;
+            opacity: 0.7;
         }
 
         .detail-btn {
@@ -302,6 +338,10 @@
                 width: 60px;
                 height: 45px;
             }
+
+            .action-section {
+                min-width: 250px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -331,12 +371,16 @@
             }
 
             .data-table {
-                min-width: 800px;
+                min-width: 1000px;
             }
 
             .action-section {
+                min-width: 200px;
+            }
+
+            .form-row {
                 flex-direction: column;
-                gap: 5px;
+                align-items: stretch;
             }
         }
 
@@ -403,19 +447,19 @@
         <header class="header">
             <div class="logo-section">
                 <div class="logo">
-<img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
+                    <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
                 </div>
                 <div class="title-section">
                     <h1 class="title">Selamat Datang, {{ Auth::guard('pengurus')->user()->instansi_pemerintahan }} 🎉</h1>
                 </div>
             </div>
-    <form action="{{ route('pengurus.logout') }}" method="POST" style="margin: 0; position: absolute; top: 20px; right: 30px;">
-        @csrf
-        <button type="submit" class="logout-btn" style="width:auto; padding:10px 20px; border-radius:8px;">
-            <span>🚪</span>
-            Logout
-        </button>
-    </form>
+            <form action="{{ route('pengurus.logout') }}" method="POST" style="margin: 0; position: absolute; top: 20px; right: 30px;">
+                @csrf
+                <button type="submit" class="logout-btn" style="width:auto; padding:10px 20px; border-radius:8px;">
+                    <span>🚪</span>
+                    Logout
+                </button>
+            </form>
         </header>
 
         <!-- Main Content -->
@@ -437,7 +481,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                         @foreach($hasilPengaduan as $pengaduan)
+                        @foreach($hasilPengaduan as $pengaduan)
                         <tr>
                             <td>{{ $pengaduan->id_hasil }}</td>
                             <td>{{ $pengaduan->lokasi_kejadian }}</td>
@@ -446,44 +490,54 @@
                             <td>
                                 <img src="{{ asset('storage/'.$pengaduan->bukti_foto) }}"
                                     alt="Bukti Foto Pengaduan"
-                                     class="photo-preview"
-                                     onclick="openModal(this.src)">
+                                    class="photo-preview"
+                                    onclick="openModal(this.src)">
                             </td>
                             <td>
                                 <span class="status-badge status-working">{{ $pengaduan->status }}</span>
                             </td>
                             <td>
-                                <form action="{{ route('pengurus.updateStatus', $pengaduan->id_hasil) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <select name="status" class="status-dropdown">
-            <option value="pending" {{ $pengaduan->status == 'pending' ? 'selected' : '' }}>Pending</option>
-            <option value="ditolak" {{ $pengaduan->status == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
-            <option value="sedang dikerjakan" {{ $pengaduan->status == 'sedang dikerjakan' ? 'selected' : '' }}>Sedang Dikerjakan</option>
-            <option value="selesai" {{ $pengaduan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-        </select>
-        <textarea name="keterangan" rows="2" placeholder="Tambah keterangan..."
-                  style="width:100%; margin-top:8px; border-radius:8px; border:1px solid #F0E68C;">{{ $pengaduan->keterangan }}</textarea>
-        <button type="submit" class="update-btn" style="margin-top:10px;">Update</button>
-    </form>
+                                <div class="action-section">
+                                    <form action="{{ route('pengurus.updateStatus', $pengaduan->id_hasil) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        
+                                        <!-- Baris pertama: Dropdown status dan tombol update -->
+                                        <div class="form-row">
+                                            <select name="status" class="status-dropdown">
+                                                <option value="pending" {{ $pengaduan->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="ditolak" {{ $pengaduan->status == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                                <option value="sedang dikerjakan" {{ $pengaduan->status == 'sedang dikerjakan' ? 'selected' : '' }}>Sedang Dikerjakan</option>
+                                                <option value="selesai" {{ $pengaduan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                                            </select>
+                                            <button type="submit" class="update-btn">Update</button>
+                                        </div>
+                                        
+                                        <!-- Baris kedua: Textarea keterangan -->
+                                        <textarea name="keterangan" 
+                                                class="keterangan-textarea"
+                                                placeholder="Tambah keterangan...">{{ $pengaduan->keterangan }}</textarea>
+                                    </form>
+                                </div>
                             </td>
                             <td>
                                 <a href="{{ route('pengurus.hasil.detail', $pengaduan->id_hasil) }}" class="detail-btn">Lihat Detail</a>
                             </td>
                         </tr>
-    @endforeach
-
+                        @endforeach
                     </tbody>
                 </table>
             </section>
         </main>
     </div>
 
+    <!-- Modal untuk preview gambar -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
 
     <script>
-
-
-
         // Image Modal Functions
         function openModal(imageSrc) {
             const modal = document.getElementById('imageModal');
