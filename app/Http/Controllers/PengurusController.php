@@ -24,7 +24,8 @@ class PengurusController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:pending,sedang dikerjakan,selesai'
+            'status' => 'required|in:pending,ditolak,sedang dikerjakan,selesai',
+            'keterangan' => 'nullable|string|max:255',
         ]);
 
         $pengurus = auth('pengurus')->user();
@@ -37,7 +38,8 @@ class PengurusController extends Controller
 
         // Update status
         $pengaduan->update([
-            'status' => $request->status
+            'status' => $request->status,
+            'keterangan' => $request->keterangan,
         ]);
 
         return redirect()->route('pengurus.dashboard')->with('success', 'Status berhasil diperbarui');

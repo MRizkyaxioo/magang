@@ -533,6 +533,10 @@
             <div class="stat-label">⏳ Pending</div>
         </div>
         <div class="stat-card">
+            <div class="stat-number">{{ $hasil->where('status', 'ditolak')->count() }}</div>
+            <div class="stat-label">❌ Ditolak</div>
+        </div>
+        <div class="stat-card">
             <div class="stat-number">{{ $hasil->where('status', 'sedang dikerjakan')->count() }}</div>
             <div class="stat-label">🔄 Sedang Dikerjakan</div>
         </div>
@@ -562,6 +566,7 @@
                         @csrf
                         <select name="status" class="status-dropdown" onchange="this.form.submit()">
                             <option value="pending" {{ $item->status == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
+                             <option value="ditolak" {{ $item->status == 'ditolak' ? 'selected' : '' }}>❌ Ditolak</option>
                             <option value="sedang dikerjakan" {{ $item->status == 'sedang dikerjakan' ? 'selected' : '' }}>🔄 Sedang Dikerjakan</option>
                             <option value="selesai" {{ $item->status == 'selesai' ? 'selected' : '' }}>✅ Selesai</option>
                         </select>
@@ -585,6 +590,25 @@
                         <div class="content-label">📝 Deskripsi Pengaduan</div>
                         <div class="deskripsi-text">{{ $item->deskripsi }}</div>
                     </div>
+
+                    <div class="deskripsi-full">
+    <div class="content-label">📝 Deskripsi Pengaduan</div>
+    <div class="deskripsi-text">{{ $item->deskripsi }}</div>
+</div>
+
+{{-- Keterangan hanya untuk Admin --}}
+<div class="deskripsi-full" style="margin-top:15px; background:#f9f9f9;">
+    <div class="content-label">📌 Keterangan Admin</div>
+    <form action="{{ route('admin.updateKeterangan', $item->id_hasil) }}" method="POST">
+        @csrf
+        <textarea name="keterangan" rows="3" class="filter-select"
+                  style="width:100%; resize:vertical;">{{ $item->keterangan }}</textarea>
+        <button type="submit" class="detail-btn" style="margin-top:10px;">
+            💾 Simpan Keterangan
+        </button>
+    </form>
+</div>
+
                 </div>
 
                 <!-- Foto Section -->
@@ -627,6 +651,7 @@
                 <select class="filter-select" id="statusFilter" onchange="filterByStatus()">
                     <option value="all">Semua Status</option>
                     <option value="pending">⏳ Pending</option>
+                    <option value="ditolak">❌ Ditolak</option>
                     <option value="sedang dikerjakan">🔄 Sedang Dikerjakan</option>
                     <option value="selesai">✅ Selesai</option>
                 </select>

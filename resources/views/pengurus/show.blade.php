@@ -321,40 +321,45 @@
         <!-- Informasi Pengaduan Card -->
         <div class="info-card fade-in">
             <h2 class="card-title">Informasi Pengaduan</h2>
-            
+
             <div class="info-item">
                 <span class="info-label">Kategori:</span>
                 <span class="info-value">{{ $hasilPengaduan->pengaduan->kategori ?? '-' }}</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Lokasi Kejadian:</span>
                 <span class="info-value">{{ $hasilPengaduan->lokasi_kejadian }}</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Tanggal Kejadian:</span>
                 <span class="info-value">{{ $hasilPengaduan->tanggal_kejadian }}</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Deskripsi:</span>
                 <span class="info-value">{{ $hasilPengaduan->deskripsi }}</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Status:</span>
                 <span class="info-value">
                     <span class="status-badge">{{ ucfirst($hasilPengaduan->status) }}</span>
                 </span>
             </div>
-            
+
+            <div class="info-item">
+                <span class="info-label">Keterangan:</span>
+                <span class="info-value">{{ $hasilPengaduan->keterangan }}</span>
+            </div>
+
 @if($hasilPengaduan->bukti_foto)
             <div class="info-item">
                 <span class="info-label">Bukti foto:</span>
                 <div class="photo-container">
                     <img src="{{ asset('storage/'.$hasilPengaduan->bukti_foto) }}"
-                     alt="Bukti Foto" 
+                     alt="Bukti Foto"
                          class="evidence-photo"
                          onclick="openModal(this.src)">
 @endif
@@ -365,37 +370,37 @@
         <!-- Detail Pengadu Card -->
         <div class="info-card fade-in">
             <h2 class="card-title">Detail Pengadu</h2>
-            
+
             <div class="info-item">
                 <span class="info-label">NIK:</span>
                 <span class="info-value">1234567891011121</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Nama:</span>
                 <span class="info-value">Muhammad Fadhil</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Alamat:</span>
                 <span class="info-value">barabai</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Tempat Lahir:</span>
                 <span class="info-value">barabai</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Tanggal Lahir:</span>
                 <span class="info-value">2005-05-03</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">No. Telepon:</span>
                 <span class="info-value">087736567651</span>
             </div>
-            
+
             <div class="info-item">
                 <span class="info-label">Email:</span>
                 <span class="info-value">pengadu@example.com</span>
@@ -426,7 +431,7 @@
                 const button = document.querySelector('.back-button');
                 const originalText = button.innerHTML;
                 button.innerHTML = '<span class="loading"></span>Loading...';
-                
+
                 setTimeout(() => {
                     button.innerHTML = originalText;
                     alert('Redirecting to dashboard page...');
@@ -441,7 +446,7 @@
             const modalImg = document.getElementById('modalImage');
             modal.style.display = 'block';
             modalImg.src = imageSrc;
-            
+
             // Add click event to close modal when clicking outside image
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
@@ -464,12 +469,12 @@
         // Add smooth animations on page load
         window.addEventListener('load', function() {
             const cards = document.querySelectorAll('.info-card');
-            
+
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
                 card.style.transition = 'all 0.8s ease';
-                
+
                 setTimeout(() => {
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
@@ -481,7 +486,7 @@
             title.style.opacity = '0';
             title.style.transform = 'translateX(-30px)';
             title.style.transition = 'all 0.6s ease';
-            
+
             setTimeout(() => {
                 title.style.opacity = '1';
                 title.style.transform = 'translateX(0)';
@@ -492,7 +497,7 @@
             backBtn.style.opacity = '0';
             backBtn.style.transform = 'translateY(20px)';
             backBtn.style.transition = 'all 0.6s ease';
-            
+
             setTimeout(() => {
                 backBtn.style.opacity = '1';
                 backBtn.style.transform = 'translateY(0)';
@@ -503,7 +508,7 @@
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
             const cards = document.querySelectorAll('.info-card');
-            
+
             cards.forEach((card, index) => {
                 const speed = 0.02 + (index * 0.01);
                 card.style.transform = `translateY(${scrolled * speed}px)`;

@@ -91,6 +91,11 @@
   color: #2C1810;
 }
 
+.status.ditolak {
+  background: #ff4203; /* merah */
+  color: #060201;
+}
+
 .status.sedang-dikerjakan {
   background: #17A2B8; /* biru */
   color: white;
@@ -160,6 +165,7 @@
               <th>Lokasi</th>
               <th>Tanggal Kejadian</th>
               <th>Status</th>
+              <th>Keterangan</th>
               <th>Foto Pendukung</th>
             </tr>
           </thead>
@@ -176,6 +182,7 @@
     {{ ucfirst($item->status) }}
   </span>
 </td>
+<td>{{ $item->keterangan }}</td>
 
               <td>
                 @if($item->bukti_foto)

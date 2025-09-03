@@ -41,4 +41,16 @@ class DashboardAdminController extends Controller
     return redirect()->back()->with('success', 'Kategori pengaduan berhasil diperbarui!');
 }
 
+
+public function updateKeterangan(Request $request, $id)
+{
+    $hasil = HasilPengaduan::findOrFail($id);
+
+    // field tidak wajib diisi → jadi cukup pakai nullable
+    $hasil->keterangan = $request->keterangan ?? null;
+    $hasil->save();
+
+    return redirect()->back()->with('success', 'Keterangan berhasil diperbarui!');
+}
+
 }

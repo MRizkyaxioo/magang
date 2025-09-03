@@ -24,6 +24,7 @@ class HasilPengaduan extends Model
         'tanggal_kejadian',
         'bukti_foto',
         'status',
+        'keterangan',
         'deskripsi',
     ];
 

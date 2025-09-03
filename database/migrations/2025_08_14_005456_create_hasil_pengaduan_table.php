@@ -29,7 +29,8 @@ return new class extends Migration
         $table->string('lokasi_kejadian');
         $table->date('tanggal_kejadian');
         $table->string('bukti_foto')->nullable();
-         $table->enum('status', ['pending', 'sedang dikerjakan', 'selesai'])->default('pending');
+        $table->enum('status', ['pending', 'ditolak', 'sedang dikerjakan', 'selesai'])->default('pending');
+        $table->text('keterangan')->nullable();
         $table->text('deskripsi')->nullable();
         $table->timestamps();
         });

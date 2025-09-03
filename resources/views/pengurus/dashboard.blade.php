@@ -454,15 +454,18 @@
                             </td>
                             <td>
                                 <form action="{{ route('pengurus.updateStatus', $pengaduan->id_hasil) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                    <select name="status" class="status-dropdown">
-                                    <option value="pending" {{ $pengaduan->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                    <option value="sedang dikerjakan" {{ $pengaduan->status == 'sedang dikerjakan' ? 'selected' : '' }}>Sedang Dikerjakan</option>
-                                    <option value="selesai" {{ $pengaduan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                    </select>
-                                    <button type="submit" class="update-btn">Update</button>
-                                </form>
+        @csrf
+        @method('PUT')
+        <select name="status" class="status-dropdown">
+            <option value="pending" {{ $pengaduan->status == 'pending' ? 'selected' : '' }}>Pending</option>
+            <option value="ditolak" {{ $pengaduan->status == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+            <option value="sedang dikerjakan" {{ $pengaduan->status == 'sedang dikerjakan' ? 'selected' : '' }}>Sedang Dikerjakan</option>
+            <option value="selesai" {{ $pengaduan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+        </select>
+        <textarea name="keterangan" rows="2" placeholder="Tambah keterangan..."
+                  style="width:100%; margin-top:8px; border-radius:8px; border:1px solid #F0E68C;">{{ $pengaduan->keterangan }}</textarea>
+        <button type="submit" class="update-btn" style="margin-top:10px;">Update</button>
+    </form>
                             </td>
                             <td>
                                 <a href="{{ route('pengurus.hasil.detail', $pengaduan->id_hasil) }}" class="detail-btn">Lihat Detail</a>
