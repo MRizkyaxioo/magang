@@ -28,4 +28,17 @@ class DashboardAdminController extends Controller
         return view('admin.show', compact('hasil'));
     }
 
+    public function updateKategori(Request $request, $id)
+{
+    $request->validate([
+        'id_pengaduan' => 'required|exists:pengaduan,id_pengaduan',
+    ]);
+
+    $hasil = HasilPengaduan::findOrFail($id);
+    $hasil->id_pengaduan = $request->id_pengaduan;
+    $hasil->save();
+
+    return redirect()->back()->with('success', 'Kategori pengaduan berhasil diperbarui!');
+}
+
 }

@@ -408,11 +408,22 @@
                     <h3 style="color: #B8860B; margin-bottom: 15px; font-size: 16px;">Informasi Pengaduan</h3>
 
                     <div class="info-row">
-                        <span class="info-label">Kategori:</span>
-                        <span class="info-value">
-                            <span class="kategori-badge"> {{ $hasil->pengaduan->kategori ?? '-' }}</span>
-                        </span>
-                    </div>
+    <span class="info-label">Kategori:</span>
+    <span class="info-value">
+        <form action="{{ route('admin.updateKategori', $hasil->id_hasil) }}" method="POST">
+            @csrf
+            <select name="id_pengaduan" class="filter-select" onchange="this.form.submit()">
+                @foreach(\App\Models\Pengaduan::all() as $kategori)
+                    <option value="{{ $kategori->id_pengaduan }}"
+                        {{ $hasil->id_pengaduan == $kategori->id_pengaduan ? 'selected' : '' }}>
+                        {{ $kategori->kategori }}
+                    </option>
+                @endforeach
+            </select>
+        </form>
+    </span>
+</div>
+
 
                     <div class="info-row">
                         <span class="info-label">Lokasi Kejadian:</span>

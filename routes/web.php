@@ -98,6 +98,9 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     Route::get('/kategori/{id}/edit', [PengaduanController::class, 'edit'])->name('pengaduan.edit');
     Route::put('/kategori/{id}', [PengaduanController::class, 'update'])->name('pengaduan.update');
     Route::delete('/kategori/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
+    Route::post('/admin/pengaduan/{id}/update-kategori', [DashboardAdminController::class, 'updateKategori'])
+    ->name('admin.updateKategori');
+
 
     Route::get('/pengurus', [AuthPengurusController::class, 'index'])->name('pengurus.index');
     Route::get('/pengurus/create', [AuthPengurusController::class, 'create'])->name('pengurus.create');
