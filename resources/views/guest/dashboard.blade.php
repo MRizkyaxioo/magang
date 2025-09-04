@@ -62,6 +62,12 @@
             padding: 15px 30px;
             border-radius: 12px;
             border: 2px solid #B8860B;
+
+            min-width: 800px;   /* supaya ada lebar minimum */
+            max-width: 900px;   /* kalau mau dibatasi maksimal */
+            flex: 1;
+            margin: 0 50px; /* kasih jarak dari logo dan tombol login */
+            text-align: center; /* biar teks tetap rapi */
         }
 
         .dashboard-title {
@@ -440,11 +446,11 @@
                     <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
                 </div>
                 <div class="title-section">
-                    <h1 class="dashboard-title">📋 Dashboard</h1>
+                    <h1 class="dashboard-title">📋 Dashboard Utama</h1>
                     <p class="dashboard-subtitle">Sistem Informasi Masyarakat (SIMARA)</p>
                 </div>
             </div>
-            <a href="#" class="login-btn">
+            <a href="{{ route('pengadu.login') }}" class="login-btn">
                 <span>🚪</span>
                 Login
             </a>
