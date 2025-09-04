@@ -385,11 +385,6 @@
         <span>↗</span>
     </button>
 </form>
-
-            <!-- <div class="logout-btn" onclick="logout()">
-                <span>↗</span>
-                Log out
-            </div> -->
         </header>
 
         <!-- Main Content -->

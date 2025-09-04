@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardPengaduController;
 use App\Http\Controllers\PengurusController;
@@ -14,7 +15,11 @@ use App\Http\Middleware\RedirectIfNotPengadu;
 use Illuminate\Support\Facades\Route;
 
 
-Route::redirect('/', '/login-pengadu');
+Route::redirect('/', '/dashboard');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.guest');
+
 
 // Register
 Route::get('/register-pengadu', [AuthPengaduController::class, 'showRegisterForm'])->name('pengadu.register');
