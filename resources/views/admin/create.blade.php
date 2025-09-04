@@ -344,34 +344,34 @@
                 </ul>
             </div>
 
-            <form action="{{ route('pengurus.store') }}" method="POST">
+            <form id="registrationForm" action="{{ route('pengurus.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label class="form-label" for="instansi">Nama Instansi</label>
-                    <input type="text" 
-                           id="instansi" 
-                           name="instansi_pemerintahan" 
-                           class="form-input" 
+                    <input type="text"
+                           id="instansi"
+                           name="instansi_pemerintahan"
+                           class="form-input"
                            placeholder="Masukkan nama instansi pemerintahan"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="email">Email Pengurus</label>
-                    <input type="email" 
-                           id="email" 
-                           name="email" 
-                           class="form-input" 
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           class="form-input"
                            placeholder="contoh@instansi.go.id"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
-                    <input type="password" 
-                           id="password" 
-                           name="password" 
-                           class="form-input" 
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           class="form-input"
                            placeholder="Masukkan password yang kuat"
                            required>
                     <div class="password-strength" id="passwordStrength"></div>
@@ -379,17 +379,17 @@
 
                 <div class="form-group">
                     <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
-                    <input type="password" 
-                           id="password_confirmation" 
-                           name="password_confirmation" 
-                           class="form-input" 
+                    <input type="password"
+                           id="password_confirmation"
+                           name="password_confirmation"
+                           class="form-input"
                            placeholder="Ulangi password yang sama"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="kategori">Kategori Pengaduan</label>
-                    <select name="id_pengaduan" class="form-select" required>
+                    <select id="kategori" name="id_pengaduan" class="form-select" required>
                         <option value="">-- Pilih Kategori Pengaduan --</option>
                         @foreach($kategori as $k)
                         <option value="{{ $k->id_pengaduan }}">{{ $k->kategori }}</option>
@@ -409,88 +409,102 @@
         </div>
     </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if(session('success'))
+<script>
+Swal.fire({
+    icon: 'success',
+    title: 'Berhasil!',
+    text: "{{ session('success') }}",
+    confirmButtonColor: '#8B4513',
+    confirmButtonText: 'OK'
+});
+</script>
+@endif
+
+
     <script>
+
         // Form validation and submission
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+document.getElementById('registrationForm').addEventListener('submit', function(e) {
+
+        hideErrors();
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+
+        const errors = validateForm(data);
+        if (errors.length > 0) {
             e.preventDefault();
-            
-            // Clear previous errors
-            hideErrors();
-            
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Validate form
-            const errors = validateForm(data);
-            
-            if (errors.length > 0) {
-                showErrors(errors);
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="loading"></span>Membuat Akun...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                alert('Akun pengurus berhasil dibuat!\n\n' + 
-                      'Detail akun:\n' +
-                      '• Instansi: ' + data.instansi_pemerintahan + '\n' +
-                      '• Email: ' + data.email + '\n' +
-                      '• Kategori: ' + getKategoriName(data.id_pengaduan));
-                
-                // Reset form
-                this.reset();
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                
-                // Clear validation states
-                clearValidationStates();
-            }, 2000);
+            showErrors(errors);
+            return;
+        }
+
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="loading"></span>Membuat Akun...';
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                html: `
+                    Akun pengurus berhasil dibuat.<br><br>
+                    <b>Instansi:</b> ${data.instansi_pemerintahan}<br>
+                    <b>Email:</b> ${data.email}<br>
+                    <b>Kategori:</b> ${getKategoriName(data.id_pengaduan)}
+                `,
+                confirmButtonColor: '#8B4513',
+                confirmButtonText: 'OK'
+            });
+
+            this.reset();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            clearValidationStates();
+        }, 1500);
         });
 
         // Form validation function
         function validateForm(data) {
             const errors = [];
-            
+
             if (!data.instansi_pemerintahan || data.instansi_pemerintahan.length < 3) {
                 errors.push('Nama instansi harus diisi minimal 3 karakter');
                 markInvalid('instansi');
             } else {
                 markValid('instansi');
             }
-            
+
             if (!data.email || !isValidEmail(data.email)) {
                 errors.push('Email tidak valid atau belum diisi');
                 markInvalid('email');
             } else {
                 markValid('email');
             }
-            
+
             if (!data.password || data.password.length < 6) {
                 errors.push('Password harus minimal 6 karakter');
                 markInvalid('password');
             } else {
                 markValid('password');
             }
-            
+
             if (data.password !== data.password_confirmation) {
                 errors.push('Konfirmasi password tidak cocok');
                 markInvalid('password_confirmation');
             } else if (data.password_confirmation) {
                 markValid('password_confirmation');
             }
-            
+
             if (!data.id_pengaduan) {
                 errors.push('Kategori pengaduan harus dipilih');
                 markInvalid('kategori');
             } else {
                 markValid('kategori');
             }
-            
+
             return errors;
         }
 
@@ -526,14 +540,14 @@
         function showErrors(errors) {
             const errorAlert = document.getElementById('errorAlert');
             const errorList = document.getElementById('errorList');
-            
+
             errorList.innerHTML = '';
             errors.forEach(error => {
                 const li = document.createElement('li');
                 li.textContent = error;
                 errorList.appendChild(li);
             });
-            
+
             errorAlert.style.display = 'block';
             errorAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -562,21 +576,21 @@
         document.getElementById('password').addEventListener('input', function() {
             const password = this.value;
             const strengthDiv = document.getElementById('passwordStrength');
-            
+
             if (password.length === 0) {
                 strengthDiv.classList.remove('show');
                 return;
             }
-            
+
             strengthDiv.classList.add('show');
-            
+
             let strength = 0;
             if (password.length >= 6) strength++;
             if (password.match(/[a-z]/)) strength++;
             if (password.match(/[A-Z]/)) strength++;
             if (password.match(/[0-9]/)) strength++;
             if (password.match(/[^a-zA-Z0-9]/)) strength++;
-            
+
             if (strength <= 2) {
                 strengthDiv.textContent = 'Password lemah';
                 strengthDiv.className = 'password-strength show strength-weak';
@@ -604,7 +618,7 @@
             input.addEventListener('blur', function() {
                 const formData = new FormData(document.getElementById('registrationForm'));
                 const data = Object.fromEntries(formData);
-                
+
                 // Validate only this field
                 if (this.name === 'instansi_pemerintahan') {
                     if (!data.instansi_pemerintahan || data.instansi_pemerintahan.length < 3) {
@@ -646,7 +660,7 @@
             container.style.opacity = '0';
             container.style.transform = 'scale(0.9) translateY(20px)';
             container.style.transition = 'all 0.8s ease';
-            
+
             setTimeout(() => {
                 container.style.opacity = '1';
                 container.style.transform = 'scale(1) translateY(0)';
@@ -658,7 +672,7 @@
                 element.style.opacity = '0';
                 element.style.transform = 'translateY(20px)';
                 element.style.transition = 'all 0.6s ease';
-                
+
                 setTimeout(() => {
                     element.style.opacity = '1';
                     element.style.transform = 'translateY(0)';

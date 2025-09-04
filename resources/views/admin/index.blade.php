@@ -665,14 +665,6 @@ header {
                     <span>➕</span>
                     Tambah Kategori
                 </button>
-                <a href="#" class="quick-action-btn" onclick="exportData()">
-                    <span>📊</span>
-                    Export Data
-                </a>
-                <a href="#" class="quick-action-btn" onclick="refreshData()">
-                    <span>🔄</span>
-                    Refresh
-                </a>
             </div>
         </div>
     </div>
