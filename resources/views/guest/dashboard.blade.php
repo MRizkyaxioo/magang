@@ -459,23 +459,23 @@
         <!-- Stats Section -->
         <div class="stats-section">
             <div class="stat-card">
-                <div class="stat-number">0</div>
+                <div class="stat-number">{{ $hasil->where('status', 'pending')->count() }}</div>
                 <div class="stat-label">⏳ Pending</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">1</div>
+                <div class="stat-number">{{ $hasil->where('status', 'ditolak')->count() }}</div>
                 <div class="stat-label">❌ Ditolak</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">0</div>
+                <div class="stat-number">{{ $hasil->where('status', 'sedang dikerjakan')->count() }}</div>
                 <div class="stat-label">🔄 Sedang Dikerjakan</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">0</div>
+                <div class="stat-number">{{ $hasil->where('status', 'selesai')->count() }}</div>
                 <div class="stat-label">✅ Selesai</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">1</div>
+                <div class="stat-number">{{ $hasil->count() }}</div>
                 <div class="stat-label">📊 Total Pengaduan</div>
             </div>
         </div>
