@@ -48,21 +48,8 @@
         .logo {
             width: 200px;
             height: 150px;
-            /* background: radial-gradient(circle, #FFD700 0%, #FFA500 50%, #228B22 100%); */
-            /* border-radius: 50%; */
-            /* display: flex; */
-            /* flex-direction: column; */
             align-items: center;
             justify-content: center;
-            /* font-weight: bold;
-            font-size: 10px;
-            text-align: center;
-            line-height: 1.1; */
-            /* color: white;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            border: 3px solid #B8860B; */
-            /* position: relative;
-            overflow: hidden; */
         }
 
         .logo::before {
