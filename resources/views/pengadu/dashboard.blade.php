@@ -393,37 +393,37 @@
 
                     <div class="faq-item">
                         <div class="faq-dropdown" onclick="toggleFAQ(0)">
-                            Berapa lama waktu pengaduan untuk ditindaklanjuti?
-                        </div>
-                        <div class="faq-answer" id="faq-answer-0">
-                            Pengaduan akan di proses paling lama 4 hari, jika tidak ada info lebih lanjut pengadu bisa melakukan pengaduan ulang atau bisa hubungi nomor ini 081234567891
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-dropdown" onclick="toggleFAQ(1)">
                             Apakah identitas pelapor akan dirahasiakan?
                         </div>
-                        <div class="faq-answer" id="faq-answer-1">
+                        <div class="faq-answer" id="faq-answer-0">
                             Ya, identitas pelapor akan dijaga kerahasiaannya sesuai dengan kebijakan privasi yang berlaku. Namun, untuk keperluan verifikasi dan tindak lanjut, tim SIMARA mungkin perlu menghubungi pelapor melalui nomor kontak pelapor.
                         </div>
                     </div>
 
                     <div class="faq-item">
+                        <div class="faq-dropdown" onclick="toggleFAQ(1)">
+                            Berapa lama waktu pengaduan untuk ditindaklanjuti?
+                        </div>
+                        <div class="faq-answer" id="faq-answer-1">
+                            Pengaduan akan di proses paling lama 4 hari, jika tidak ada info lebih lanjut pengadu bisa melakukan pengaduan ulang atau bisa hubungi nomor ini 081234567891.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
                         <div class="faq-dropdown" onclick="toggleFAQ(2)">
-                            Bagaimana cara melaporkan pungutan liar?
+                            Apakah laporan saya akan segera ditindaklanjuti?
                         </div>
                         <div class="faq-answer" id="faq-answer-2">
-                            Untuk melaporkan pungutan liar, Anda dapat menggunakan form pengaduan dengan memilih kategori "Pungutan Liar". Sertakan informasi detail seperti lokasi, waktu kejadian, dan bukti pendukung (foto) jika ada.
+                            Setiap laporan yang masuk akan diverifikasi terlebih dahulu oleh tim SIMARA. Anda akan dihubungi oleh pihak terkait untuk ditindaklanjuti. Status laporan dapat dilihat pada riwayat pengaduan.
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <div class="faq-dropdown" onclick="toggleFAQ(3)">
-                            Apakah laporan saya akan segera ditindaklanjuti?
+                            Bagaimana cara memantau status laporan saya?
                         </div>
                         <div class="faq-answer" id="faq-answer-3">
-                            Setiap laporan yang masuk akan diverifikasi terlebih dahulu oleh tim SIMARA. Anda akan dihubungi oleh pihak terkait untuk ditindaklanjuti. Status laporan dapat dilihat pada riwayat pengaduan.
+                            Pengadu dapat memantau status laporan melalui fitur "Riwayat Pengaduan" di dashboard SIMARA. Setiap perubahan status akan diinformasikan melalui notifikasi di aplikasi atau email yang terdaftar.
                         </div>
                     </div>
                 </section>

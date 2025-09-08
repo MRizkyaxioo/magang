@@ -488,7 +488,10 @@
                     <h2 class="section-title">SIMARA</h2>
                     <div class="info-box">
                         <p class="info-text">
-                            Sistem Pengaduan Masyarakat (SIMARA) adalah platform digital yang memungkinkan masyarakat Banjarmasin untuk menyampaikan aspirasi, keluhan, dan laporan secara online. Sistem ini dirancang untuk meningkatkan pelayanan publik dan transparansi pemerintahan kota.
+                            Sistem Pengaduan Masyarakat (SIMARA) merupakan sebuah platform digital yang dikembangkan untuk memberikan ruang bagi masyarakat Kota Banjarmasin dalam menyampaikan berbagai aspirasi, keluhan, saran, maupun laporan terkait pelayanan publik. Melalui sistem ini, warga tidak perlu lagi datang langsung ke kantor pemerintahan atau lembaga terkait, melainkan cukup menggunakan perangkat yang terhubung ke internet untuk menyampaikan pengaduan secara cepat, mudah, dan efisien. 
+                            SIMARA hadir sebagai upaya pemerintah kota dalam meningkatkan kualitas pelayanan publik, mempercepat proses tindak lanjut terhadap laporan masyarakat, serta menciptakan transparansi dalam penyelenggaraan pemerintahan. Dengan adanya sistem ini, masyarakat dapat merasa lebih didengar karena setiap aduan yang masuk akan tercatat, dipantau, dan ditindaklanjuti sesuai dengan kategori permasalahan yang dilaporkan.
+                            Selain itu, SIMARA juga berfungsi sebagai sarana penghubung antara masyarakat dengan pihak pemerintah. Informasi yang terkumpul dari berbagai laporan dapat dijadikan bahan evaluasi untuk memperbaiki kinerja pelayanan, mengidentifikasi permasalahan yang sering muncul, serta merumuskan kebijakan yang lebih tepat sasaran. Dengan demikian, SIMARA tidak hanya menjadi alat pengaduan, tetapi juga instrumen penting dalam membangun komunikasi dua arah antara pemerintah dan masyarakat.
+                            Melalui penerapan teknologi digital ini, diharapkan partisipasi masyarakat dalam pembangunan kota semakin meningkat, rasa percaya terhadap pemerintah semakin kuat, serta tercipta tata kelola pemerintahan yang lebih terbuka, akuntabel, dan responsif terhadap kebutuhan warganya.
                         </p>
                     </div>
                 </section>
@@ -499,37 +502,37 @@
 
                     <div class="faq-item">
                         <div class="faq-dropdown" onclick="toggleFAQ(0)">
-                            Berapa lama waktu pengaduan untuk ditindaklanjuti?
-                        </div>
-                        <div class="faq-answer" id="faq-answer-0">
-                            Pengaduan akan di proses paling lama 4 hari, jika tidak ada info lebih lanjut pengadu bisa melakukan pengaduan ulang atau bisa hubungi nomor ini 081234567891
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-dropdown" onclick="toggleFAQ(1)">
                             Apakah identitas pelapor akan dirahasiakan?
                         </div>
-                        <div class="faq-answer" id="faq-answer-1">
+                        <div class="faq-answer" id="faq-answer-0">
                             Ya, identitas pelapor akan dijaga kerahasiaannya sesuai dengan kebijakan privasi yang berlaku. Namun, untuk keperluan verifikasi dan tindak lanjut, tim SIMARA mungkin perlu menghubungi pelapor melalui nomor kontak pelapor.
                         </div>
                     </div>
 
                     <div class="faq-item">
+                        <div class="faq-dropdown" onclick="toggleFAQ(1)">
+                            Bagaimana cara mengajukan pengaduan?
+                        </div>
+                        <div class="faq-answer" id="faq-answer-1">
+                            Untuk mengajukan pengaduan, klik tombol "Buat Pengaduan" di bagian bawah halaman ini. Isi form pengaduan dengan informasi yang lengkap dan jelas, termasuk kategori pengaduan, deskripsi masalah, lokasi kejadian, dan lampiran foto jika ada. Setelah itu, kirimkan pengaduan Anda dan tunggu konfirmasi dari tim SIMARA.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
                         <div class="faq-dropdown" onclick="toggleFAQ(2)">
-                            Bagaimana cara melaporkan pungutan liar?
+                            Apakah sebelum melakukan pengaduan harus mendaftar akun terlebih dahulu?
                         </div>
                         <div class="faq-answer" id="faq-answer-2">
-                            Untuk melaporkan pungutan liar, Anda dapat menggunakan form pengaduan dengan memilih kategori "Pungutan Liar". Sertakan informasi detail seperti lokasi, waktu kejadian, dan bukti pendukung (foto) jika ada.
+                            Ya, untuk mengajukan pengaduan, Anda perlu mendaftar akun terlebih dahulu. Pendaftaran akun memungkinkan Anda untuk melacak status pengaduan Anda, menerima pembaruan, dan berkomunikasi dengan tim SIMARA jika diperlukan.
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <div class="faq-dropdown" onclick="toggleFAQ(3)">
-                            Apakah laporan saya akan segera ditindaklanjuti?
+                            Bagaimana proses tindak lanjut pengaduan?
                         </div>
                         <div class="faq-answer" id="faq-answer-3">
-                            Setiap laporan yang masuk akan diverifikasi terlebih dahulu oleh tim SIMARA. Anda akan dihubungi oleh pihak terkait untuk ditindaklanjuti. Status laporan dapat dilihat pada riwayat pengaduan.
+                            Setelah pengaduan diajukan, tim SIMARA akan memverifikasi informasi yang diberikan. Jika pengaduan valid, tim akan meneruskan laporan ke dinas terkait untuk ditindaklanjuti. Pelapor akan menerima pembaruan status pengaduan melalui akun mereka.
                         </div>
                     </div>
                 </section>
