@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\HasilPengaduan;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class HasilPengaduanController extends Controller
@@ -43,4 +44,20 @@ class HasilPengaduanController extends Controller
 
         return redirect()->route('pengadu.riwayat')->with('success', 'Pengaduan berhasil dikirim!');
     }
+
+    public function destroy($id)
+{
+    $pengaduan = HasilPengaduan::findOrFail($id);
+
+    // Hapus file bukti_foto jika ada
+    if ($pengaduan->bukti_foto && Storage::disk('public')->exists($pengaduan->bukti_foto)) {
+        Storage::disk('public')->delete($pengaduan->bukti_foto);
+    }
+
+    $pengaduan->delete();
+
+    return redirect()->back()->with('success', 'Pengaduan berhasil dihapus!');
+}
+
+
 }

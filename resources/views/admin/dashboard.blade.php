@@ -631,6 +631,55 @@
                         <span>👁️</span>
                         Lihat Detail
                     </a>
+
+                    <form action="{{ route('admin.destroy', $item->id_hasil) }}" method="POST" class="delete-form" style="margin:0;">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="detail-btn delete-btn"
+        style="background:linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%); color:white; border:2px solid #FF3742;">
+        <span>🗑️</span>
+        Hapus
+    </button>
+</form>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Konfirmasi hapus dengan SweetAlert
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: "Data yang dihapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+
+    // Notifikasi sukses setelah hapus
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    @endif
+</script>
+
+
+
                 </div>
             </div>
             @empty

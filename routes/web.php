@@ -107,6 +107,8 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     ->name('admin.updateKategori');
     Route::post('/admin/pengaduan/{id}/update-keterangan', [DashboardAdminController::class, 'updateKeterangan'])
     ->name('admin.updateKeterangan');
+    Route::delete('/admin/pengaduan/{id}', [HasilPengaduanController::class, 'destroy'])->name('admin.destroy');
+
 
 
 
