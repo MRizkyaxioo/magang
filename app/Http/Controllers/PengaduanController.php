@@ -10,7 +10,7 @@ class PengaduanController extends Controller
     public function index()
     {
         $pengaduans = Pengaduan::all();
-        return view('admin.index', compact('pengaduans'));
+        return view('admin.kategori', compact('pengaduans'));
     }
 
     public function create()

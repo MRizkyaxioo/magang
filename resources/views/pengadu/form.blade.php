@@ -14,7 +14,7 @@
       padding: 20px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    
+
     .logo {
       position: absolute;
       top: 70px;
@@ -34,7 +34,7 @@
       overflow: hidden;
       backdrop-filter: blur(10px);
     }
-    
+
     .form-header {
       background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
       color: #2C1810;
@@ -46,7 +46,7 @@
       border-radius: 0;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     }
-    
+
     .btn-lapor {
       background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
       color: #2C1810;
@@ -59,22 +59,22 @@
       transition: all 0.3s ease;
       box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
     }
-    
+
     /* Styling untuk tombol yang sejajar */
-    .btn-container { 
-      display: flex; 
-      justify-content: space-between; 
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
       margin-top: 30px;
     }
-    
+
     .back-btn {
-      padding: 15px 30px; 
+      padding: 15px 30px;
       background: white;
-      border: 2px solid #B8860B; 
+      border: 2px solid #B8860B;
       border-radius: 12px;
-      text-decoration: none; 
-      color: #B8860B; 
+      text-decoration: none;
+      color: #B8860B;
       font-weight: 600;
       transition: all 0.3s ease;
       box-shadow: 0 8px 25px rgba(184, 134, 11, 0.4);
@@ -83,9 +83,9 @@
       align-items: center;
       gap: 8px;
     }
-    
+
     .back-btn:hover {
-      background: #FFFACD; 
+      background: #FFFACD;
       box-shadow: 0 12px 35px rgba(255, 193, 7, 0.6);
       transform: translateY(-3px);
       color: #8B4513;
@@ -97,11 +97,11 @@
       background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
       color: #2C1810;
     }
-    
+
     .btn-lapor:active, .back-btn:active {
       transform: translateY(-1px);
     }
-    
+
     select, textarea, input[type="text"], input[type="date"], input[type="file"] {
       width: 100%;
       border: 2px solid #F0E68C;
@@ -112,22 +112,22 @@
       font-size: 14px;
       transition: all 0.3s ease;
     }
-    
-    select:focus, textarea:focus, input[type="text"]:focus, 
+
+    select:focus, textarea:focus, input[type="text"]:focus,
     input[type="date"]:focus, input[type="file"]:focus {
       border-color: #FFD700;
       box-shadow: 0 5px 20px rgba(255, 193, 7, 0.3);
       background: #FFFACD;
       outline: none;
     }
-    
+
     .form-label {
       color: #8B4513;
       font-weight: 600;
       margin-bottom: 8px;
       display: block;
     }
-    
+
     .header {
       text-align: center;
       margin-bottom: 20px; /* Dikurangi dari 30px ke 20px */
@@ -142,7 +142,7 @@
       margin-top: 140px;
       margin-bottom: 20px;
     }
-    
+
     .header h3 {
       color: #B8860B;
       font-size: 28px;
@@ -150,19 +150,19 @@
       margin-bottom: 10px;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     }
-    
+
     .header p {
       color: #8B4513;
       font-size: 16px;
       margin: 0;
     }
-    
+
     .form-content {
       padding: 30px;
       background: white;
       border-radius: 0 0 18px 18px;
     }
-    
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .logo {
@@ -172,42 +172,42 @@
         width: 150px;
         height: 120px;
       }
-      
+
       .header {
         margin-top: 20px;
       }
-      
+
       .form-container {
         margin-top: 20px;
         margin-left: 10px;
         margin-right: 10px;
       }
-      
+
       /* Stack tombol pada mobile */
       .btn-container {
         flex-direction: column;
         gap: 15px;
       }
-      
+
       .btn-lapor, .back-btn {
         width: 100%;
         text-align: center;
         justify-content: center;
       }
     }
-    
+
     /* Hover effect for form container */
     .form-container:hover {
       transform: translateY(-2px);
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
     }
-    
+
     /* File input styling */
     input[type="file"] {
       padding: 8px;
       cursor: pointer;
     }
-    
+
     input[type="file"]::-webkit-file-upload-button {
       background: linear-gradient(135deg, #FFD700, #FFA500);
       border: 1px solid #B8860B;
@@ -219,7 +219,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    
+
     input[type="file"]::-webkit-file-upload-button:hover {
       background: linear-gradient(135deg, #FFA500, #FF8C00);
     }
@@ -234,10 +234,10 @@
       <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo d-block d-md-absolute">
     </div>
   </div>
-  
+
   <!-- Header Section -->
   <div class="header">
-    <h3>SELAMAT DATANG DI SIMARA</h3>
+    <h3>SELAMAT DATANG DI SIPAMA</h3>
     <p>Sampaikan laporan Anda langsung ke instansi yang berwenang</p>
   </div>
 

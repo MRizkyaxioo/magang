@@ -576,7 +576,7 @@ header {
             <div class="header-icon">🏷️</div>
             <div class="header-text">
                 <h1>Kategori Pengaduan</h1>
-                <p>Kelola kategori untuk sistem pengaduan SIMARA</p>
+                <p>Kelola kategori untuk sistem pengaduan SIPAMA</p>
             </div>
         </div>
         <button type="button" class="add-btn" onclick="window.location.href='{{ route('admin.dashboard') }}'">
@@ -607,7 +607,7 @@ header {
                     </div>
                     <div class="kategori-details">
                         <h3>{{ $item->kategori }}</h3>
-                        <p>Kategori pengaduan untuk sistem SIMARA</p>
+                        <p>Kategori pengaduan untuk sistem SIPAMA</p>
                     </div>
                 </div>
                 <div class="kategori-actions">

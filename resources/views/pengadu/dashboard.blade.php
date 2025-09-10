@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMARA - Sistem Informasi Masyarakat Raya</title>
+    <title>SIPAMA - Sistem Pengaduan Masyarakat</title>
     <style>
         * {
             margin: 0;
@@ -379,10 +379,10 @@
             <div class="left-content">
                 <!-- SIMARA Section -->
                 <section class="simara-section">
-                    <h2 class="section-title">SIMARA</h2>
+                    <h2 class="section-title">SIPAMA</h2>
                     <div class="info-box">
                         <p class="info-text">
-                            Sistem Pengaduan Masyarakat (SIMARA) adalah platform digital yang memungkinkan masyarakat Banjarmasin untuk menyampaikan aspirasi, keluhan, dan laporan secara online. Sistem ini dirancang untuk meningkatkan pelayanan publik dan transparansi pemerintahan kota.
+                            Sistem Pengaduan Masyarakat (SIPAMA) adalah platform digital yang memungkinkan masyarakat Banjarmasin untuk menyampaikan aspirasi, keluhan, dan laporan secara online. Sistem ini dirancang untuk meningkatkan pelayanan publik dan transparansi pemerintahan kota.
                         </p>
                     </div>
                 </section>
@@ -396,7 +396,7 @@
                             Apakah identitas pelapor akan dirahasiakan?
                         </div>
                         <div class="faq-answer" id="faq-answer-0">
-                            Ya, identitas pelapor akan dijaga kerahasiaannya sesuai dengan kebijakan privasi yang berlaku. Namun, untuk keperluan verifikasi dan tindak lanjut, tim SIMARA mungkin perlu menghubungi pelapor melalui nomor kontak pelapor.
+                            Ya, identitas pelapor akan dijaga kerahasiaannya sesuai dengan kebijakan privasi yang berlaku. Namun, untuk keperluan verifikasi dan tindak lanjut, tim SIPAMA mungkin perlu menghubungi pelapor melalui nomor kontak pelapor.
                         </div>
                     </div>
 
@@ -414,7 +414,7 @@
                             Apakah laporan saya akan segera ditindaklanjuti?
                         </div>
                         <div class="faq-answer" id="faq-answer-2">
-                            Setiap laporan yang masuk akan diverifikasi terlebih dahulu oleh tim SIMARA. Anda akan dihubungi oleh pihak terkait untuk ditindaklanjuti. Status laporan dapat dilihat pada riwayat pengaduan.
+                            Setiap laporan yang masuk akan diverifikasi terlebih dahulu oleh tim SIPAMA. Anda akan dihubungi oleh pihak terkait untuk ditindaklanjuti. Status laporan dapat dilihat pada riwayat pengaduan.
                         </div>
                     </div>
 
@@ -423,7 +423,7 @@
                             Bagaimana cara memantau status laporan saya?
                         </div>
                         <div class="faq-answer" id="faq-answer-3">
-                            Pengadu dapat memantau status laporan melalui fitur "Riwayat Pengaduan" di dashboard SIMARA. Setiap perubahan status akan diinformasikan melalui notifikasi di aplikasi atau email yang terdaftar.
+                            Pengadu dapat memantau status laporan melalui fitur "Riwayat Pengaduan" di dashboard SIPAMA. Setiap perubahan status akan diinformasikan melalui notifikasi di aplikasi atau email yang terdaftar.
                         </div>
                     </div>
                 </section>
@@ -471,9 +471,9 @@
 
         // Logout Function
         function logout() {
-            const confirmed = confirm('Apakah Anda yakin ingin keluar dari sistem SIMARA?');
+            const confirmed = confirm('Apakah Anda yakin ingin keluar dari sistem SIPAMA?');
             if (confirmed) {
-                alert('Anda telah berhasil logout dari sistem SIMARA. Terima kasih telah menggunakan layanan kami.');
+                alert('Anda telah berhasil logout dari sistem SIPAMA. Terima kasih telah menggunakan layanan kami.');
                 // Here you would typically redirect to login page
                 // window.location.href = '/login';
             }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Hasil Pengaduan - SIMARA</title>
+    <title>Detail Hasil Pengaduan - SIPAMA</title>
     <style>
         * {
             margin: 0;
@@ -373,37 +373,37 @@
 
             <div class="info-item">
                 <span class="info-label">NIK:</span>
-                <span class="info-value">1234567891011121</span>
+                <span class="info-value">{{ $hasilPengaduan->pengadu->nik ?? '-' }}</span>
             </div>
 
             <div class="info-item">
                 <span class="info-label">Nama:</span>
-                <span class="info-value">Muhammad Fadhil</span>
+                <span class="info-value">{{ $hasilPengaduan->pengadu->nama_pengadu ?? '-' }}</span>
             </div>
 
             <div class="info-item">
                 <span class="info-label">Alamat:</span>
-                <span class="info-value">barabai</span>
+                <span class="info-value">{{ $hasilPengaduan->pengadu->alamat ?? '-' }}</span>
             </div>
 
             <div class="info-item">
                 <span class="info-label">Tempat Lahir:</span>
-                <span class="info-value">barabai</span>
+                <span class="info-value">{{ $hasilPengaduan->pengadu->tempat_lahir ?? '-' }}</span>
             </div>
 
             <div class="info-item">
                 <span class="info-label">Tanggal Lahir:</span>
-                <span class="info-value">2005-05-03</span>
+                <span class="info-value">{{ $hasilPengaduan->pengadu->tanggal_lahir ?? '-' }}</span>
             </div>
 
             <div class="info-item">
                 <span class="info-label">No. Telepon:</span>
-                <span class="info-value">087736567651</span>
+                <span class="info-value">{{ $hasilPengaduan->pengadu->no_telp ?? '-' }}</span>
             </div>
 
             <div class="info-item">
                 <span class="info-label">Email:</span>
-                <span class="info-value">pengadu@example.com</span>
+                <span class="info-value">{{ $hasilPengaduan->pengadu->email ?? '-' }}</span>
             </div>
         </div>
 
