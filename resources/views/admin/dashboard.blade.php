@@ -591,10 +591,7 @@
                         <div class="deskripsi-text">{{ $item->deskripsi }}</div>
                     </div>
 
-                    <div class="deskripsi-full">
-    <div class="content-label">📝 Deskripsi Pengaduan</div>
-    <div class="deskripsi-text">{{ $item->deskripsi }}</div>
-</div>
+                    
 
 {{-- Keterangan hanya untuk Admin --}}
 <div class="deskripsi-full" style="margin-top:15px; background:#f9f9f9;">
