@@ -448,6 +448,11 @@
                     </div>
 
                     <div class="info-row">
+                        <span class="info-label">Keterangan:</span>
+                        <span class="info-value">{{ $hasil->keterangan }}</span>
+                    </div>
+
+                    <div class="info-row">
                         <span class="info-label">Bukti foto:</span>
                         <div class="info-value">
                             <img src="{{ asset('storage/'.$hasil->bukti_foto) }}"
