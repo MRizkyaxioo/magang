@@ -12,6 +12,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
         min-height: 100vh;
+        padding: 20px;
     }
 
     /* Hide default header/navbar */
@@ -39,62 +40,130 @@
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         overflow: hidden;
         backdrop-filter: blur(10px);
-        margin-top: 20px;
-        margin-bottom: 20px;
     }
 
     /* Header */
     .dashboard-header {
         background: linear-gradient(135deg, #B8860B 0%, #DAA520 50%, #FFD700 100%);
         color: #2C1810;
-        padding: 25px 40px;
-        text-align: center;
+        padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
 
+    .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+    }
+
+    .logo {
+            width: 200px;
+            height: 150px;
+            align-items: center;
+            justify-content: center;
+    }
+
+    .logo::before {
+            content: '🏛️';
+            font-size: 20px;
+            margin-bottom: 2px;
+    }
+
+    .logo-text {
+            font-size: 8px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .dashboard-title-section {
+         background: rgba(255, 255, 255, 0.9);
+            padding: 15px 40px;
+            border-radius: 12px;
+            border: 2px solid #B8860B;
+    }
+
     .dashboard-title {
-        font-size: 36px;
+        font-size: 34px;
         font-weight: 700;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
+        text-align: center;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         margin-bottom: 10px;
     }
 
     .dashboard-subtitle {
-        font-size: 16px;
-        opacity: 0.8;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #B8860B;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Logout Button - Same as pengadu dashboard */
+    .logout-btn {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 12px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #2C1810;
         font-weight: 500;
+    }
+
+    .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .logout-btn button {
+        all: unset;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: inherit;
+        font-weight: inherit;
     }
 
     /* Stats Cards */
     .stats-section {
-        padding: 30px 40px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        margin-bottom: 20px;
-    }
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
 
     .stat-card {
-        background: white;
-        border-radius: 15px;
-        padding: 25px;
-        text-align: center;
-        box-shadow: 0 10px 25px rgba(255, 193, 7, 0.2);
-        border: 2px solid #FFF8DC;
-        transition: all 0.3s ease;
-    }
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.2);
+            border: 2px solid #FFF8DC;
+            transition: all 0.3s ease;
+        }
 
     .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(255, 193, 7, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 193, 7, 0.3);
     }
 
     .stat-number {
-        font-size: 32px;
-        font-weight: 700;
-        color: #B8860B;
-        margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 700;
+            color: #B8860B;
+            margin-bottom: 10px;
     }
 
     .stat-label {
@@ -391,34 +460,6 @@
         text-decoration: none;
     }
 
-    /* Logout Button - Special styling */
-    .logout-btn {
-        width: 100%;
-        background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%);
-        color: white;
-        border: 2px solid #FF3742;
-        padding: 15px 20px;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .logout-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
-        background: linear-gradient(135deg, #FF4757 0%, #FF3742 100%);
-        color: white;
-        text-decoration: none;
-    }
-
     /* Empty State */
     .empty-state {
         text-align: center;
@@ -457,6 +498,11 @@
         .sidebar {
             position: static;
         }
+
+        .dashboard-header {
+            flex-direction: column;
+            gap: 15px;
+        }
     }
 
     @media (max-width: 768px) {
@@ -467,6 +513,8 @@
 
         .dashboard-header {
             padding: 20px;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .dashboard-title {
@@ -511,20 +559,25 @@
 
 <div class="dashboard-container">
     <!-- Header -->
-<div class="dashboard-header" style="position: relative;">
-    <h1 class="dashboard-title">📋 Dashboard Admin</h1>
-    <p class="dashboard-subtitle">Sistem Pengaduan Masyarakat (SIPAMA)</p>
-
-    <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0; position: absolute; top: 20px; right: 30px;">
-        @csrf
-        <button type="submit" class="logout-btn" style="width:auto; padding:10px 20px; border-radius:8px;">
-            <span>🚪</span>
-            Logout
-        </button>
-    </form>
-</div>
-
-
+    <div class="dashboard-header">
+         <div class="logo-section">
+                <div>
+                    <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
+                </div>
+                <div class="dashboard-title-section">
+                 <h1 class="dashboard-title">Dashboard Admin</h1>
+                  <p class="dashboard-subtitle">Sistem Pengaduan Masyarakat (SIPAMA)</p>
+                </div>
+            </div>
+        
+        <form action="{{ route('admin.logout') }}" method="POST" class="logout-btn" style="margin: 0;">
+            @csrf
+            <button type="submit">
+                <span>Logout</span>
+                <span>↗</span>
+            </button>
+        </form>
+    </div>
 
     <!-- Stats Section -->
     <div class="stats-section">
@@ -591,21 +644,18 @@
                         <div class="deskripsi-text">{{ $item->deskripsi }}</div>
                     </div>
 
-                    
-
-{{-- Keterangan hanya untuk Admin --}}
-<div class="deskripsi-full" style="margin-top:15px; background:#f9f9f9;">
-    <div class="content-label">📌 Keterangan Admin</div>
-    <form action="{{ route('admin.updateKeterangan', $item->id_hasil) }}" method="POST">
-        @csrf
-        <textarea name="keterangan" rows="3" class="filter-select"
-                  style="width:100%; resize:vertical;">{{ $item->keterangan }}</textarea>
-        <button type="submit" class="detail-btn" style="margin-top:10px;">
-            💾 Simpan Keterangan
-        </button>
-    </form>
-</div>
-
+                    {{-- Keterangan hanya untuk Admin --}}
+                    <div class="deskripsi-full" style="margin-top:15px; background:#f9f9f9;">
+                        <div class="content-label">📌 Keterangan Admin</div>
+                        <form action="{{ route('admin.updateKeterangan', $item->id_hasil) }}" method="POST">
+                            @csrf
+                            <textarea name="keterangan" rows="3" class="filter-select"
+                                      style="width:100%; resize:vertical;">{{ $item->keterangan }}</textarea>
+                            <button type="submit" class="detail-btn" style="margin-top:10px;">
+                                💾 Simpan Keterangan
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Foto Section -->
@@ -630,53 +680,14 @@
                     </a>
 
                     <form action="{{ route('admin.destroy', $item->id_hasil) }}" method="POST" class="delete-form" style="margin:0;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="detail-btn delete-btn"
-        style="background:linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%); color:white; border:2px solid #FF3742;">
-        <span>🗑️</span>
-        Hapus
-    </button>
-</form>
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    // Konfirmasi hapus dengan SweetAlert
-    document.querySelectorAll('.delete-form').forEach(form => {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Yakin ingin menghapus?',
-                text: "Data yang dihapus tidak bisa dikembalikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        });
-    });
-
-    // Notifikasi sukses setelah hapus
-    @if(session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!',
-            text: '{{ session('success') }}',
-            showConfirmButton: false,
-            timer: 2000
-        });
-    @endif
-</script>
-
-
-
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="detail-btn delete-btn"
+                            style="background:linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%); color:white; border:2px solid #FF3742;">
+                            <span>🗑️</span>
+                            Hapus
+                        </button>
+                    </form>
                 </div>
             </div>
             @empty
@@ -723,15 +734,6 @@
                     <span>🏢</span>
                     Buat Akun Pengurus
                 </a>
-
-                <!-- Logout Button - Moved here -->
-                {{-- <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
-                    @csrf
-                    <button type="submit" class="logout-btn" >
-                        <span>🚪</span>
-                        Logout
-                    </button>
-                </form> --}}
             </div>
         </div>
     </div>
@@ -744,6 +746,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     // Image Modal Functions
     function openImageModal(imageSrc) {
@@ -808,28 +811,37 @@
         }
     }
 
-    // Action Functions
-    function exportData() {
-        alert('🚧 Fitur export data sedang dalam pengembangan. Akan segera tersedia!');
-    }
+    // Konfirmasi hapus dengan SweetAlert
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: "Data yang dihapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
 
-    function refreshData() {
-        const btn = event.target.closest('.action-btn');
-        const originalText = btn.innerHTML;
-
-        btn.innerHTML = '<span>⟳</span> Memuat...';
-        btn.style.pointerEvents = 'none';
-
-        setTimeout(() => {
-            location.reload();
-        }, 1000);
-    }
-
-    function printReport() {
-        if (confirm('Apakah Anda ingin mencetak laporan pengaduan?')) {
-            window.print();
-        }
-    }
+    // Notifikasi sukses setelah hapus
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    @endif
 
     // Auto-refresh stats setiap 30 detik
     setInterval(() => {

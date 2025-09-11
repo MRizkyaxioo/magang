@@ -446,7 +446,7 @@
                     <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
                 </div>
                 <div class="title-section">
-                    <h1 class="dashboard-title">📋 Dashboard Utama</h1>
+                    <h1 class="dashboard-title"> Dashboard Utama</h1>
                     <p class="dashboard-subtitle">Sistem Pengaduan Masyarakat (SIPAMA)</p>
                 </div>
             </div>

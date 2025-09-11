@@ -362,7 +362,7 @@
                     <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
                 </div>
                 <div class="title-section">
-                    <h1 class="title">Selamat Datang, {{ Auth::guard('pengadu')->user()->nama_pengadu }} 🎉</h1>
+                    <h1 class="title">Selamat Datang, {{ Auth::guard('pengadu')->user()->nama_pengadu }} </h1>
                 </div>
             </div>
             <form class="logout-btn" method="POST" action="{{ route('pengadu.logout') }}">

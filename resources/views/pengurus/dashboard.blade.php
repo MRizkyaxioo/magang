@@ -75,6 +75,7 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        /* Logout Button - Same as pengadu dashboard */
         .logout-btn {
             background: rgba(255, 255, 255, 0.2);
             padding: 12px 20px;
@@ -94,6 +95,16 @@
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .logout-btn button {
+            all: unset;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: inherit;
+            font-weight: inherit;
         }
 
         /* Main Content */
@@ -450,14 +461,14 @@
                     <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
                 </div>
                 <div class="title-section">
-                    <h1 class="title">Selamat Datang, {{ Auth::guard('pengurus')->user()->instansi_pemerintahan }} 🎉</h1>
+                    <h1 class="title">Selamat Datang, {{ Auth::guard('pengurus')->user()->instansi_pemerintahan }} </h1>
                 </div>
             </div>
             <form action="{{ route('pengurus.logout') }}" method="POST" style="margin: 0; position: absolute; top: 20px; right: 30px;">
                 @csrf
-                <button type="submit" class="logout-btn" style="width:auto; padding:10px 20px; border-radius:8px;">
-                    <span>🚪</span>
-                    Logout
+                <button type="submit" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;">
+                <span>Logout</span>
+                <span>↗</span>
                 </button>
             </form>
         </header>

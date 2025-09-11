@@ -16,12 +16,11 @@
     }
 
     .logo {
-      position: absolute;
-      top: 70px;
-      left: 200px;
-      width: 250px;
-      height: 200px;
-      object-fit: contain;
+     width: 200px;
+     height: 150px;
+     align-items: center;
+     justify-content: center;
+     position: absolute;
     }
 
     .form-container {
@@ -136,11 +135,11 @@
       border-radius: 15px;
       border: 2px solid #B8860B;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      max-width: 800px;
+      max-width: 700px;
       margin-left: auto;
       margin-right: auto;
-      margin-top: 140px;
-      margin-bottom: 20px;
+      margin-top: 25px;
+      margin-bottom: auto;
     }
 
     .header h3 {
