@@ -8,39 +8,47 @@ function closeImageModal() {
     document.getElementById('imageModal').style.display = 'none';
 }
 
-// Filter Functions
-function filterByStatus() {
+// FIXED: Combined Filter Function
+function applyFilters() {
     const selectedStatus = document.getElementById('statusFilter').value;
+    const selectedKategori = document.getElementById('kategoriFilter').value;
     const cards = document.querySelectorAll('.pengaduan-card');
 
     cards.forEach(card => {
-        if (selectedStatus === 'all') {
-            card.style.display = 'block';
-        } else {
+        let showCard = true;
+
+        // Check Status Filter
+        if (selectedStatus !== 'all') {
             const statusSelect = card.querySelector('select[name="status"]');
             const cardStatus = statusSelect ? statusSelect.value : '';
-            card.style.display = cardStatus === selectedStatus ? 'block' : 'none';
+            if (cardStatus !== selectedStatus) {
+                showCard = false;
+            }
         }
+
+        // Check Kategori Filter
+        if (selectedKategori !== 'all' && showCard) {
+            const kategoriBadge = card.querySelector('.kategori-badge');
+            const cardKategori = kategoriBadge ? kategoriBadge.textContent.trim() : '';
+            if (cardKategori !== selectedKategori) {
+                showCard = false;
+            }
+        }
+
+        // Show/Hide card based on both filters
+        card.style.display = showCard ? 'block' : 'none';
     });
 
     updateEmptyState();
 }
 
+// Updated Filter Functions to use combined filter
+function filterByStatus() {
+    applyFilters();
+}
+
 function filterByKategori() {
-    const selectedKategori = document.getElementById('kategoriFilter').value;
-    const cards = document.querySelectorAll('.pengaduan-card');
-
-    cards.forEach(card => {
-        if (selectedKategori === 'all') {
-            card.style.display = 'block';
-        } else {
-            const kategoriBadge = card.querySelector('.kategori-badge');
-            const cardKategori = kategoriBadge ? kategoriBadge.textContent.trim() : '';
-            card.style.display = cardKategori === selectedKategori ? 'block' : 'none';
-        }
-    });
-
-    updateEmptyState();
+    applyFilters();
 }
 
 function updateEmptyState() {
@@ -48,16 +56,22 @@ function updateEmptyState() {
         card.style.display !== 'none'
     );
     const emptyState = document.querySelector('.empty-state');
+    const grid = document.querySelector('.pengaduan-grid');
 
-    if (visibleCards.length === 0 && !emptyState) {
-        const grid = document.querySelector('.pengaduan-grid');
-        grid.innerHTML = `
+    // Remove existing empty state if it exists
+    if (emptyState) {
+        emptyState.remove();
+    }
+
+    if (visibleCards.length === 0) {
+        const emptyStateHTML = `
             <div class="empty-state">
                 <div class="empty-icon">🔍</div>
                 <h3 class="empty-title">Tidak Ada Data</h3>
                 <p class="empty-message">Tidak ditemukan pengaduan sesuai dengan filter yang dipilih.</p>
             </div>
         `;
+        grid.insertAdjacentHTML('beforeend', emptyStateHTML);
     }
 }
 
