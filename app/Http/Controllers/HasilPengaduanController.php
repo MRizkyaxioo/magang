@@ -24,7 +24,7 @@ class HasilPengaduanController extends Controller
             'lokasi_kejadian' => 'required|string|max:100',
             'deskripsi'      => 'required|string',
             'tanggal_kejadian' => 'required|date',
-            'bukti_foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'bukti_foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:3048',
         ]);
 
         $data = $request->all();

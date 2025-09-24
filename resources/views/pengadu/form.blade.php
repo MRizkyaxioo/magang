@@ -48,7 +48,7 @@
           <div class="col-md-4">
             <label for="bukti_foto" class="form-label">Foto laporan</label>
             <input type="file" name="bukti_foto" id="bukti_foto" accept="image/*">
-            <small class="text-muted">Format: JPG, PNG, GIF (Maks. 5MB)</small>
+            <small class="text-muted">Format: JPG, PNG, GIF (Maks. 3MB)</small>
           </div>
         </div>
 
