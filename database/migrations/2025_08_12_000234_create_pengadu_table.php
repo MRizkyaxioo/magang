@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pengadu', function (Blueprint $table) {
             $table->id('id_pengadu'); // Auto increment
             $table->string('nik', 16)->unique();
-            $table->string('nama_pengadu', 100);
+            $table->string('nama_pengadu', 50);
             $table->text('alamat');
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');

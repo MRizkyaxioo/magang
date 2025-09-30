@@ -18,7 +18,7 @@ return new class extends Migration
               ->references('id_pengaduan')
               ->on('pengaduan')
               ->onDelete('cascade');
-        $table->string('instansi_pemerintahan');
+        $table->string('instansi_pemerintahan', 65);
         $table->string('email')->unique();
         $table->string('password');
         $table->timestamps();
