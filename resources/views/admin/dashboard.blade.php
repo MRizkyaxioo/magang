@@ -12,15 +12,15 @@
     <div class="dashboard-container">
         <!-- Header -->
         <div class="dashboard-header">
-             <div class="logo-section">
-                    <div>
-                        <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
-                    </div>
-                    <div class="dashboard-title-section">
-                     <h1 class="dashboard-title">Dashboard Admin</h1>
-                      <p class="dashboard-subtitle">Sistem Pengaduan Masyarakat (SIPAMA)</p>
-                    </div>
+            <div class="logo-section">
+                <div>
+                    <img src="{{ asset('images/logo_pemko.png') }}" alt="Logo" class="logo">
                 </div>
+                <div class="dashboard-title-section">
+                    <h1 class="dashboard-title">Dashboard Admin</h1>
+                    <p class="dashboard-subtitle">Sistem Pengaduan Masyarakat (SIPAMA)</p>
+                </div>
+            </div>
 
             <form action="{{ route('admin.logout') }}" method="POST" class="logout-btn" style="margin: 0;">
                 @csrf
@@ -34,30 +34,30 @@
         <!-- Stats Section -->
         <div class="stats-section">
             <div class="stat-card">
-                <div class="stat-number">{{ $hasil->where('status', 'pending')->count() }}</div>
+                <div class="stat-number">{{ $allHasil->where('status', 'pending')->count() }}</div>
                 <div class="stat-label">⏳ Pending</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">{{ $hasil->where('status', 'ditolak')->count() }}</div>
+                <div class="stat-number">{{ $allHasil->where('status', 'ditolak')->count() }}</div>
                 <div class="stat-label">❌ Ditolak</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">{{ $hasil->where('status', 'sedang dikerjakan')->count() }}</div>
+                <div class="stat-number">{{ $allHasil->where('status', 'sedang dikerjakan')->count() }}</div>
                 <div class="stat-label">🔄 Sedang Dikerjakan</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">{{ $hasil->where('status', 'selesai')->count() }}</div>
+                <div class="stat-number">{{ $allHasil->where('status', 'selesai')->count() }}</div>
                 <div class="stat-label">✅ Selesai</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">{{ $hasil->count() }}</div>
+                <div class="stat-number">{{ $allHasil->count() }}</div>
                 <div class="stat-label">📊 Total Pengaduan</div>
             </div>
         </div>
 
         <!-- Main Dashboard -->
         <div class="main-dashboard">
-            <!-- Pengaduan Cards -->
+            <!-- KOLOM KIRI: Pengaduan Cards -->
             <div class="pengaduan-grid">
                 @forelse($hasil as $item)
                 <div class="pengaduan-card">
@@ -71,7 +71,7 @@
                             @csrf
                             <select name="status" class="status-dropdown" onchange="this.form.submit()">
                                 <option value="pending" {{ $item->status == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
-                                 <option value="ditolak" {{ $item->status == 'ditolak' ? 'selected' : '' }}>❌ Ditolak</option>
+                                <option value="ditolak" {{ $item->status == 'ditolak' ? 'selected' : '' }}>❌ Ditolak</option>
                                 <option value="sedang dikerjakan" {{ $item->status == 'sedang dikerjakan' ? 'selected' : '' }}>🔄 Sedang Dikerjakan</option>
                                 <option value="selesai" {{ $item->status == 'selesai' ? 'selected' : '' }}>✅ Selesai</option>
                             </select>
@@ -96,13 +96,11 @@
                             <div class="deskripsi-text">{{ $item->deskripsi }}</div>
                         </div>
 
-                        {{-- Keterangan hanya untuk Admin --}}
                         <div class="deskripsi-full" style="margin-top:15px; background:#f9f9f9;">
                             <div class="content-label">📌 Keterangan Admin</div>
                             <form action="{{ route('admin.updateKeterangan', $item->id_hasil) }}" method="POST">
                                 @csrf
-                                <textarea name="keterangan" rows="3" class="filter-select"
-                                          style="width:100%; resize:vertical;">{{ $item->keterangan }}</textarea>
+                                <textarea name="keterangan" rows="3" class="filter-select" style="width:100%; resize:vertical;">{{ $item->keterangan }}</textarea>
                                 <button type="submit" class="detail-btn" style="margin-top:10px;">
                                     💾 Simpan Keterangan
                                 </button>
@@ -146,18 +144,25 @@
                 <div class="empty-state">
                     <div class="empty-icon">📭</div>
                     <h3 class="empty-title">Belum Ada Pengaduan</h3>
-                    <p class="empty-message">Saat ini belum ada pengaduan yang masuk ke dalam sistem. Data akan muncul setelah ada pengaduan baru dari masyarakat.</p>
+                    <p class="empty-message">Saat ini belum ada pengaduan yang masuk ke dalam sistem.</p>
                 </div>
                 @endforelse
+
+                <!-- Pagination -->
+                @if($hasil->hasPages())
+                <div class="pagination-wrapper">
+                    {{ $hasil->links('pagination::bootstrap-5') }}
+                </div>
+                @endif
             </div>
 
-            <!-- Right Sidebar -->
+            <!-- KOLOM KANAN: Sidebar (Sticky) -->
             <div class="sidebar">
                 <h3 class="sidebar-title">🛠️ Panel Kontrol</h3>
 
                 <div class="filter-section">
                     <label class="filter-label">Filter Status:</label>
-                    <select class="filter-select" id="statusFilter" onchange="filterByStatus()">
+                    <select class="filter-select" id="statusFilter" onchange="applyFilters()">
                         <option value="all">Semua Status</option>
                         <option value="pending">⏳ Pending</option>
                         <option value="ditolak">❌ Ditolak</option>
@@ -166,9 +171,9 @@
                     </select>
 
                     <label class="filter-label">Filter Kategori:</label>
-                    <select class="filter-select" id="kategoriFilter" onchange="filterByKategori()">
+                    <select class="filter-select" id="kategoriFilter" onchange="applyFilters()">
                         <option value="all">Semua Kategori</option>
-                        @foreach($hasil->unique('pengaduan.kategori') as $item)
+                        @foreach($allHasil->unique('pengaduan.kategori')->sortBy('pengaduan.kategori') as $item)
                             @if($item->pengaduan && $item->pengaduan->kategori)
                             <option value="{{ $item->pengaduan->kategori }}">{{ $item->pengaduan->kategori }}</option>
                             @endif
@@ -178,12 +183,12 @@
 
                 <div class="action-buttons">
                     <a href="{{ route('pengaduan.index') }}" class="action-btn">
-                        <span>🏢</span>
+                        <span>📋</span>
                         Kelola Kategori Pengaduan
                     </a>
 
                     <a href="{{ route('pengurus.create') }}" class="action-btn">
-                        <span>🏢</span>
+                        <span>👥</span>
                         Buat Akun Pengurus
                     </a>
                 </div>
@@ -200,7 +205,6 @@
 
     <script src="{{ asset('js/admin/dashboard.js') }}"></script>
     <script>
-        // Notifikasi sukses setelah hapus
         @if(session('success'))
             Swal.fire({
                 icon: 'success',

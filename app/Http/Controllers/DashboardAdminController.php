@@ -7,10 +7,32 @@ use Illuminate\Http\Request;
 
 class DashboardAdminController extends Controller
 {
-    public function index()
+    public function index(Request $request, $kategori = null, $status = null)
     {
-        $hasil = HasilPengaduan::with(['pengadu', 'pengaduan'])->get();
-        return view('admin.dashboard', compact('hasil'));
+
+        // Query untuk data yang akan ditampilkan (dengan filter)
+        $query = HasilPengaduan::with(['pengadu', 'pengaduan']);
+
+        // Filter berdasarkan status
+        if ($status && $status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        // Filter berdasarkan kategori
+        if ($kategori && $kategori !== 'all') {
+            $query->whereHas('pengaduan', function($q) use ($kategori) {
+                $q->where('kategori', $kategori);
+            });
+        }
+
+        // Paginate dengan 5 item per halaman
+        $hasil = $query->latest('created_at')->paginate(5)->appends($request->query());
+
+        // PERBAIKAN: Ambil SEMUA data untuk statistik (tanpa filter dan pagination)
+        $allHasil = HasilPengaduan::with(['pengadu', 'pengaduan'])->get();
+
+        // Kirim ke view dengan 2 variabel terpisah
+        return view('admin.dashboard', compact('hasil', 'allHasil', 'kategori', 'status'));
     }
 
     public function updateStatus(Request $request, $id)

@@ -66,7 +66,7 @@
                                     <form action="{{ route('pengurus.updateStatus', $pengaduan->id_hasil) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        
+
                                         <!-- Baris pertama: Dropdown status dan tombol update -->
                                         <div class="form-row">
                                             <select name="status" class="status-dropdown">
@@ -77,9 +77,9 @@
                                             </select>
                                             <button type="submit" class="update-btn">Update</button>
                                         </div>
-                                        
+
                                         <!-- Baris kedua: Textarea keterangan -->
-                                        <textarea name="keterangan" 
+                                        <textarea name="keterangan"
                                                 class="keterangan-textarea"
                                                 placeholder="Tambah keterangan...">{{ $pengaduan->keterangan }}</textarea>
                                     </form>
@@ -92,6 +92,10 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="pagination-wrapper">
+                    {{ $hasilPengaduan->links('pagination::bootstrap-5') }}
+                </div>
+
             </section>
         </main>
     </div>

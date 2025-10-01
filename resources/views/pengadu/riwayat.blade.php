@@ -74,6 +74,12 @@
             @endforeach
           </tbody>
         </table>
+        <!-- Pagination -->
+@if($riwayat->hasPages())
+<div class="pagination-wrapper">
+  {{ $riwayat->links('pagination::bootstrap-5') }}
+</div>
+@endif
         @endif
 
         <div class="btn-container">

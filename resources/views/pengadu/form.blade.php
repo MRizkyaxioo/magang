@@ -46,9 +46,9 @@
             <textarea name="deskripsi" id="deskripsi" rows="5" required placeholder="Jelaskan secara detail laporan Anda..."></textarea>
           </div>
           <div class="col-md-4">
-            <label for="bukti_foto" class="form-label">Foto laporan</label>
+            <label for="bukti_foto" class="form-label">Bukti foto</label>
             <input type="file" name="bukti_foto" id="bukti_foto" accept="image/*">
-            <small class="text-muted">Format: JPG, PNG, GIF (Maks. 3MB)</small>
+            <small class="text-muted">Format: JPG, PNG (Maks. 3MB)</small>
           </div>
         </div>
 

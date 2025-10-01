@@ -15,8 +15,10 @@ class PengurusController extends Controller
         // Ambil id_pengaduan yang dimiliki pengurus (kategori yang dia handle)
         $idPengaduan = $pengurus->id_pengaduan;
 
-        // Ambil semua hasil pengaduan sesuai kategori
-        $hasilPengaduan = HasilPengaduan::where('id_pengaduan', $idPengaduan)->get();
+        // Ambil data dengan pagination, urutkan terbaru
+    $hasilPengaduan = HasilPengaduan::where('id_pengaduan', $idPengaduan)
+        ->orderBy('created_at', 'desc') // urutkan terbaru
+        ->paginate(5); // maksimal 5 per halaman
 
         return view('pengurus.dashboard', compact('hasilPengaduan'));
     }

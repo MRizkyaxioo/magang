@@ -24,7 +24,13 @@ class DashboardPengaduController extends Controller
         $user = Auth::guard('pengadu')->user();
 
         // Filter data hasil_pengaduan sesuai id_pengadu user
-        $riwayat = HasilPengaduan::where('id_pengadu', $user->id_pengadu)->get();
+        // $riwayat = HasilPengaduan::where('id_pengadu', $user->id_pengadu)->get();
+
+        // Tambahkan pagination (10 item per halaman)
+        $riwayat = HasilPengaduan::where('id_pengadu', $user->id_pengadu)
+            ->with('pengaduan')
+            ->latest('created_at') // Urutkan dari yang terbaru
+            ->paginate(5);
 
         return view('pengadu.riwayat', compact('riwayat'));
     }

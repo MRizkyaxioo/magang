@@ -118,7 +118,7 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
 });
 
 Route::middleware(RedirectIfNotAdmin::class)->group(function () {
-Route::get('/dashboard-admin', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+Route::get('/dashboard-admin/{kategori?}/{status?}', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 Route::post('/admin/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.updateStatus');
 Route::get('/admin/{id}', [DashboardAdminController::class, 'show'])->name('admin.show');
 });

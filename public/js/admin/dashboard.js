@@ -8,88 +8,86 @@ function closeImageModal() {
     document.getElementById('imageModal').style.display = 'none';
 }
 
-// FIXED: Combined Filter Function
+// Apply gabungan filter kategori + status ke URL path
 function applyFilters() {
-    const selectedStatus = document.getElementById('statusFilter').value;
-    const selectedKategori = document.getElementById('kategoriFilter').value;
-    const cards = document.querySelectorAll('.pengaduan-card');
+    const status = document.getElementById('statusFilter').value;
+    const kategori = document.getElementById('kategoriFilter').value;
 
-    cards.forEach(card => {
-        let showCard = true;
+    let url = "/dashboard-admin";
 
-        // Check Status Filter
-        if (selectedStatus !== 'all') {
-            const statusSelect = card.querySelector('select[name="status"]');
-            const cardStatus = statusSelect ? statusSelect.value : '';
-            if (cardStatus !== selectedStatus) {
-                showCard = false;
-            }
-        }
-
-        // Check Kategori Filter
-        if (selectedKategori !== 'all' && showCard) {
-            const kategoriBadge = card.querySelector('.kategori-badge');
-            const cardKategori = kategoriBadge ? kategoriBadge.textContent.trim() : '';
-            if (cardKategori !== selectedKategori) {
-                showCard = false;
-            }
-        }
-
-        // Show/Hide card based on both filters
-        card.style.display = showCard ? 'block' : 'none';
-    });
-
-    updateEmptyState();
-}
-
-// Updated Filter Functions to use combined filter
-function filterByStatus() {
-    applyFilters();
-}
-
-function filterByKategori() {
-    applyFilters();
-}
-
-function updateEmptyState() {
-    const visibleCards = Array.from(document.querySelectorAll('.pengaduan-card')).filter(card =>
-        card.style.display !== 'none'
-    );
-    const emptyState = document.querySelector('.empty-state');
-    const grid = document.querySelector('.pengaduan-grid');
-
-    // Remove existing empty state if it exists
-    if (emptyState) {
-        emptyState.remove();
+    // tambahkan kategori ke path
+    if (kategori && kategori !== 'all') {
+        url += "/" + encodeURIComponent(kategori);
     }
 
-    if (visibleCards.length === 0) {
-        const emptyStateHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">🔍</div>
-                <h3 class="empty-title">Tidak Ada Data</h3>
-                <p class="empty-message">Tidak ditemukan pengaduan sesuai dengan filter yang dipilih.</p>
-            </div>
-        `;
-        grid.insertAdjacentHTML('beforeend', emptyStateHTML);
+    // tambahkan status ke path
+    if (status && status !== 'all') {
+        url += "/" + encodeURIComponent(status);
     }
+
+    window.location.href = url;
 }
+
+// Reset ke default (semua → pending)
+function resetFilters() {
+    window.location.href = "/dashboard-admin";
+}
+
+// Set filter dropdown sesuai URL path saat halaman load
+document.addEventListener('DOMContentLoaded', function() {
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+
+    // ambil kategori dan status dari URL
+    let kategori = pathSegments[1]; // setelah "dashboard-admin"
+    let status   = pathSegments[2]; // setelah kategori
+
+    // set ke dropdown jika ada
+    const kategoriFilter = document.getElementById('kategoriFilter');
+    if (kategori && kategoriFilter) {
+        kategoriFilter.value = kategori;
+    }
+
+    const statusFilter = document.getElementById('statusFilter');
+    if (status && statusFilter) {
+        statusFilter.value = status;
+    }
+});
+
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Set filter values dari URL saat halaman load
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Set status filter berdasarkan URL
+    const status = urlParams.get('status');
+    const statusFilter = document.getElementById('statusFilter');
+    if (status && statusFilter) {
+        statusFilter.value = status;
+    }
+
+    // Set kategori filter berdasarkan URL
+    const kategori = urlParams.get('kategori');
+    const kategoriFilter = document.getElementById('kategoriFilter');
+    if (kategori && kategoriFilter) {
+        kategoriFilter.value = kategori;
+    }
+
     // Konfirmasi hapus dengan SweetAlert
     document.querySelectorAll('.delete-form').forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
+
             Swal.fire({
-                title: 'Yakin ingin menghapus?',
-                text: "Data yang dihapus tidak bisa dikembalikan!",
+                title: 'Apakah Anda yakin?',
+                text: "Data pengaduan akan dihapus permanen dan tidak dapat dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
+                confirmButtonColor: '#FF4757',
+                cancelButtonColor: '#B8860B',
                 confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
+                cancelButtonText: 'Batal',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
@@ -98,19 +96,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Auto-refresh stats setiap 30 detik
+    // Animasi untuk stat cards saat hover
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Auto-refresh animasi stats setiap 30 detik (opsional)
     setInterval(() => {
-        // Update stats numbers dengan animasi
         const statNumbers = document.querySelectorAll('.stat-number');
         statNumbers.forEach(stat => {
+            stat.style.transition = 'transform 0.3s ease';
             stat.style.transform = 'scale(1.1)';
             setTimeout(() => {
                 stat.style.transform = 'scale(1)';
-            }, 200);
+            }, 300);
         });
     }, 30000);
 
-    // Smooth scroll untuk navigasi
+    // Smooth scroll untuk navigasi internal
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -123,4 +132,64 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Animasi fade-in untuk cards saat pertama load
+    const cards = document.querySelectorAll('.pengaduan-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+
+    // Tambahkan loading indicator saat form disubmit
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        // Skip delete forms (sudah punya handler sendiri)
+        if (!form.classList.contains('delete-form')) {
+            form.addEventListener('submit', function() {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn && !submitBtn.classList.contains('loading')) {
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.classList.add('loading');
+                    submitBtn.innerHTML = '<span class="loading"></span> Memproses...';
+                    submitBtn.disabled = true;
+                }
+            });
+        }
+    });
+
+    // Keyboard shortcut untuk filter
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + R untuk reset filter
+        if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+            e.preventDefault();
+            if (typeof resetFilters === 'function') {
+                resetFilters();
+            }
+        }
+    });
+});
+
+// Fungsi helper untuk menampilkan notifikasi
+function showNotification(message, type = 'success') {
+    Swal.fire({
+        icon: type,
+        title: type === 'success' ? 'Berhasil!' : 'Perhatian!',
+        text: message,
+        showConfirmButton: false,
+        timer: 2000,
+        toast: true,
+        position: 'top-end'
+    });
+}
+
+// Close modal dengan ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeImageModal();
+    }
 });
