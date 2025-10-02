@@ -12,20 +12,15 @@ function closeImageModal() {
 function applyFilters() {
     const status = document.getElementById('statusFilter').value;
     const kategori = document.getElementById('kategoriFilter').value;
+    const pengurus = document.getElementById('pengurusFilter').value;
 
-    let url = "/dashboard-admin";
+    let params = new URLSearchParams();
 
-    // tambahkan kategori ke path
-    if (kategori && kategori !== 'all') {
-        url += "/" + encodeURIComponent(kategori);
-    }
+     if (status && status !== 'all') params.set('status', status);
+    if (kategori && kategori !== 'all') params.set('kategori', kategori);
+    if (pengurus && pengurus !== 'all') params.set('pengurus', pengurus);
 
-    // tambahkan status ke path
-    if (status && status !== 'all') {
-        url += "/" + encodeURIComponent(status);
-    }
-
-    window.location.href = url;
+    window.location.href = "/dashboard-admin" + (params.toString() ? "?" + params.toString() : "");
 }
 
 // Reset ke default (semua → pending)
@@ -35,22 +30,15 @@ function resetFilters() {
 
 // Set filter dropdown sesuai URL path saat halaman load
 document.addEventListener('DOMContentLoaded', function() {
-    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const urlParams = new URLSearchParams(window.location.search);
 
-    // ambil kategori dan status dari URL
-    let kategori = pathSegments[1]; // setelah "dashboard-admin"
-    let status   = pathSegments[2]; // setelah kategori
+    const status = urlParams.get('status');
+    const kategori = urlParams.get('kategori');
+    const pengurus = urlParams.get('pengurus');
 
-    // set ke dropdown jika ada
-    const kategoriFilter = document.getElementById('kategoriFilter');
-    if (kategori && kategoriFilter) {
-        kategoriFilter.value = kategori;
-    }
-
-    const statusFilter = document.getElementById('statusFilter');
-    if (status && statusFilter) {
-        statusFilter.value = status;
-    }
+    if (status) document.getElementById('statusFilter').value = status;
+    if (kategori) document.getElementById('kategoriFilter').value = kategori;
+    if (pengurus) document.getElementById('pengurusFilter').value = pengurus;
 });
 
 

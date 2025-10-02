@@ -7,32 +7,44 @@ use Illuminate\Http\Request;
 
 class DashboardAdminController extends Controller
 {
-    public function index(Request $request, $kategori = null, $status = null)
+    public function index(Request $request)
     {
 
         // Query untuk data yang akan ditampilkan (dengan filter)
-        $query = HasilPengaduan::with(['pengadu', 'pengaduan']);
+        $query = HasilPengaduan::with(['pengadu', 'pengaduan.pengurus']);
 
-        // Filter berdasarkan status
-        if ($status && $status !== 'all') {
-            $query->where('status', $status);
-        }
+         // Filter status
+    if ($request->filled('status') && $request->status !== 'all') {
+        $query->where('status', $request->status);
+    }
 
-        // Filter berdasarkan kategori
-        if ($kategori && $kategori !== 'all') {
-            $query->whereHas('pengaduan', function($q) use ($kategori) {
-                $q->where('kategori', $kategori);
-            });
-        }
+    // Filter kategori
+    if ($request->filled('kategori') && $request->kategori !== 'all') {
+        $query->whereHas('pengaduan', function($q) use ($request) {
+            $q->where('kategori', $request->kategori);
+        });
+    }
+
+    // Filter pengurus
+    if ($request->filled('pengurus') && $request->pengurus !== 'all') {
+        $query->whereHas('pengaduan.pengurus', function ($q) use ($request) {
+            $q->where('instansi_pemerintahan', 'LIKE', '%' . $request->pengurus . '%');
+        });
+    }
 
         // Paginate dengan 5 item per halaman
         $hasil = $query->latest('created_at')->paginate(5)->appends($request->query());
 
         // PERBAIKAN: Ambil SEMUA data untuk statistik (tanpa filter dan pagination)
-        $allHasil = HasilPengaduan::with(['pengadu', 'pengaduan'])->get();
+        $allHasil = HasilPengaduan::with(['pengadu', 'pengaduan.pengurus'])->get();
 
-        // Kirim ke view dengan 2 variabel terpisah
-        return view('admin.dashboard', compact('hasil', 'allHasil', 'kategori', 'status'));
+        return view('admin.dashboard', [
+        'hasil' => $hasil,
+        'allHasil' => $allHasil,
+        'status' => $request->status,
+        'kategori' => $request->kategori,
+        'pengurus' => $request->pengurus,
+    ]);
     }
 
     public function updateStatus(Request $request, $id)

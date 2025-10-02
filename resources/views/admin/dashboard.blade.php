@@ -66,6 +66,7 @@
                         <div class="pengadu-info">
                             <h3 class="pengadu-name">👤 {{ $item->pengadu->nama_pengadu ?? 'Pengadu Anonim' }}</h3>
                             <span class="kategori-badge">{{ $item->pengaduan->kategori ?? 'Kategori Umum' }}</span>
+                            <small class="kategori-badge">Pengurus: {{ $item->pengaduan->pengurus->pluck('instansi_pemerintahan')->join(', ') ?? 'Belum ada instansi' }}</small>
                         </div>
                         <form action="{{ route('admin.updateStatus', $item->id_hasil) }}" method="POST" style="margin: 0;">
                             @csrf
@@ -179,7 +180,20 @@
                             @endif
                         @endforeach
                     </select>
-                </div>
+
+                    <label class="filter-label">Filter Pengurus:</label>
+<select class="filter-select" id="pengurusFilter" onchange="applyFilters()">
+    <option value="all">Semua Pengurus</option>
+    @foreach($allHasil->pluck('pengaduan.pengurus')->flatten()->unique('instansi_pemerintahan')->sortBy('instansi_pemerintahan') as $pengurus)
+        @if($pengurus && $pengurus->instansi_pemerintahan)
+            <option value="{{ $pengurus->instansi_pemerintahan }}">
+                {{ $pengurus->instansi_pemerintahan }}
+            </option>
+        @endif
+    @endforeach
+</select>
+
+            </div>
 
                 <div class="action-buttons">
                     <a href="{{ route('pengaduan.index') }}" class="action-btn">
