@@ -109,6 +109,9 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     ->name('admin.updateKeterangan');
     Route::delete('/admin/pengaduan/{id}', [HasilPengaduanController::class, 'destroy'])->name('admin.destroy');
 
+    Route::get('/admin/change-password', [AuthAdminController::class, 'showChangePasswordForm'])->name('admin.change-password.form');
+    Route::post('/admin/change-password', [AuthAdminController::class, 'changePassword'])->name('admin.change-password');
+
 
 
 

@@ -22,6 +22,7 @@
                 </div>
             </div>
 
+
             <form action="{{ route('admin.logout') }}" method="POST" class="logout-btn" style="margin: 0;">
                 @csrf
                 <button type="submit">
@@ -204,6 +205,11 @@
                     <a href="{{ route('pengurus.create') }}" class="action-btn">
                         <span>👥</span>
                         Buat Akun Pengurus
+                    </a>
+
+                    <a href="{{ route('admin.change-password.form') }}" class="action-btn">
+                        <span>🔐</span>
+                        Ganti password
                     </a>
                 </div>
             </div>

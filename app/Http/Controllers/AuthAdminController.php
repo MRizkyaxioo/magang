@@ -38,4 +38,36 @@ class AuthAdminController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('admin.login');
     }
+
+    public function showChangePasswordForm()
+{
+    return view('admin.changepassword');
+}
+
+public function changePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:6|confirmed',
+    ]);
+
+    $admin = Auth::guard('admin')->user(); // ini sudah instance Admin model
+
+    // Cek password lama
+    if (!Hash::check($request->current_password, $admin->password)) {
+        return back()->withErrors(['current_password' => 'Password lama salah']);
+    }
+
+    // Update password
+    $admin->password = Hash::make($request->new_password);
+    $admin->save();
+
+    // Logout otomatis
+    Auth::guard('admin')->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('admin.login')->with('success', 'Password berhasil diubah, silakan login ulang.');
+}
+
 }
