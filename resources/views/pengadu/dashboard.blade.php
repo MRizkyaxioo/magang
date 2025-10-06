@@ -99,6 +99,9 @@
                 <button class="complaint-button" onclick="window.location.href='{{ route('pengadu.riwayat') }}'">
                     ⌛ Riwayat Pengaduan
                 </button>
+                <button class="complaint-button" onclick="window.location.href='{{ route('pengadu.change-password.form') }}'">
+                    🔒 Ubah Password
+                </button>
             </aside>
         </main>
     </div>

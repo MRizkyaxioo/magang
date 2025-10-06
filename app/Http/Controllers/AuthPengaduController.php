@@ -70,4 +70,44 @@ class AuthPengaduController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('pengadu.login');
     }
+
+    // Method untuk menampilkan form ubah password
+    public function showChangePasswordForm()
+    {
+        return view('pengadu.change-password');
+    }
+
+    // Method untuk memproses ubah password
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'password_lama' => 'required',
+            'password_baru' => 'required|min:6|confirmed',
+        ], [
+            'password_lama.required' => 'Password lama wajib diisi.',
+            'password_baru.required' => 'Password baru wajib diisi.',
+            'password_baru.min' => 'Password baru minimal 6 karakter.',
+            'password_baru.confirmed' => 'Konfirmasi password baru tidak cocok.',
+        ]);
+
+        $pengadu = Auth::guard('pengadu')->user();
+
+        // Cek apakah password lama benar
+        if (!Hash::check($request->password_lama, $pengadu->password)) {
+            return back()->withErrors([
+                'password_lama' => 'Password lama tidak sesuai.'
+            ]);
+        }
+
+        // Update password baru
+        $pengadu->password = Hash::make($request->password_baru);
+        $pengadu->save();
+
+        // Logout otomatis setelah ubah password
+        Auth::guard('pengadu')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('pengadu.login')->with('success', 'Password berhasil diubah. Silakan login dengan password baru Anda.');
+    }
 }

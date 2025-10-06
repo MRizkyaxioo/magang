@@ -56,6 +56,14 @@ Route::post('/logout-pengadu', [AuthPengaduController::class, 'logout'])->name('
 
 Route::middleware(RedirectIfNotPengadu::class)->group(function () {
     Route::get('/riwayat', [DashboardPengaduController::class, 'history'])->name('pengadu.riwayat');
+    // Route untuk menampilkan form ubah password
+Route::get('/ubah-password', [AuthPengaduController::class, 'showChangePasswordForm'])
+    ->name('pengadu.change-password.form');
+
+// Route untuk memproses ubah password
+Route::post('/ubah-password', [AuthPengaduController::class, 'changePassword'])
+    ->name('pengadu.change-password');
+
 });
 
 
