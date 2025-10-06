@@ -77,4 +77,38 @@ class AuthPengurusController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('pengurus.login');
     }
+
+    // Form ubah password
+    public function showChangePasswordForm()
+    {
+        return view('pengurus.change-password');
+    }
+
+    // Proses ubah password
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password'     => 'required|min:6|confirmed',
+        ]);
+
+        $pengurus = Auth::guard('pengurus')->user();
+
+        // Cek password lama
+        if (!Hash::check($request->current_password, $pengurus->password)) {
+            return back()->withErrors(['current_password' => 'Password lama salah']);
+        }
+
+        // Update password
+        $pengurus->password = Hash::make($request->new_password);
+        $pengurus->save(); // ✅ Pastikan model Pengurus extend Authenticatable
+
+        // Logout otomatis
+        Auth::guard('pengurus')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('pengurus.login')->with('success', 'Password berhasil diubah, silakan login ulang.');
+    }
+
 }

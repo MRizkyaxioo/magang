@@ -81,7 +81,10 @@ Route::put('/pengurus/update-status/{id}', [PengurusController::class, 'updateSt
     ->name('pengurus.updateStatus');
 Route::get('/pengurus/hasil/{id}', [PengurusController::class, 'show'])
     ->name('pengurus.hasil.detail');
-
+ Route::get('/pengurus/change-password', [AuthPengurusController::class, 'showChangePasswordForm'])
+        ->name('pengurus.change-password.form');
+    Route::post('/pengurus/change-password', [AuthPengurusController::class, 'changePassword'])
+        ->name('pengurus.change-password');
 });
 
 

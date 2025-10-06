@@ -96,6 +96,8 @@
                     {{ $hasilPengaduan->links('pagination::bootstrap-5') }}
                 </div>
 
+                <a href="{{ route('pengurus.change-password.form') }}" class="detail-btn">Ganti Password</a>
+
             </section>
         </main>
     </div>
