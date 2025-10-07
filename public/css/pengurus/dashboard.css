@@ -559,8 +559,8 @@ body {
 }
 
 .modal form button {
-    background-color: #5b6ff5;
-    color: white;
+    background-color: #FFD700;
+    color: black;
     border: none;
     padding: 12px;
     border-radius: 8px;
@@ -571,7 +571,7 @@ body {
 }
 
 .modal form button:hover {
-    background-color: #4a5fdd;
+    background-color: #FFD700;
 }
 
 .error-message {
