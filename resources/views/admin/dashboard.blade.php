@@ -9,6 +9,37 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>🔐 Ubah Password Admin</h2>
+            <span class="close-btn" onclick="closePasswordModal()">&times;</span>
+        </div>
+        <form method="POST" action="{{ route('admin.change-password') }}">
+            @csrf
+            <label>Password Lama</label>
+<div class="password-field">
+    <input type="password" name="current_password" id="current_password" required>
+    <span class="toggle-password" onclick="togglePassword('current_password', this)">👁️</span>
+</div>
+
+<label>Password Baru</label>
+<div class="password-field">
+    <input type="password" name="new_password" id="new_password" required minlength="6">
+    <span class="toggle-password" onclick="togglePassword('new_password', this)">👁️</span>
+</div>
+
+<label>Konfirmasi Password Baru</label>
+<div class="password-field">
+    <input type="password" name="new_password_confirmation" id="new_password_confirmation" required>
+    <span class="toggle-password" onclick="togglePassword('new_password_confirmation', this)">👁️</span>
+</div>
+
+
+            <button type="submit">Ubah Password</button>
+        </form>
+    </div>
+</div>
     <div class="dashboard-container">
         <!-- Header -->
         <div class="dashboard-header">
@@ -207,10 +238,10 @@
                         Buat Akun Pengurus
                     </a>
 
-                    <a href="{{ route('admin.change-password.form') }}" class="action-btn">
-                        <span>🔐</span>
-                        Ganti password
-                    </a>
+                    <button type="button" class="action-btn" onclick="openPasswordModal()">
+                        <span>🔐</span> Ganti Password
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -236,4 +267,5 @@
         @endif
     </script>
 </body>
+
 </html>

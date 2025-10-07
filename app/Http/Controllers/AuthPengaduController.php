@@ -110,4 +110,34 @@ class AuthPengaduController extends Controller
 
         return redirect()->route('pengadu.login')->with('success', 'Password berhasil diubah. Silakan login dengan password baru Anda.');
     }
+
+    // Tampilkan form edit profil
+public function editProfile()
+{
+    $pengadu = Auth::guard('pengadu')->user();
+    return view('pengadu.edit-profil', compact('pengadu'));
+}
+
+// Proses update profil
+public function updateProfile(Request $request)
+{
+    $pengadu = Auth::guard('pengadu')->user();
+
+    $request->validate([
+        'nama_pengadu' => 'required|string|max:100',
+        'alamat' => 'required|string|max:255',
+        'no_telp' => 'required|string|max:20',
+        'email' => 'required|email|unique:pengadu,email,' . $pengadu->id_pengadu . ',id_pengadu',
+    ]);
+
+    $pengadu->update([
+        'nama_pengadu' => $request->nama_pengadu,
+        'alamat' => $request->alamat,
+        'no_telp' => $request->no_telp,
+        'email' => $request->email,
+    ]);
+
+    return redirect()->route('pengadu.edit-profil')->with('success', 'Profil berhasil diperbarui!');
+}
+
 }

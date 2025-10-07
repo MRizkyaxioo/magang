@@ -7,6 +7,41 @@
     <link href="{{ asset('css/pengurus/dashboard.css') }}" rel="stylesheet">
 </head>
 <body>
+
+    <!-- Modal Ganti Password -->
+<div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>🔐 Ubah Password Pengurus</h2>
+            <span class="close-btn" onclick="closePasswordModal()">&times;</span>
+        </div>
+        <form method="POST" action="{{ route('pengurus.change-password') }}">
+            @csrf
+            <label>Password Lama</label>
+<div class="password-field">
+    <input type="password" name="current_password" id="current_password" required>
+    <span class="toggle-password" onclick="togglePassword('current_password', this)">👁️</span>
+</div>
+
+<label>Password Baru</label>
+<div class="password-field">
+    <input type="password" name="new_password" id="new_password" required minlength="6">
+    <span class="toggle-password" onclick="togglePassword('new_password', this)">👁️</span>
+</div>
+
+<label>Konfirmasi Password Baru</label>
+<div class="password-field">
+    <input type="password" name="new_password_confirmation" id="new_password_confirmation" required>
+    <span class="toggle-password" onclick="togglePassword('new_password_confirmation', this)">👁️</span>
+</div>
+
+
+            <button type="submit">Ubah Password</button>
+        </form>
+    </div>
+</div>
+
+
     <div class="container">
         <!-- Header -->
         <header class="header">
@@ -96,8 +131,9 @@
                     {{ $hasilPengaduan->links('pagination::bootstrap-5') }}
                 </div>
 
-                <a href="{{ route('pengurus.change-password.form') }}" class="detail-btn">Ganti Password</a>
-
+                 <button type="button" class="detail-btn" onclick="openPasswordModal()">
+                        <span>🔐</span> Ganti Password
+                    </button>
             </section>
         </main>
     </div>

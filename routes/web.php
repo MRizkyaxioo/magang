@@ -64,6 +64,11 @@ Route::get('/ubah-password', [AuthPengaduController::class, 'showChangePasswordF
 Route::post('/ubah-password', [AuthPengaduController::class, 'changePassword'])
     ->name('pengadu.change-password');
 
+    // Halaman edit profil pengadu
+Route::get('/profil', [AuthPengaduController::class, 'editProfile'])->name('pengadu.edit-profil');
+Route::post('/pengadu/update-profil', [AuthPengaduController::class, 'updateProfile'])->name('pengadu.update-profil');
+
+
 });
 
 

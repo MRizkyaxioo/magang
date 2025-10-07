@@ -181,3 +181,58 @@ document.addEventListener('keydown', function(e) {
         closeImageModal();
     }
 });
+
+// ====================== PASSWORD MODAL ADMIN ======================
+
+// Buka modal ubah password
+function openPasswordModal() {
+    const modal = document.getElementById('passwordModal');
+    if (modal) modal.style.display = 'block';
+}
+
+// Tutup modal ubah password
+function closePasswordModal() {
+    const modal = document.getElementById('passwordModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// Tutup modal jika klik di luar area modal
+window.addEventListener('click', function (event) {
+    const modal = document.getElementById('passwordModal');
+    if (event.target === modal) {
+        closePasswordModal();
+    }
+});
+
+// Tutup modal dengan tombol Escape
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        closePasswordModal();
+    }
+});
+
+// Tampilkan notifikasi sukses/gagal dengan SweetAlert2
+function showPasswordAlert(message, type = 'success') {
+    Swal.fire({
+        icon: type,
+        title: type === 'success' ? 'Berhasil!' : 'Gagal!',
+        text: message,
+        toast: true,
+        timer: 2500,
+        position: 'top-end',
+        showConfirmButton: false
+    });
+}
+
+function togglePassword(id, icon) {
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "🙈"; // Ganti ikon kalau password sedang ditampilkan
+    } else {
+        input.type = "password";
+        icon.textContent = "👁️"; // Balik lagi
+    }
+}
+
+

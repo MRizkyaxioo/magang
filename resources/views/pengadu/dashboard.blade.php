@@ -17,14 +17,10 @@
                 <div class="title-section">
                     <h1 class="title">Selamat Datang, {{ Auth::guard('pengadu')->user()->nama_pengadu }} </h1>
                 </div>
-            </div>
-            <form class="logout-btn" method="POST" action="{{ route('pengadu.logout') }}">
-                @csrf
-                <button type="submit" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;">
-                    <span>Logout</span>
-                    <span>↗</span>
-                </button>
-            </form>
+            <div class="profile-icon" style="cursor:pointer;" onclick="window.location.href='{{ route('pengadu.edit-profil') }}'">
+    <img src="{{ asset('images/profile_icon.png') }}" alt="Profil" style="width:40px;height:40px;border-radius:50%;">
+</div>
+
         </header>
 
         <!-- Main Content -->
@@ -98,9 +94,6 @@
                 </button>
                 <button class="complaint-button" onclick="window.location.href='{{ route('pengadu.riwayat') }}'">
                     ⌛ Riwayat Pengaduan
-                </button>
-                <button class="complaint-button" onclick="window.location.href='{{ route('pengadu.change-password.form') }}'">
-                    🔒 Ubah Password
                 </button>
             </aside>
         </main>
