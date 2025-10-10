@@ -44,6 +44,11 @@
                     </div>
 
                     <div class="info-row">
+                        <span class="info-label">Koordinat:</span>
+                        <span class="info-value">{{ $hasil->latitude }} {{ $hasil->longitude }}</span>
+                    </div>
+
+                    <div class="info-row">
                         <span class="info-label">Tanggal Kejadian:</span>
                         <span class="info-value">{{ $hasil->tanggal_kejadian }}</span>
                     </div>

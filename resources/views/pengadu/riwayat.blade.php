@@ -43,6 +43,7 @@
               <th>Kategori</th>
               <th>Deskripsi</th>
               <th>Lokasi</th>
+              <th>Koordinat</th>
               <th>Tanggal Kejadian</th>
               <th>Status</th>
               <th>Keterangan</th>
@@ -56,6 +57,7 @@
               <td>{{ $item->pengaduan->kategori ?? '-' }}</td>
               <td>{{ $item->deskripsi }}</td>
               <td>{{ $item->lokasi_kejadian }}</td>
+              <td>{{ $item->latitude }} {{ $item->longitude }}</td>
               <td>{{ $item->tanggal_kejadian }}</td>
               <td>
                 <span class="status {{ str_replace(' ', '-', strtolower($item->status)) }}">

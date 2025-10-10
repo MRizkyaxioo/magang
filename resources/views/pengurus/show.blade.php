@@ -25,6 +25,11 @@
             </div>
 
             <div class="info-item">
+                <span class="info-label">Koordinat:</span>
+                <span class="info-value">{{ $hasilPengaduan->latitude }} {{ $hasilPengaduan->longitude }}</span>
+            </div>
+
+            <div class="info-item">
                 <span class="info-label">Tanggal Kejadian:</span>
                 <span class="info-value">{{ $hasilPengaduan->tanggal_kejadian }}</span>
             </div>
