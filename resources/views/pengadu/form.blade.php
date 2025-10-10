@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Form Pengaduan</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
   <link rel="stylesheet" href="{{ asset('css/pengadu/form_pengaduan.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/pengadu/map_style.css') }}">
 </head>
 <body>
 
@@ -27,7 +32,7 @@
   <div class="form-container">
     <div class="form-header">SAMPAIKAN LAPORAN ANDA</div>
     <div class="form-content">
-      <form action="{{ route('pengadu.pengaduan.store') }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ route('pengadu.pengaduan.store') }}" method="POST" enctype="multipart/form-data" id="pengaduanForm">
         @csrf
 
         <div class="mb-4">
@@ -58,8 +63,26 @@
         </div>
 
         <div class="mb-4">
-          <label for="lokasi_kejadian" class="form-label">Lokasi Kejadian</label>
-          <input type="text" name="lokasi_kejadian" id="lokasi_kejadian" required placeholder="Contoh: Jl. Lambung Mangkurat No. 123, Banjarmasin">
+          <label class="form-label">Lokasi Kejadian</label>
+          
+          <div class="map-instructions">
+            <p>📍 <strong>Petunjuk:</strong> Klik pada peta untuk menentukan lokasi kejadian, atau gunakan tombol "Gunakan Lokasi Saya" untuk lokasi otomatis</p>
+          </div>
+
+          <button type="button" class="btn-get-location" id="btnGetLocation">
+            📍 Gunakan Lokasi Saya
+          </button>
+
+          <div id="map"></div>
+
+          <div class="location-info" id="locationInfo" style="display: none;">
+            <p><strong>Alamat:</strong> <span id="addressDisplay">-</span></p>
+            <p><strong>Koordinat:</strong> <span id="coordinatesDisplay">-</span></p>
+          </div>
+
+          <input type="hidden" name="lokasi_kejadian" id="lokasi_kejadian" required>
+          <input type="hidden" name="latitude" id="latitude" required>
+          <input type="hidden" name="longitude" id="longitude" required>
         </div>
 
         <!-- Tombol sejajar -->
@@ -72,6 +95,9 @@
   </div>
 </div>
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="{{ asset('js/pengadu/form_pengaduan.js') }}"></script>
+
 </body>
 </html>

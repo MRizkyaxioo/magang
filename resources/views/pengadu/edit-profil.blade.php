@@ -55,7 +55,7 @@
 
 <div class="form-group">
 <label>Tempat Lahir *</label>
-<input type="text" value="{{ $pengadu->tanggal_lahir }}" disabled>
+<input type="text" value="{{ $pengadu->tempat_lahir }}" disabled>
 </div>
 
 <div class="form-group">

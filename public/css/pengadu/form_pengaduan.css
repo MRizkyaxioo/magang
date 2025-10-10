@@ -208,3 +208,217 @@ input[type="file"]::-webkit-file-upload-button {
 input[type="file"]::-webkit-file-upload-button:hover {
   background: linear-gradient(135deg, #FFA500, #FF8C00);
 }
+
+/* ============================================
+   STYLING UNTUK LEAFLET MAP (OPENSTREETMAP)
+   Letakkan di: public/css/pengadu/map_style.css
+   ============================================ */
+
+/* Container Peta */
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #F0E68C;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+#map:hover {
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+  border-color: #FFD700;
+}
+
+/* Informasi Lokasi yang Dipilih */
+.location-info {
+  background: rgba(255, 215, 0, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #F0E68C;
+  margin-bottom: 15px;
+  animation: fadeIn 0.5s ease;
+}
+
+.location-info p {
+  margin: 5px 0;
+  color: #8B4513;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.location-info strong {
+  color: #B8860B;
+  font-weight: 600;
+}
+
+/* Petunjuk Penggunaan Maps */
+.map-instructions {
+  background: #FFFACD;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 4px solid #FFD700;
+  animation: slideInLeft 0.5s ease;
+}
+
+.map-instructions p {
+  margin: 0;
+  color: #8B4513;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Tombol Gunakan Lokasi Saya */
+.btn-get-location {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.btn-get-location:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+}
+
+.btn-get-location:active {
+  transform: translateY(0);
+}
+
+.btn-get-location:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Custom styling untuk Leaflet popup */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.leaflet-popup-content {
+  margin: 10px;
+  font-size: 13px;
+  color: #2C1810;
+}
+
+.leaflet-popup-tip {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Custom marker icon */
+.custom-marker-icon {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Loading indicator untuk geocoding */
+.geocoding-loading {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 215, 0, 0.9);
+  color: #2C1810;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 1000;
+  animation: pulse 1.5s infinite;
+}
+
+/* Animasi */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Responsive Design untuk Maps */
+@media (max-width: 768px) {
+  #map {
+    height: 300px;
+  }
+  
+  .map-instructions {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .btn-get-location {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  
+  .location-info p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  #map {
+    height: 250px;
+  }
+}
+
+/* Leaflet attribution styling */
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Zoom control styling */
+.leaflet-control-zoom {
+  border: 2px solid #F0E68C !important;
+  border-radius: 8px !important;
+}
+
+.leaflet-control-zoom a {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #B8860B !important;
+  font-weight: bold !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #FFFACD !important;
+}

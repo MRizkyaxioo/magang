@@ -21,6 +21,8 @@ class HasilPengaduan extends Model
         'id_pengadu',
         'id_pengaduan',
         'lokasi_kejadian',
+        'latitude',        // TAMBAHKAN INI
+        'longitude',       // TAMBAHKAN INI
         'tanggal_kejadian',
         'bukti_foto',
         'status',
