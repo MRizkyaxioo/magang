@@ -1,60 +1,32 @@
-// Animasi masuk elemen
-window.addEventListener('load', function() {
-  const elements = document.querySelectorAll('.header, .form-container');
-  elements.forEach((el, index) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'all 0.6s ease';
-
-    setTimeout(() => {
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    }, index * 200);
-  });
-});
-
-// Feedback tombol submit
-document.querySelector('form').addEventListener('submit', function() {
-  const button = document.querySelector('.btn-lapor');
-  button.innerHTML = '⏳ Mengirim...';
-  button.disabled = true;
-});
-
 /* ============================================
    JAVASCRIPT UNTUK FORM PENGADUAN & LEAFLET MAPS
-   Letakkan di: public/js/pengadu/form_pengaduan.js
-   100% GRATIS - TIDAK PERLU API KEY!
+   Dengan Fitur Search Lokasi
    ============================================ */
 
-// Variabel global untuk Maps
 let map;
 let marker;
+let searchTimeout;
 
 // ========================================
 // INISIALISASI LEAFLET MAP
 // ========================================
 function initMap() {
-  // Lokasi default: Banjarmasin, Kalimantan Selatan
   const banjarmasin = [-3.3194374, 114.5897825];
   
-  // Buat peta dengan OpenStreetMap (GRATIS!)
   map = L.map('map').setView(banjarmasin, 13);
 
-  // Tambahkan tile layer dari OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors',
     maxZoom: 19,
     minZoom: 10
   }).addTo(map);
 
-  // Event listener untuk klik pada peta
   map.on('click', function(e) {
     const { lat, lng } = e.latlng;
     placeMarker(lat, lng);
     getAddress(lat, lng);
   });
 
-  // Coba dapatkan lokasi pengguna saat halaman dimuat
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       function(position) {
@@ -64,7 +36,7 @@ function initMap() {
         console.log('Lokasi pengguna berhasil didapatkan');
       },
       function(error) {
-        console.log('Geolocation tidak diizinkan atau tidak tersedia:', error.message);
+        console.log('Geolocation tidak tersedia:', error.message);
       }
     );
   }
@@ -74,12 +46,10 @@ function initMap() {
 // MENEMPATKAN MARKER DI PETA
 // ========================================
 function placeMarker(lat, lng) {
-  // Hapus marker lama jika ada
   if (marker) {
     map.removeLayer(marker);
   }
 
-  // Custom icon untuk marker
   const customIcon = L.icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
@@ -89,44 +59,36 @@ function placeMarker(lat, lng) {
     shadowSize: [41, 41]
   });
 
-  // Buat marker baru
   marker = L.marker([lat, lng], {
     draggable: true,
     icon: customIcon
   }).addTo(map);
 
-  // Tambahkan popup
   marker.bindPopup('<b>Lokasi Kejadian</b><br>Drag marker untuk menyesuaikan posisi').openPopup();
 
-  // Event listener untuk marker yang di-drag
   marker.on('dragend', function(e) {
     const position = e.target.getLatLng();
     getAddress(position.lat, position.lng);
   });
 
-  // Simpan koordinat ke input hidden
   document.getElementById('latitude').value = lat;
   document.getElementById('longitude').value = lng;
   
-  // Tampilkan koordinat di UI
   document.getElementById('coordinatesDisplay').textContent = 
     `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 }
 
 // ========================================
-// KONVERSI KOORDINAT KE ALAMAT (GEOCODING)
-// Menggunakan Nominatim API dari OpenStreetMap (GRATIS!)
+// KONVERSI KOORDINAT KE ALAMAT
 // ========================================
 function getAddress(lat, lng) {
-  // Tampilkan loading indicator
   showLoadingIndicator();
 
-  // URL untuk Nominatim Reverse Geocoding API
   const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
 
   fetch(url, {
     headers: {
-      'User-Agent': 'SIPAMA Pengaduan App' // Required by Nominatim
+      'User-Agent': 'SIPAMA Pengaduan App'
     }
   })
   .then(response => response.json())
@@ -136,14 +98,10 @@ function getAddress(lat, lng) {
     if (data.display_name) {
       const address = data.display_name;
       
-      // Simpan alamat ke input hidden
       document.getElementById('lokasi_kejadian').value = address;
-      
-      // Tampilkan alamat di UI
       document.getElementById('addressDisplay').textContent = address;
       document.getElementById('locationInfo').style.display = 'block';
       
-      // Update popup marker
       if (marker) {
         marker.bindPopup(`<b>Lokasi Kejadian</b><br>${address}`).openPopup();
       }
@@ -160,7 +118,6 @@ function getAddress(lat, lng) {
     hideLoadingIndicator();
     console.error('Error mendapatkan alamat:', error);
     
-    // Fallback: gunakan koordinat saja
     const fallbackAddress = `Koordinat: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
     document.getElementById('lokasi_kejadian').value = fallbackAddress;
     document.getElementById('addressDisplay').textContent = 'Alamat tidak dapat dimuat, menggunakan koordinat';
@@ -172,6 +129,8 @@ function getAddress(lat, lng) {
 // LOADING INDICATOR
 // ========================================
 function showLoadingIndicator() {
+  if (document.getElementById('geocodingLoading')) return;
+  
   const loading = document.createElement('div');
   loading.id = 'geocodingLoading';
   loading.className = 'geocoding-loading';
@@ -188,7 +147,121 @@ function hideLoadingIndicator() {
 }
 
 // ========================================
-// MENDAPATKAN LOKASI PENGGUNA SAAT INI
+// SEARCH LOKASI BERDASARKAN NAMA
+// ========================================
+function searchLocationByName(query) {
+  if (!query || query.trim().length < 3) {
+    alert('Mohon masukkan minimal 3 karakter untuk mencari lokasi');
+    return;
+  }
+
+  const button = document.getElementById('btnSearchLocation');
+  button.innerHTML = '⏳ Mencari...';
+  button.disabled = true;
+
+  // Tambahkan "Banjarmasin" ke query untuk hasil lebih akurat
+  const searchQuery = query.includes('Banjarmasin') ? query : `${query}, Banjarmasin`;
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=5&addressdetails=1`;
+  
+  fetch(url, {
+    headers: {
+      'User-Agent': 'SIPAMA Pengaduan App'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    button.innerHTML = '🔍 Cari';
+    button.disabled = false;
+
+    if (data && data.length > 0) {
+      displaySearchResults(data);
+    } else {
+      displayNoResults();
+    }
+  })
+  .catch(error => {
+    button.innerHTML = '🔍 Cari';
+    button.disabled = false;
+    console.error('Error searching location:', error);
+    alert('Terjadi kesalahan saat mencari lokasi. Silakan coba lagi.');
+  });
+}
+
+// ========================================
+// TAMPILKAN HASIL PENCARIAN
+// ========================================
+function displaySearchResults(results) {
+  const resultsContainer = document.getElementById('searchResults');
+  resultsContainer.innerHTML = '';
+  
+  results.forEach((result, index) => {
+    const item = document.createElement('div');
+    item.className = 'search-result-item';
+    
+    const name = document.createElement('div');
+    name.className = 'result-name';
+    name.textContent = result.name || result.display_name.split(',')[0];
+    
+    const address = document.createElement('div');
+    address.className = 'result-address';
+    address.textContent = result.display_name;
+    
+    item.appendChild(name);
+    item.appendChild(address);
+    
+    // Event klik pada hasil
+    item.addEventListener('click', function() {
+      selectSearchResult(result);
+    });
+    
+    resultsContainer.appendChild(item);
+  });
+  
+  resultsContainer.classList.add('active');
+}
+
+// ========================================
+// TAMPILKAN JIKA TIDAK ADA HASIL
+// ========================================
+function displayNoResults() {
+  const resultsContainer = document.getElementById('searchResults');
+  resultsContainer.innerHTML = '<div class="search-no-results">Lokasi tidak ditemukan. Coba dengan kata kunci lain.</div>';
+  resultsContainer.classList.add('active');
+}
+
+// ========================================
+// PILIH HASIL PENCARIAN
+// ========================================
+function selectSearchResult(result) {
+  const lat = parseFloat(result.lat);
+  const lng = parseFloat(result.lon);
+  
+  // Pindahkan peta ke lokasi
+  map.setView([lat, lng], 16);
+  
+  // Tempatkan marker
+  placeMarker(lat, lng);
+  
+  // Set alamat
+  document.getElementById('lokasi_kejadian').value = result.display_name;
+  document.getElementById('addressDisplay').textContent = result.display_name;
+  document.getElementById('locationInfo').style.display = 'block';
+  
+  // Update marker popup
+  if (marker) {
+    marker.bindPopup(`<b>Lokasi Kejadian</b><br>${result.display_name}`).openPopup();
+  }
+  
+  // Kosongkan search input dan hasil
+  document.getElementById('locationSearch').value = '';
+  document.getElementById('searchResults').classList.remove('active');
+  document.getElementById('searchResults').innerHTML = '';
+  
+  console.log('Lokasi dipilih:', result.display_name);
+}
+
+// ========================================
+// MENDAPATKAN LOKASI PENGGUNA
 // ========================================
 function getCurrentLocation() {
   const button = document.getElementById('btnGetLocation');
@@ -206,14 +279,10 @@ function getCurrentLocation() {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
       
-      // Pusatkan peta ke lokasi pengguna
       map.setView([lat, lng], 16);
-      
-      // Tempatkan marker dan dapatkan alamat
       placeMarker(lat, lng);
       getAddress(lat, lng);
       
-      // Reset tombol
       button.innerHTML = '✅ Lokasi Berhasil Didapat';
       setTimeout(() => {
         button.innerHTML = '📍 Gunakan Lokasi Saya';
@@ -243,7 +312,6 @@ function getCurrentLocation() {
       
       alert(errorMessage);
       
-      // Reset tombol
       button.innerHTML = '📍 Gunakan Lokasi Saya';
       button.disabled = false;
     },
@@ -272,18 +340,46 @@ window.addEventListener('load', function() {
     }, index * 200);
   });
 
-  // Inisialisasi peta setelah semua elemen dimuat
   setTimeout(initMap, 500);
 });
 
 // ========================================
-// VALIDASI FORM SEBELUM SUBMIT
+// EVENT LISTENERS
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
-  // Event listener untuk tombol lokasi
+  // Event listener untuk tombol GPS
   const btnGetLocation = document.getElementById('btnGetLocation');
   if (btnGetLocation) {
     btnGetLocation.addEventListener('click', getCurrentLocation);
+  }
+
+  // Event listener untuk tombol search
+  const btnSearchLocation = document.getElementById('btnSearchLocation');
+  if (btnSearchLocation) {
+    btnSearchLocation.addEventListener('click', function() {
+      const query = document.getElementById('locationSearch').value;
+      searchLocationByName(query);
+    });
+  }
+
+  // Event listener untuk Enter key di search input
+  const locationSearch = document.getElementById('locationSearch');
+  if (locationSearch) {
+    locationSearch.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const query = this.value;
+        searchLocationByName(query);
+      }
+    });
+
+    // Auto-hide results when clicking outside
+    document.addEventListener('click', function(e) {
+      const searchResults = document.getElementById('searchResults');
+      if (!e.target.closest('.location-search-container')) {
+        searchResults.classList.remove('active');
+      }
+    });
   }
 
   // Validasi form
@@ -294,12 +390,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const longitude = document.getElementById('longitude').value;
       const lokasi = document.getElementById('lokasi_kejadian').value;
       
-      // Validasi apakah lokasi sudah dipilih
       if (!latitude || !longitude || !lokasi) {
         e.preventDefault();
-        alert('⚠️ Mohon pilih lokasi kejadian pada peta terlebih dahulu!\n\nAnda bisa:\n• Klik pada peta untuk memilih lokasi\n• Gunakan tombol "Gunakan Lokasi Saya"');
+        alert('⚠️ Mohon pilih lokasi kejadian terlebih dahulu!\n\nAnda bisa:\n• Ketik nama lokasi dan klik "Cari"\n• Klik pada peta\n• Gunakan tombol "Gunakan Lokasi Saya"');
         
-        // Scroll ke bagian peta
         document.getElementById('map').scrollIntoView({ 
           behavior: 'smooth', 
           block: 'center' 
@@ -308,7 +402,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
       }
       
-      // Ubah tampilan tombol submit
       const button = document.querySelector('.btn-lapor');
       button.innerHTML = '⏳ Mengirim laporan...';
       button.disabled = true;
@@ -321,38 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ========================================
-// FUNGSI TAMBAHAN: CARI LOKASI BERDASARKAN NAMA
+// CONSOLE LOG
 // ========================================
-function searchLocation(query) {
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
-  
-  fetch(url, {
-    headers: {
-      'User-Agent': 'SIPAMA Pengaduan App'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data && data.length > 0) {
-      const location = data[0];
-      const lat = parseFloat(location.lat);
-      const lng = parseFloat(location.lon);
-      
-      map.setView([lat, lng], 16);
-      placeMarker(lat, lng);
-      getAddress(lat, lng);
-    } else {
-      alert('Lokasi tidak ditemukan. Silakan coba dengan kata kunci yang berbeda.');
-    }
-  })
-  .catch(error => {
-    console.error('Error searching location:', error);
-    alert('Terjadi kesalahan saat mencari lokasi.');
-  });
-}
-
-// ========================================
-// CONSOLE LOG UNTUK DEBUGGING
-// ========================================
-console.log('Form Pengaduan dengan Leaflet Maps berhasil dimuat');
-console.log('Menggunakan OpenStreetMap - 100% GRATIS, tidak perlu API Key!');
+console.log('Form Pengaduan dengan Leaflet Maps & Search berhasil dimuat');
+console.log('Fitur: Klik peta, GPS, Search lokasi - 100% GRATIS!');

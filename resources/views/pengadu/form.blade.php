@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   
   <link rel="stylesheet" href="{{ asset('css/pengadu/form_pengaduan.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/pengadu/map_style.css') }}">
 </head>
 <body>
 
@@ -66,7 +65,24 @@
           <label class="form-label">Lokasi Kejadian</label>
           
           <div class="map-instructions">
-            <p>📍 <strong>Petunjuk:</strong> Klik pada peta untuk menentukan lokasi kejadian, atau gunakan tombol "Gunakan Lokasi Saya" untuk lokasi otomatis</p>
+            <p>📍 <strong>Petunjuk:</strong> Ketik nama lokasi di bawah ini, klik pada peta, atau gunakan tombol GPS</p>
+          </div>
+
+          <!-- SEARCH BAR UNTUK CARI LOKASI -->
+          <div class="location-search-container">
+            <div class="search-wrapper">
+              <input 
+                type="text" 
+                id="locationSearch" 
+                class="location-search-input" 
+                placeholder="🔍 Cari lokasi (contoh: Jl. Lambung Mangkurat, Banjarmasin)" 
+                autocomplete="off"
+              >
+              <button type="button" class="btn-search-location" id="btnSearchLocation">
+                🔍 Cari
+              </button>
+            </div>
+            <div id="searchResults" class="search-results"></div>
           </div>
 
           <button type="button" class="btn-get-location" id="btnGetLocation">
