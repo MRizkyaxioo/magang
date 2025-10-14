@@ -26,35 +26,29 @@ Route::get('/register-pengadu', [AuthPengaduController::class, 'showRegisterForm
 Route::post('/register-pengadu', [AuthPengaduController::class, 'register']);
 
 // Login
+// Pengadu
 Route::get('/login-pengadu', [AuthPengaduController::class, 'showLoginForm'])->name('pengadu.login');
 Route::post('/login-pengadu', [AuthPengaduController::class, 'login']);
 
+// Admin
+Route::get('/login-admin', [AuthAdminController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/login-admin', [AuthAdminController::class, 'login']);
+
+// Pengurus
+Route::get('/login-pengurus', [AuthPengurusController::class, 'showLoginForm'])->name('pengurus.login');
+Route::post('/login-pengurus', [AuthPengurusController::class, 'login']);
+
 // Logout
 Route::post('/logout-pengadu', [AuthPengaduController::class, 'logout'])->name('pengadu.logout');
+Route::post('/logout-admin', [AuthAdminController::class, 'logout'])->name('admin.logout');
+Route::post('/logout-pengurus', [AuthPengurusController::class, 'logout'])->name('pengurus.logout');
 
-// Dashboard (contoh middleware)
-// Route::get('/dashboard-pengadu', function () {
-//     return 'Selamat datang di dashboard pengadu!';
-// })->middleware('auth:pengadu');
-
-// Route::get('/dashboard-pengadu', function () {
-//     return view('pengadu.dashboard');
-// })->middleware(RedirectIfNotPengadu::class)
-//   ->name('pengadu.dashboard');
-
-  Route::get('/dashboard-pengadu', [App\Http\Controllers\DashboardPengaduController::class, 'index'])
-    ->middleware(RedirectIfNotPengadu::class)
-    ->name('pengadu.dashboard');
-
-    Route::middleware(RedirectIfNotPengadu::class)->group(function () {
-    Route::get('/pengaduan/create', [App\Http\Controllers\HasilPengaduanController::class, 'create'])
-        ->name('pengadu.pengaduan.create');
-
-    Route::post('/pengaduan/store', [App\Http\Controllers\HasilPengaduanController::class, 'store'])
-        ->name('pengadu.pengaduan.store');
-});
-
+// Pengadu
 Route::middleware(RedirectIfNotPengadu::class)->group(function () {
+    Route::get('/dashboard-pengadu', [App\Http\Controllers\DashboardPengaduController::class, 'index'])->name('pengadu.dashboard');
+    Route::get('/pengaduan/create', [App\Http\Controllers\HasilPengaduanController::class, 'create'])->name('pengadu.pengaduan.create');
+    Route::post('/pengaduan/store', [App\Http\Controllers\HasilPengaduanController::class, 'store'])->name('pengadu.pengaduan.store');
+    Route::get('/form-pengadu', [HasilPengaduanController::class, 'create'])->name('pengadu.form');
     Route::get('/riwayat', [DashboardPengaduController::class, 'history'])->name('pengadu.riwayat');
     // Route untuk menampilkan form ubah password
 Route::get('/ubah-password', [AuthPengaduController::class, 'showChangePasswordForm'])
@@ -72,22 +66,7 @@ Route::post('/pengadu/update-profil', [AuthPengaduController::class, 'updateProf
 });
 
 
-
-// login admin
-Route::get('/login-admin', [AuthAdminController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/login-admin', [AuthAdminController::class, 'login']);
-
-// logout admin
-Route::post('/logout-admin', [AuthAdminController::class, 'logout'])->name('admin.logout');
-
-
-// login pengurus
-Route::get('/login-pengurus', [AuthPengurusController::class, 'showLoginForm'])->name('pengurus.login');
-Route::post('/login-pengurus', [AuthPengurusController::class, 'login']);
-
-// logout pengurus
-Route::post('/logout-pengurus', [AuthPengurusController::class, 'logout'])->name('pengurus.logout');
-
+// Pengurus
 Route::middleware(RedirectIfNotPengurus::class)->group(function () {
 Route::get('/dashboard-pengurus', [PengurusController::class, 'index'])->name('pengurus.dashboard');
 Route::put('/pengurus/update-status/{id}', [PengurusController::class, 'updateStatus'])
@@ -101,17 +80,7 @@ Route::get('/pengurus/hasil/{id}', [PengurusController::class, 'show'])
 });
 
 
-
-// Route::get('/dashboard-admin', function () {
-//     return view('admin.dashboard');
-// })->middleware(RedirectIfNotAdmin::class)
-//   ->name('admin.dashboard');
-
-Route::get('/form-pengadu', [HasilPengaduanController::class, 'create'])
-    ->middleware(RedirectIfNotPengadu::class)
-    ->name('pengadu.form');
-
-
+// Admin
 Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     Route::get('/kategori', [PengaduanController::class, 'index'])->name('pengaduan.index');
     Route::get('/kategori/create', [PengaduanController::class, 'create'])->name('pengaduan.create');
@@ -128,7 +97,9 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     Route::get('/admin/change-password', [AuthAdminController::class, 'showChangePasswordForm'])->name('admin.change-password.form');
     Route::post('/admin/change-password', [AuthAdminController::class, 'changePassword'])->name('admin.change-password');
 
-
+    Route::get('/dashboard-admin', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+    Route::post('/admin/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.updateStatus');
+    Route::get('/admin/{id}', [DashboardAdminController::class, 'show'])->name('admin.show');
 
 
     Route::get('/pengurus', [AuthPengurusController::class, 'index'])->name('pengurus.index');
@@ -136,10 +107,5 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     Route::post('/pengurus', [AuthPengurusController::class, 'store'])->name('pengurus.store');
 });
 
-Route::middleware(RedirectIfNotAdmin::class)->group(function () {
-Route::get('/dashboard-admin', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
-Route::post('/admin/{id}/status', [DashboardAdminController::class, 'updateStatus'])->name('admin.updateStatus');
-Route::get('/admin/{id}', [DashboardAdminController::class, 'show'])->name('admin.show');
-});
 
 
