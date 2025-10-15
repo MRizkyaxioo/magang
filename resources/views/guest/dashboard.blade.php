@@ -59,10 +59,9 @@
                     <h2 class="section-title">SIPAMA</h2>
                     <div class="info-box">
                         <p class="info-text">
-                            Sistem Pengaduan Masyarakat (SIPAMA) merupakan sebuah platform digital yang dikembangkan untuk memberikan ruang bagi masyarakat Kota Banjarmasin dalam menyampaikan berbagai aspirasi, keluhan, saran, maupun laporan terkait pelayanan publik. Melalui sistem ini, warga tidak perlu lagi datang langsung ke kantor pemerintahan atau lembaga terkait, melainkan cukup menggunakan perangkat yang terhubung ke internet untuk menyampaikan pengaduan secara cepat, mudah, dan efisien.
-                            SIPAMA hadir sebagai upaya pemerintah kota dalam meningkatkan kualitas pelayanan publik, mempercepat proses tindak lanjut terhadap laporan masyarakat, serta menciptakan transparansi dalam penyelenggaraan pemerintahan. Dengan adanya sistem ini, masyarakat dapat merasa lebih didengar karena setiap aduan yang masuk akan tercatat, dipantau, dan ditindaklanjuti sesuai dengan kategori permasalahan yang dilaporkan.
-                            Selain itu, SIPAMA juga berfungsi sebagai sarana penghubung antara masyarakat dengan pihak pemerintah. Informasi yang terkumpul dari berbagai laporan dapat dijadikan bahan evaluasi untuk memperbaiki kinerja pelayanan, mengidentifikasi permasalahan yang sering muncul, serta merumuskan kebijakan yang lebih tepat sasaran. Dengan demikian, SIPAMA tidak hanya menjadi alat pengaduan, tetapi juga instrumen penting dalam membangun komunikasi dua arah antara pemerintah dan masyarakat.
-                            Melalui penerapan teknologi digital ini, diharapkan partisipasi masyarakat dalam pembangunan kota semakin meningkat, rasa percaya terhadap pemerintah semakin kuat, serta tercipta tata kelola pemerintahan yang lebih terbuka, akuntabel, dan responsif terhadap kebutuhan warganya.
+                            Sistem Pengaduan Masyarakat (SIPAMA) adalah platform digital yang memudahkan warga Banjarmasin menyampaikan aspirasi, keluhan, dan saran terkait pelayanan publik secara cepat, mudah, dan transparan tanpa perlu datang langsung ke kantor pemerintahan.
+SIPAMA hadir untuk meningkatkan kualitas layanan publik, mempercepat tindak lanjut laporan, dan membangun komunikasi dua arah antara masyarakat dan pemerintah.
+Data dari pengaduan juga digunakan sebagai bahan evaluasi untuk meningkatkan kinerja dan kebijakan publik agar lebih tepat sasaran.
                         </p>
                         </p>
                     </div>
@@ -110,6 +109,42 @@
 
                     <!-- Tambahkan FAQ lain di sini -->
                 </section>
+
+<!-- Pending Reports Section -->
+<section class="pending-section">
+    <h2 class="section-title">📋 Kumpulan Pengaduan</h2>
+
+    @if($pending->isEmpty())
+        <p class="no-data">Tidak ada pengaduan.</p>
+    @else
+        <div class="pending-grid">
+            @foreach($pending as $item)
+                <div class="pending-card">
+                    <p><strong>Kategori:</strong> {{ $item->pengaduan->kategori ?? '-' }}</p>
+                    <p><strong>Lokasi:</strong> {{ $item->lokasi_kejadian }}</p>
+                    <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d M Y') }}</p>
+                    <p><strong>Deskripsi:</strong> {{ Str::limit($item->deskripsi, 80) }}</p>
+                    <p><strong>Keterangan:</strong> {{ $item->keterangan ?? '-' }}</p>
+
+                    @if($item->bukti_foto)
+                        <img src="{{ asset('storage/' . $item->bukti_foto) }}" alt="Bukti Foto" class="bukti-foto">
+                    @else
+                        <p><em>Tidak ada bukti foto</em></p>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Pagination -->
+        @if($pending->hasPages())
+<div class="pagination-wrapper">
+  {{ $pending->links('pagination::bootstrap-5') }}
+</div>
+@endif
+    @endif
+</section>
+
+
             </div>
         </main>
     </div>
