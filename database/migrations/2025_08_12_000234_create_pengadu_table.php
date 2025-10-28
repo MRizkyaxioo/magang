@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
             $table->string('no_telp', 20);
-            $table->string('email')->unique();
+            $table->string('email', 40)->unique();
             $table->string('password'); // password akan di-hash
             $table->timestamps();
         });

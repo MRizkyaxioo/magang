@@ -19,7 +19,7 @@ return new class extends Migration
               ->on('pengaduan')
               ->onDelete('cascade');
         $table->string('instansi_pemerintahan', 65);
-        $table->string('email')->unique();
+        $table->string('email', 40)->unique();
         $table->string('password');
         $table->timestamps();
         });

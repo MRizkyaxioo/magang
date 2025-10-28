@@ -18,7 +18,7 @@ return new class extends Migration
         //       ->references('id_hasil')
         //       ->on('hasil_pengaduan')
         //       ->onDelete('cascade');
-        $table->string('email')->unique();
+        $table->string('email', 20)->unique();
         $table->string('password');
         $table->timestamps();
         });
