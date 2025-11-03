@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/admin/kategori.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="kategori-container">
@@ -60,9 +61,9 @@
                             <span>✏️</span>
                             Edit
                         </button>
-                        <form action="{{ route('pengaduan.destroy', $item->id_pengaduan) }}" method="POST" style="display:inline-block;">
+                        <form action="{{ route('pengaduan.destroy', $item->id_pengaduan) }}" method="POST" class="delete-form" style="display:inline-block;">
                             @csrf @method('DELETE')
-                            <button class="action-btn delete-btn" onclick="return confirmDelete('{{ $item->kategori }}')">
+                            <button class="action-btn delete-btn" type="submit" class="action-btn delete-btn">
                                 <span>🗑️</span>
                                 Hapus
                             </button>
@@ -194,5 +195,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="{{ asset('js/admin/kategori.js') }}"></script>
+     <script>
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        @endif
+    </script>
 </body>
 </html>

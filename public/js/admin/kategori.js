@@ -1,63 +1,43 @@
-// Enhanced delete confirmation
-function confirmDelete(kategoriName) {
-    return confirm(`⚠️ Apakah Anda yakin ingin menghapus kategori "${kategoriName}"?\n\nTindakan ini tidak dapat dibatalkan dan akan mempengaruhi pengaduan yang menggunakan kategori ini.`);
-}
+// kategori.js (ganti isi file dengan ini)
 
-// Export data function
-function exportData() {
-    const totalKategori = document.querySelectorAll('.kategori-card').length;
-    if (totalKategori === 0) {
-        alert('📂 Tidak ada data kategori untuk diekspor!');
-        return;
-    }
-
-    alert('🚧 Fitur export data sedang dalam pengembangan.\n\n📊 Data yang akan diekspor:\n• Total ' + totalKategori + ' kategori\n• Format: Excel/CSV\n\nFitur ini akan segera tersedia!');
-}
-
-// Refresh data function
-function refreshData() {
-    const btn = event.target.closest('.quick-action-btn');
-    const originalText = btn.innerHTML;
-
-    btn.innerHTML = '<span>⟳</span> Memuat...';
-    btn.style.pointerEvents = 'none';
-
-    setTimeout(() => {
-        location.reload();
-    }, 1000);
-}
-
-// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Pastikan Bootstrap loaded
     if (typeof bootstrap === 'undefined') {
         console.error('Bootstrap JS not loaded!');
         return;
     }
-
     console.log('Bootstrap loaded successfully');
 
-    // Initialize all modals
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        new bootstrap.Modal(modal);
+    // Semua modal
+    const modalList = document.querySelectorAll('.modal');
+    modalList.forEach(modalEl => {
+        // create bootstrap modal instances only if needed
+        try {
+            new bootstrap.Modal(modalEl);
+        } catch (err) {
+            console.warn('Could not init modal', modalEl, err);
+        }
     });
 
     // Auto-hide success alert after 5 seconds
     const successAlert = document.querySelector('.alert-success');
     if (successAlert) {
         setTimeout(() => {
-            successAlert.style.animation = 'slideInDown 0.5s ease reverse';
-            setTimeout(() => {
+            // safe removal animation fallback
+            try {
+                successAlert.style.animation = 'slideInDown 0.5s ease reverse';
+                setTimeout(() => successAlert.remove(), 500);
+            } catch (e) {
                 successAlert.remove();
-            }, 500);
+            }
         }, 5000);
     }
 
-    // Enhanced form validation
+    // Enhanced form validation (tombol simpan)
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
+            // jika tombol submit ada dan bukan delete button
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn && !submitBtn.classList.contains('delete-btn')) {
                 const originalText = submitBtn.innerHTML;
@@ -73,65 +53,86 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Auto-focus on modal inputs
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        modal.addEventListener('shown.bs.modal', function() {
+    // Auto-focus input on modal show
+    modalList.forEach(modalEl => {
+        modalEl.addEventListener('shown.bs.modal', function() {
             const input = this.querySelector('input[type="text"]');
-            if (input) {
-                setTimeout(() => input.focus(), 100);
-            }
+            if (input) setTimeout(() => input.focus(), 100);
         });
     });
 
     // Remove any existing modal backdrops on page load
-    const existingBackdrops = document.querySelectorAll('.modal-backdrop');
-    existingBackdrops.forEach(backdrop => backdrop.remove());
-
-    // Reset body classes
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
     document.body.classList.remove('modal-open');
     document.body.style.paddingRight = '';
 
-    // Handle modal events properly
-    modals.forEach(modal => {
-        modal.addEventListener('show.bs.modal', function() {
+    // Modal event logs + cleanup
+    modalList.forEach(modalEl => {
+        modalEl.addEventListener('show.bs.modal', function() {
             console.log('Modal showing:', this.id);
         });
-
-        modal.addEventListener('shown.bs.modal', function() {
+        modalEl.addEventListener('shown.bs.modal', function() {
             console.log('Modal shown:', this.id);
-            // Ensure modal is visible
             this.style.display = 'block';
             this.style.zIndex = '1056';
         });
-
-        modal.addEventListener('hidden.bs.modal', function() {
+        modalEl.addEventListener('hidden.bs.modal', function() {
             console.log('Modal hidden:', this.id);
-            // Clean up any remaining backdrops
-            const backdrops = document.querySelectorAll('.modal-backdrop');
-            backdrops.forEach(backdrop => backdrop.remove());
+            document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
             document.body.classList.remove('modal-open');
             document.body.style.paddingRight = '';
         });
     });
 
-    // Real-time input validation
+    // Real-time input validation untuk nama kategori
     document.querySelectorAll('input[name="kategori"]').forEach(input => {
         input.addEventListener('input', function() {
             const value = this.value.trim();
-            const submitBtn = this.closest('form').querySelector('button[type="submit"]');
+            const form = this.closest('form');
+            if (!form) return;
+            const submitBtn = form.querySelector('button[type="submit"]');
 
             if (value.length < 3) {
                 this.style.borderColor = '#FF6B6B';
-                submitBtn.disabled = true;
+                if (submitBtn) submitBtn.disabled = true;
             } else if (value.length > 50) {
                 this.style.borderColor = '#FF8C00';
                 this.setCustomValidity('Nama kategori maksimal 50 karakter');
+                if (submitBtn) submitBtn.disabled = true;
             } else {
                 this.style.borderColor = '#32CD32';
                 this.setCustomValidity('');
-                submitBtn.disabled = false;
+                if (submitBtn) submitBtn.disabled = false;
             }
+        });
+    });
+
+    // Konfirmasi hapus dengan SweetAlert — inisialisasi di sini agar pasti element ada
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // ambil nama kategori (jika tersedia di card)
+            const kategoriEl = form.closest('.kategori-card')?.querySelector('h3');
+            const kategoriName = kategoriEl ? kategoriEl.textContent.trim() : 'kategori ini';
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: `Kategori "${kategoriName}" akan dihapus permanen dan tidak dapat dikembalikan!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#FF4757',
+                cancelButtonColor: '#B8860B',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // submit form tanpa memicu event lagi
+                    form.removeEventListener('submit', arguments.callee);
+                    form.submit();
+                }
+            });
         });
     });
 });
