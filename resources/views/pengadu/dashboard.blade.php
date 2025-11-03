@@ -84,7 +84,7 @@
                 <div class="complaint-description">
                     Sampaikan keluhan, saran, atau aspirasi Anda kepada Pemerintah Kota Banjarmasin melalui form pengaduan online. Tim kami akan merespon dan menindaklanjuti laporan Anda dengan cepat dan tepat.
 
-                    <br><br><strong>Jenis Laporan:</strong>
+                    <br><br><strong>Kategori Laporan:</strong>
                     @foreach($pengaduan as $item)
                         <br>• {{ $item->kategori }}
                     @endforeach
