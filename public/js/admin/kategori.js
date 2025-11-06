@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Konfirmasi hapus dengan SweetAlert — inisialisasi di sini agar pasti element ada
+    // Konfirmasi hapus dengan SweetAlert
     document.querySelectorAll('.delete-form').forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();

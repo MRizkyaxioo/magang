@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Form Pengaduan</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  
+
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  
+
   <link rel="stylesheet" href="{{ asset('css/pengadu/form_pengaduan.css') }}">
 </head>
 <body>
@@ -63,7 +63,7 @@
 
         <div class="mb-4">
           <label class="form-label">Lokasi Kejadian</label>
-          
+
           <div class="map-instructions">
             <p>📍 <strong>Petunjuk:</strong> Ketik nama lokasi di bawah ini, klik pada peta, atau gunakan tombol GPS</p>
           </div>
@@ -71,11 +71,11 @@
           <!-- SEARCH BAR UNTUK CARI LOKASI -->
           <div class="location-search-container">
             <div class="search-wrapper">
-              <input 
-                type="text" 
-                id="locationSearch" 
-                class="location-search-input" 
-                placeholder="🔍 Cari lokasi (contoh: Jl. Lambung Mangkurat, Banjarmasin)" 
+              <input
+                type="text"
+                id="locationSearch"
+                class="location-search-input"
+                placeholder="🔍 Cari lokasi (contoh: Jl. Lambung Mangkurat, Banjarmasin)"
                 autocomplete="off"
               >
               <button type="button" class="btn-search-location" id="btnSearchLocation">
@@ -113,6 +113,7 @@
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('js/pengadu/form_pengaduan.js') }}"></script>
 
 </body>
