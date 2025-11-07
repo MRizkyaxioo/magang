@@ -86,7 +86,7 @@
                             <td>{{ $pengaduan->id_hasil }}</td>
                             <td>{{ $pengaduan->lokasi_kejadian }}</td>
                             <td>{{ $pengaduan->deskripsi }}</td>
-                            <td>{{ $pengaduan->tanggal_kejadian }}</td>
+                            <td>{{ \Carbon\Carbon::parse($pengaduan->tanggal_kejadian)->format('d M Y') }}</td>
                             <td>
                                 <img src="{{ asset('storage/'.$pengaduan->bukti_foto) }}"
                                     alt="Bukti Foto Pengaduan"

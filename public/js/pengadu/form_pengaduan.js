@@ -511,7 +511,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// ========================================
-// CONSOLE LOG
-// ========================================
 console.log('Form Pengaduan dengan Leaflet Maps, Search & SweetAlert berhasil dimuat');

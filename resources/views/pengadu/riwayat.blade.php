@@ -58,7 +58,7 @@
               <td>{{ $item->deskripsi }}</td>
               <td>{{ $item->lokasi_kejadian }}</td>
               <td>{{ $item->latitude }} {{ $item->longitude }}</td>
-              <td>{{ $item->tanggal_kejadian }}</td>
+              <td>{{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d M Y') }}</td>
               <td>
                 <span class="status {{ str_replace(' ', '-', strtolower($item->status)) }}">
                   {{ ucfirst($item->status) }}

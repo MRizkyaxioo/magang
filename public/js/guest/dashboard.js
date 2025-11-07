@@ -30,7 +30,7 @@ window.addEventListener('load', function() {
     }, 30000);
 
     // Add hover effects to cards
-    document.querySelectorAll('.simara-section, .complaint-section, .faq-section').forEach(card => {
+    document.querySelectorAll('.simara-section, .faq-section, .pending-section, .stats-section-wrapper').forEach(card => {
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-5px)';
             this.style.boxShadow = '0 20px 40px rgba(255, 193, 7, 0.3)';

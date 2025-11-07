@@ -27,42 +27,51 @@
             </a>
         </header>
 
-        <!-- Stats Section -->
-        <div class="stats-section">
-            <div class="stat-card">
-                <div class="stat-number">{{ $hasil->where('status', 'pending')->count() }}</div>
-                <div class="stat-label">⏳ Pending</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ $hasil->where('status', 'ditolak')->count() }}</div>
-                <div class="stat-label">❌ Ditolak</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ $hasil->where('status', 'sedang dikerjakan')->count() }}</div>
-                <div class="stat-label">🔄 Sedang Dikerjakan</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ $hasil->where('status', 'selesai')->count() }}</div>
-                <div class="stat-label">✅ Selesai</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ $hasil->count() }}</div>
-                <div class="stat-label">📊 Total Pengaduan</div>
-            </div>
-        </div>
-
         <!-- Main Content -->
         <main class="main-content">
             <div class="left-content">
+                <!-- Pending Reports Section -->
+                <section class="pending-section">
+                    <h2 class="section-title">📋 Kumpulan Pengaduan</h2>
+
+                    @if($pending->isEmpty())
+                        <p class="no-data">Tidak ada pengaduan.</p>
+                    @else
+                        <div class="pending-grid">
+                            @foreach($pending as $item)
+                                <div class="pending-card">
+                                    <p><strong>Kategori:</strong> {{ $item->pengaduan->kategori ?? '-' }}</p>
+                                    <p><strong>Lokasi:</strong> {{ $item->lokasi_kejadian }}</p>
+                                    <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d M Y') }}</p>
+                                    <p><strong>Deskripsi:</strong> {{ Str::limit($item->deskripsi, 80) }}</p>
+                                    <p><strong>Keterangan:</strong> {{ $item->keterangan ?? '-' }}</p>
+
+                                    @if($item->bukti_foto)
+                                        <img src="{{ asset('storage/' . $item->bukti_foto) }}" alt="Bukti Foto" class="bukti-foto">
+                                    @else
+                                        <p><em>Tidak ada bukti foto</em></p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Pagination -->
+                        @if($pending->hasPages())
+                            <div class="pagination-wrapper">
+                                {{ $pending->links('pagination::bootstrap-5') }}
+                            </div>
+                        @endif
+                    @endif
+                </section>
+
                 <!-- SIMARA Section -->
                 <section class="simara-section">
                     <h2 class="section-title">SIPAMA</h2>
                     <div class="info-box">
                         <p class="info-text">
                             Sistem Pengaduan Masyarakat (SIPAMA) adalah platform digital yang memudahkan warga Banjarmasin menyampaikan aspirasi, keluhan, dan saran terkait pelayanan publik secara cepat, mudah, dan transparan tanpa perlu datang langsung ke kantor pemerintahan.
-SIPAMA hadir untuk meningkatkan kualitas layanan publik, mempercepat tindak lanjut laporan, dan membangun komunikasi dua arah antara masyarakat dan pemerintah.
-Data dari pengaduan juga digunakan sebagai bahan evaluasi untuk meningkatkan kinerja dan kebijakan publik agar lebih tepat sasaran.
-                        </p>
+                            SIPAMA hadir untuk meningkatkan kualitas layanan publik, mempercepat tindak lanjut laporan, dan membangun komunikasi dua arah antara masyarakat dan pemerintah.
+                            Data dari pengaduan juga digunakan sebagai bahan evaluasi untuk meningkatkan kinerja dan kebijakan publik agar lebih tepat sasaran.
                         </p>
                     </div>
                 </section>
@@ -106,46 +115,37 @@ Data dari pengaduan juga digunakan sebagai bahan evaluasi untuk meningkatkan kin
                             Setelah pengaduan diajukan, tim SIPAMA akan memverifikasi informasi yang diberikan. Jika pengaduan valid, tim akan meneruskan laporan ke dinas terkait untuk ditindaklanjuti. Pelapor akan menerima pembaruan status pengaduan melalui akun mereka.
                         </div>
                     </div>
-
-                    <!-- Tambahkan FAQ lain di sini -->
                 </section>
-
-<!-- Pending Reports Section -->
-<section class="pending-section">
-    <h2 class="section-title">📋 Kumpulan Pengaduan</h2>
-
-    @if($pending->isEmpty())
-        <p class="no-data">Tidak ada pengaduan.</p>
-    @else
-        <div class="pending-grid">
-            @foreach($pending as $item)
-                <div class="pending-card">
-                    <p><strong>Kategori:</strong> {{ $item->pengaduan->kategori ?? '-' }}</p>
-                    <p><strong>Lokasi:</strong> {{ $item->lokasi_kejadian }}</p>
-                    <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($item->tanggal_kejadian)->format('d M Y') }}</p>
-                    <p><strong>Deskripsi:</strong> {{ Str::limit($item->deskripsi, 80) }}</p>
-                    <p><strong>Keterangan:</strong> {{ $item->keterangan ?? '-' }}</p>
-
-                    @if($item->bukti_foto)
-                        <img src="{{ asset('storage/' . $item->bukti_foto) }}" alt="Bukti Foto" class="bukti-foto">
-                    @else
-                        <p><em>Tidak ada bukti foto</em></p>
-                    @endif
-                </div>
-            @endforeach
-        </div>
-
-        <!-- Pagination -->
-        @if($pending->hasPages())
-<div class="pagination-wrapper">
-  {{ $pending->links('pagination::bootstrap-5') }}
-</div>
-@endif
-    @endif
-</section>
-
-
             </div>
+
+            <!-- Stats Sidebar - KANAN VERTIKAL -->
+            <aside class="right-sidebar">
+                <div class="stats-section-wrapper">
+                    <h2 class="section-title">📊 Statistik Pengaduan</h2>
+                    <div class="stats-vertical">
+                        <div class="stat-card">
+                            <div class="stat-number">{{ $hasil->where('status', 'pending')->count() }}</div>
+                            <div class="stat-label">⏳ Pending</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">{{ $hasil->where('status', 'ditolak')->count() }}</div>
+                            <div class="stat-label">❌ Ditolak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">{{ $hasil->where('status', 'sedang dikerjakan')->count() }}</div>
+                            <div class="stat-label">🔄 Sedang Dikerjakan</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">{{ $hasil->where('status', 'selesai')->count() }}</div>
+                            <div class="stat-label">✅ Selesai</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">{{ $hasil->count() }}</div>
+                            <div class="stat-label">📊 Total Pengaduan</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </main>
     </div>
 

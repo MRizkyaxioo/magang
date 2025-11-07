@@ -60,10 +60,10 @@
 
                     <div class="faq-item">
                         <div class="faq-dropdown" onclick="toggleFAQ(2)">
-                            Apakah laporan saya akan segera ditindaklanjuti?
+                            Bagaimana laporan saya akan ditindaklanjuti?
                         </div>
                         <div class="faq-answer" id="faq-answer-2">
-                            Setiap laporan yang masuk akan diverifikasi terlebih dahulu oleh tim SIPAMA. Anda akan dihubungi oleh pihak terkait untuk ditindaklanjuti. Status laporan dapat dilihat pada riwayat pengaduan.
+                            Setelah pengaduan diajukan, sistem akan otomatis mengirim pengaduan kepada pihak terkait. Pengadu dapat memantau status pengaduan pada riwayat pengaduan masing-masing.
                         </div>
                     </div>
 

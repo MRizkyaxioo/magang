@@ -50,7 +50,7 @@
 
                     <div class="info-row">
                         <span class="info-label">Tanggal Kejadian:</span>
-                        <span class="info-value">{{ $hasil->tanggal_kejadian }}</span>
+                        <span class="info-value">{{ \Carbon\Carbon::parse($hasil->tanggal_kejadian)->format('d M Y') }}</span>
                     </div>
 
                     <div class="info-row">
