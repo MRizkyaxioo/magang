@@ -103,3 +103,22 @@ function togglePassword(id, icon) {
         icon.textContent = "👁️"; // Balik lagi
     }
 }
+
+
+// Dropdown Profil
+document.addEventListener("DOMContentLoaded", () => {
+    const profileIcon = document.getElementById("profileIcon");
+    const dropdown = document.getElementById("profileDropdown");
+
+    profileIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    });
+
+    // Tutup dropdown kalau klik di luar
+    document.addEventListener("click", (e) => {
+        if (!profileIcon.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = "none";
+        }
+    });
+});

@@ -1,17 +1,16 @@
-// kategori.js (ganti isi file dengan ini)
-
+// kategori.js (versi fix final)
 document.addEventListener('DOMContentLoaded', function() {
     // Pastikan Bootstrap loaded
     if (typeof bootstrap === 'undefined') {
         console.error('Bootstrap JS not loaded!');
         return;
     }
+
     console.log('Bootstrap loaded successfully');
 
-    // Semua modal
+    // Inisialisasi semua modal
     const modalList = document.querySelectorAll('.modal');
     modalList.forEach(modalEl => {
-        // create bootstrap modal instances only if needed
         try {
             new bootstrap.Modal(modalEl);
         } catch (err) {
@@ -19,11 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Auto-hide success alert after 5 seconds
+    // Auto-hide alert sukses setelah 5 detik
     const successAlert = document.querySelector('.alert-success');
     if (successAlert) {
         setTimeout(() => {
-            // safe removal animation fallback
             try {
                 successAlert.style.animation = 'slideInDown 0.5s ease reverse';
                 setTimeout(() => successAlert.remove(), 500);
@@ -33,18 +31,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
-    // Enhanced form validation (tombol simpan)
+    // Tombol simpan animasi
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
-            // jika tombol submit ada dan bukan delete button
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn && !submitBtn.classList.contains('delete-btn')) {
                 const originalText = submitBtn.innerHTML;
                 submitBtn.innerHTML = '<span>⏳</span> Menyimpan...';
                 submitBtn.disabled = true;
 
-                // Re-enable button after 3 seconds as fallback
                 setTimeout(() => {
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
@@ -53,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Auto-focus input on modal show
+    // Fokus otomatis pada input di modal
     modalList.forEach(modalEl => {
         modalEl.addEventListener('shown.bs.modal', function() {
             const input = this.querySelector('input[type="text"]');
@@ -61,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Remove any existing modal backdrops on page load
+    // Bersihkan backdrop saat halaman dimuat
     document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
     document.body.classList.remove('modal-open');
     document.body.style.paddingRight = '';
 
-    // Modal event logs + cleanup
+    // Event log modal
     modalList.forEach(modalEl => {
         modalEl.addEventListener('show.bs.modal', function() {
             console.log('Modal showing:', this.id);
@@ -84,35 +80,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Real-time input validation untuk nama kategori
+    // ✅ Real-time input validation untuk nama kategori (maks 15 karakter)
     document.querySelectorAll('input[name="kategori"]').forEach(input => {
         input.addEventListener('input', function() {
             const value = this.value.trim();
             const form = this.closest('form');
-            if (!form) return;
             const submitBtn = form.querySelector('button[type="submit"]');
+            const warningText = form.querySelector('small[id^="kategori-warning"]');
 
-            if (value.length < 3) {
+            if (value.length > 15) {
                 this.style.borderColor = '#FF6B6B';
-                if (submitBtn) submitBtn.disabled = true;
-            } else if (value.length > 50) {
+                warningText.textContent = 'Nama kategori maksimal 15 karakter.';
+                warningText.style.display = 'block';
+                submitBtn.disabled = true;
+            } else if (value.length < 3) {
                 this.style.borderColor = '#FF8C00';
-                this.setCustomValidity('Nama kategori maksimal 50 karakter');
-                if (submitBtn) submitBtn.disabled = true;
+                warningText.textContent = 'Nama kategori minimal 3 karakter.';
+                warningText.style.display = 'block';
+                submitBtn.disabled = true;
             } else {
                 this.style.borderColor = '#32CD32';
-                this.setCustomValidity('');
-                if (submitBtn) submitBtn.disabled = false;
+                warningText.style.display = 'none';
+                submitBtn.disabled = false;
             }
         });
     });
 
-    // Konfirmasi hapus dengan SweetAlert
+    // SweetAlert konfirmasi hapus
     document.querySelectorAll('.delete-form').forEach(form => {
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // ambil nama kategori (jika tersedia di card)
             const kategoriEl = form.closest('.kategori-card')?.querySelector('h3');
             const kategoriName = kategoriEl ? kategoriEl.textContent.trim() : 'kategori ini';
 
@@ -128,7 +126,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // submit form tanpa memicu event lagi
                     form.removeEventListener('submit', arguments.callee);
                     form.submit();
                 }

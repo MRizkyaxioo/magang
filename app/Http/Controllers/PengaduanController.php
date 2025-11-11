@@ -21,7 +21,7 @@ class PengaduanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kategori' => 'required|string|max:255',
+            'kategori' => 'required|string|max:15',
         ]);
 
         $data = $request->only(['kategori']);
@@ -43,7 +43,7 @@ class PengaduanController extends Controller
         $pengaduan = Pengaduan::findOrFail($id_pengaduan);
 
         $request->validate([
-            'kategori' => 'required|string|max:255',
+            'kategori' => 'required|string|max:15',
         ]);
 
         $data = $request->only(['kategori']);

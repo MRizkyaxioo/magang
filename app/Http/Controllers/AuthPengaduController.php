@@ -27,18 +27,24 @@ class AuthPengaduController extends Controller
             'password' => 'required|min:6|confirmed', // password_confirmation wajib
         ]);
 
-        Pengadu::create([
-            'nik' => $request->nik,
-            'nama_pengadu' => $request->nama_pengadu,
-            'alamat' => $request->alamat,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'no_telp' => $request->no_telp,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // Simpan data pengadu baru
+    $pengadu = Pengadu::create([
+        'nik' => $request->nik,
+        'nama_pengadu' => $request->nama_pengadu,
+        'alamat' => $request->alamat,
+        'tempat_lahir' => $request->tempat_lahir,
+        'tanggal_lahir' => $request->tanggal_lahir,
+        'no_telp' => $request->no_telp,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
 
-        return redirect()->route('pengadu.login')->with('success', 'Registrasi berhasil, silakan login.');
+        // 🔹 Login otomatis setelah registrasi
+    Auth::guard('pengadu')->login($pengadu);
+
+    // 🔹 Arahkan langsung ke dashboard
+    return redirect()->intended('/dashboard-pengadu')
+        ->with('success', 'Registrasi berhasil! Selamat datang di SIPAMA.');
     }
 
     public function showLoginForm()

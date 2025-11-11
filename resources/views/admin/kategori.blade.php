@@ -119,7 +119,7 @@
     <div class="modal fade" id="editKategoriModal{{ $item->id_pengaduan }}" tabindex="-1" aria-labelledby="editKategoriLabel{{ $item->id_pengaduan }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header d-flex justify-content-between align-items-center">
                     <h5 class="modal-title" id="editKategoriLabel{{ $item->id_pengaduan }}">
                         <span>✏️</span> Edit Kategori
                     </h5>
@@ -134,10 +134,17 @@
                             <input type="text"
                                    name="kategori"
                                    id="kategori{{ $item->id_pengaduan }}"
-                                   class="form-control"
-                                   value="{{ $item->kategori }}"
+                                   class="form-control @error('kategori') is-invalid @enderror"
+                                   value="{{ old('kategori', $item->kategori) }}"
                                    required
-                                   placeholder="Masukkan nama kategori...">
+                                   placeholder="Masukkan nama kategori..."
+                                   autocomplete="off">
+                                   <small id="kategori-warning-edit{{ $item->id_pengaduan }}" class="text-danger" style="display:none;">
+                            Nama kategori maksimal 15 karakter.
+                        </small>
+                        @error('kategori')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Batal</button>
@@ -157,7 +164,7 @@
     <div class="modal fade" id="kategoriModal" tabindex="-1" aria-labelledby="kategoriModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header d-flex justify-content-between align-items-center">
                     <h5 class="modal-title" id="kategoriModalLabel">
                         <span>➕</span> Tambah Kategori Baru
                     </h5>
@@ -171,10 +178,17 @@
                             <input type="text"
                                    name="kategori"
                                    id="kategori"
-                                   class="form-control"
+                                   class="form-control @error('kategori') is-invalid @enderror"
+                                   value="{{ old('kategori') }}"
                                    required
                                    placeholder="Contoh: Jalan Rusak, Sampah Berhamburan, dll..."
                                    autocomplete="off">
+                                   <small id="kategori-warning" class="text-danger" style="display:none;">
+                                        Nama kategori maksimal 15 karakter.
+                                    </small>
+                                    @error('kategori')
+                                         <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                             <small class="form-text text-muted">
                                 Masukkan nama kategori yang akan digunakan untuk klasifikasi pengaduan
                             </small>

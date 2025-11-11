@@ -53,13 +53,18 @@
                     <h1 class="title">Selamat Datang, {{ Auth::guard('pengurus')->user()->instansi_pemerintahan }} </h1>
                 </div>
             </div>
-            <form action="{{ route('pengurus.logout') }}" method="POST" style="margin: 0; position: absolute; top: 20px; right: 30px;">
+            <!-- Profile Dropdown -->
+    <div class="profile-container">
+        <div class="profile-icon" id="profileIcon">👤</div>
+
+        <div class="profile-dropdown" id="profileDropdown">
+            <button onclick="openPasswordModal()">🔐 Ganti Password</button>
+            <form action="{{ route('pengurus.logout') }}" method="POST">
                 @csrf
-                <button type="submit" style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;">
-                <span>Logout</span>
-                <span>↗</span>
-                </button>
+                <button type="submit">🚪 Logout</button>
             </form>
+        </div>
+    </div>
         </header>
 
         <!-- Main Content -->
@@ -130,10 +135,6 @@
                 <div class="pagination-wrapper">
                     {{ $hasilPengaduan->links('pagination::bootstrap-5') }}
                 </div>
-
-                 <button type="button" class="detail-btn" onclick="openPasswordModal()">
-                        <span>🔐</span> Ganti Password
-                    </button>
             </section>
         </main>
     </div>

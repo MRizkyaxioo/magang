@@ -344,3 +344,22 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.profile-icon {
+    font-size: 28px;
+    background: #fff8dc;
+    border: 2px solid #b8860b;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile-icon:hover {
+    background: #ffd700;
+    transform: scale(1.1);
+}

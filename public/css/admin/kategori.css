@@ -434,10 +434,12 @@ header {
 }
 
 .btn-close {
-    background: rgba(44, 24, 16, 0.1) !important;
+    filter: invert(1) whitescale(100%) brightness(0.3) !important;
+    background-color: rgba(255, 255, 255, 0.93) !important;
     border-radius: 50% !important;
     padding: 10px !important;
     opacity: 1 !important;
+    transition: all 0.3s ease;
 }
 
 .modal-body {

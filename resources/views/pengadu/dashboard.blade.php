@@ -18,7 +18,7 @@
                     <h1 class="title">Selamat Datang, {{ Auth::guard('pengadu')->user()->nama_pengadu }} </h1>
                 </div>
             <div class="profile-icon" style="cursor:pointer;" onclick="window.location.href='{{ route('pengadu.edit-profil') }}'">
-    <img src="{{ asset('images/profile_icon.png') }}" alt="Profil" style="width:40px;height:40px;border-radius:50%;">
+    👤
 </div>
 
         </header>
