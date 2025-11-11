@@ -36,6 +36,7 @@
         @if($riwayat->isEmpty())
           <p>Belum ada riwayat pengaduan.</p>
         @else
+        <div class="table-container">
         <table>
           <thead>
             <tr>
@@ -76,6 +77,7 @@
             @endforeach
           </tbody>
         </table>
+        </div>
         <!-- Pagination -->
 @if($riwayat->hasPages())
 <div class="pagination-wrapper">

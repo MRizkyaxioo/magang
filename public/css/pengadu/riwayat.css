@@ -147,3 +147,40 @@ table th { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color:
 .pagination li:last-child {
     display: none !important;
 }
+
+/* ======== SCROLL TABLE ======== */
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* memungkinkan geser ke kanan */
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 25px;
+}
+
+/* scrollbar agar tampil halus */
+.table-container::-webkit-scrollbar {
+  height: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #daa520;
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #b8860b;
+}
+
+/* ======== WRAP TEXT PANJANG ======== */
+table td, table th {
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 250px; /* batasi lebar agar tetap proporsional */
+  vertical-align: top;
+}
+
+/* Buat kolom panjang otomatis menyesuaikan tinggi */
+td:nth-child(3), td:nth-child(8) {
+  white-space: normal;
+  word-break: break-word;
+}
