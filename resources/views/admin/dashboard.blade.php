@@ -9,37 +9,68 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <div id="passwordModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>🔐 Ubah Password Admin</h2>
-            <span class="close-btn" onclick="closePasswordModal()">&times;</span>
+    <!-- Password Modal - Perbaikan struktur -->
+    <div id="passwordModal" class="modal" style="{{ $errors->any() ? 'display:block;' : '' }}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔐 Ubah Password Admin</h2>
+                <span class="close-btn" onclick="closePasswordModal()">&times;</span>
+            </div>
+            <form method="POST" action="{{ route('admin.change-password') }}">
+                @csrf
+
+                <!-- Password Lama -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px;">Password Lama</label>
+                    <div class="password-field">
+                        <input type="password"
+                               name="current_password"
+                               id="current_password"
+                               value="{{ old('current_password') }}"
+                               required>
+                        <span class="toggle-password" onclick="togglePassword('current_password', this)">👁️</span>
+                    </div>
+                    @error('current_password')
+                        <small style="display: block; color: red; font-size: 12px; margin-top: 5px;">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <!-- Password Baru -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px;">Password Baru</label>
+                    <div class="password-field">
+                        <input type="password"
+                               name="new_password"
+                               id="new_password"
+                               required
+                               minlength="6">
+                        <span class="toggle-password" onclick="togglePassword('new_password', this)">👁️</span>
+                    </div>
+                    @error('new_password')
+                        <small style="display: block; color: red; font-size: 12px; margin-top: 5px;">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <!-- Konfirmasi Password Baru -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px;">Konfirmasi Password Baru</label>
+                    <div class="password-field">
+                        <input type="password"
+                               name="new_password_confirmation"
+                               id="new_password_confirmation"
+                               required>
+                        <span class="toggle-password" onclick="togglePassword('new_password_confirmation', this)">👁️</span>
+                    </div>
+                    @error('new_password_confirmation')
+                        <small style="display: block; color: red; font-size: 12px; margin-top: 5px;">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <button type="submit">Ubah Password</button>
+            </form>
         </div>
-        <form method="POST" action="{{ route('admin.change-password') }}">
-            @csrf
-            <label>Password Lama</label>
-<div class="password-field">
-    <input type="password" name="current_password" id="current_password" required>
-    <span class="toggle-password" onclick="togglePassword('current_password', this)">👁️</span>
-</div>
-
-<label>Password Baru</label>
-<div class="password-field">
-    <input type="password" name="new_password" id="new_password" required minlength="6">
-    <span class="toggle-password" onclick="togglePassword('new_password', this)">👁️</span>
-</div>
-
-<label>Konfirmasi Password Baru</label>
-<div class="password-field">
-    <input type="password" name="new_password_confirmation" id="new_password_confirmation" required>
-    <span class="toggle-password" onclick="togglePassword('new_password_confirmation', this)">👁️</span>
-</div>
-
-
-            <button type="submit">Ubah Password</button>
-        </form>
     </div>
-</div>
+
     <div class="dashboard-container">
         <!-- Header -->
         <div class="dashboard-header">
@@ -53,14 +84,18 @@
                 </div>
             </div>
 
-
-            <form action="{{ route('admin.logout') }}" method="POST" class="logout-btn" style="margin: 0;">
-                @csrf
-                <button type="submit">
-                    <span>Logout</span>
-                    <span>↗</span>
-                </button>
-            </form>
+            <div class="profile-container">
+                <div class="profile-icon" id="profileIcon">👤</div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <button type="button" class="action-btn" onclick="openPasswordModal()">
+                        <span>🔐</span> Ganti Password
+                    </button>
+                    <form action="{{ route('admin.logout') }}" method="POST">
+                        @csrf
+                        <button type="submit">🚪 Logout</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <!-- Stats Section -->
@@ -214,18 +249,17 @@
                     </select>
 
                     <label class="filter-label">Filter Pengurus:</label>
-<select class="filter-select" id="pengurusFilter" onchange="applyFilters()">
-    <option value="all">Semua Pengurus</option>
-    @foreach($allHasil->pluck('pengaduan.pengurus')->flatten()->unique('instansi_pemerintahan')->sortBy('instansi_pemerintahan') as $pengurus)
-        @if($pengurus && $pengurus->instansi_pemerintahan)
-            <option value="{{ $pengurus->instansi_pemerintahan }}">
-                {{ $pengurus->instansi_pemerintahan }}
-            </option>
-        @endif
-    @endforeach
-</select>
-
-            </div>
+                    <select class="filter-select" id="pengurusFilter" onchange="applyFilters()">
+                        <option value="all">Semua Pengurus</option>
+                        @foreach($allHasil->pluck('pengaduan.pengurus')->flatten()->unique('instansi_pemerintahan')->sortBy('instansi_pemerintahan') as $pengurus)
+                            @if($pengurus && $pengurus->instansi_pemerintahan)
+                                <option value="{{ $pengurus->instansi_pemerintahan }}">
+                                    {{ $pengurus->instansi_pemerintahan }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
 
                 <div class="action-buttons">
                     <a href="{{ route('pengaduan.index') }}" class="action-btn">
@@ -237,11 +271,6 @@
                         <span>👥</span>
                         Buat Akun Pengurus
                     </a>
-
-                    <button type="button" class="action-btn" onclick="openPasswordModal()">
-                        <span>🔐</span> Ganti Password
-                    </button>
-
                 </div>
             </div>
         </div>
@@ -254,8 +283,8 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/admin/dashboard.js') }}"></script>
     <script>
+        // SweetAlert untuk success message
         @if(session('success'))
             Swal.fire({
                 icon: 'success',
@@ -265,7 +294,13 @@
                 timer: 2000
             });
         @endif
-    </script>
-</body>
 
+        @if($errors->has('current_password') || $errors->has('new_password') || $errors->has('new_password_confirmation'))
+            window.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('passwordModal').style.display = 'block';
+            });
+        @endif
+    </script>
+    <script src="{{ asset('js/admin/dashboard.js') }}"></script>
+</body>
 </html>

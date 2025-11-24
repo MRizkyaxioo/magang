@@ -98,22 +98,34 @@ Ganti Password
 <div class="password-field">
     <input type="password" id="password_lama" name="password_lama" required>
     <span class="toggle-password" onclick="togglePassword('password_lama', this)">👁️</span>
-    @error('password_lama') <div class="error-message">{{ $message }}</div> @enderror
 </div>
+@error('password_lama')
+    <small style="color: red; font-size: 12px; margin-top: 4px; display: block;">
+        {{ $message }}
+    </small>
+@enderror
 
 <label>Password Baru</label>
 <div class="password-field">
     <input type="password" id="password_baru" name="password_baru" required minlength="6">
     <span class="toggle-password" onclick="togglePassword('password_baru', this)">👁️</span>
-    @error('password_baru') <div class="error-message">{{ $message }}</div> @enderror
 </div>
+    @error('password_baru')
+    <small style="color: red; font-size: 12px; margin-top: 4px; display: block;">
+        {{ $message }}
+    </small>
+@enderror
 
 <label>Konfirmasi Password Baru</label>
 <div class="password-field">
     <input type="password" id="password_baru_confirmation" name="password_baru_confirmation" required>
     <span class="toggle-password" onclick="togglePassword('password_baru_confirmation', this)">👁️</span>
 </div>
-
+@error('password_baru_confirmation')
+    <small style="color: red; font-size: 12px; margin-top: 4px; display: block;">
+        {{ $message }}
+    </small>
+@enderror
 
                 <button type="submit" class="btn btn-primary" style="margin-top: 10px;" >Ubah Password</button>
             </form>
@@ -122,17 +134,26 @@ Ganti Password
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-@if(session('success'))
 <script>
-Swal.fire({
-    icon: 'success',
-    title: 'Berhasil!',
-    text: "{{ session('success') }}",
-    confirmButtonColor: '#8B4513',
-    confirmButtonText: 'OK'
-});
+// SweetAlert untuk success message
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                confirmButtonColor: '#8B4513',
+                confirmButtonText: 'OK'
+            });
+        @endif
+
+        // PENTING: Auto-buka modal jika ada error password
+        @if($errors->has('password_lama') || $errors->has('password_baru') || $errors->has('password_baru_confirmation'))
+            window.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('passwordModal').style.display = 'block';
+            });
+        @endif
 </script>
-@endif
+
 
 <script src="{{ asset('js/pengadu/profil.js') }}"></script>
 

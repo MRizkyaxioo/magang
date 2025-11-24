@@ -1,4 +1,77 @@
-// Image Modal Functions
+// ====================== PASSWORD MODAL ADMIN ======================
+
+// Buka modal ubah password
+function openPasswordModal() {
+    const modal = document.getElementById('passwordModal');
+    if (modal) {
+        modal.style.display = 'block';
+        // Clear previous input values on open (optional)
+        // document.getElementById('current_password').value = '';
+        // document.getElementById('new_password').value = '';
+        // document.getElementById('new_password_confirmation').value = '';
+    }
+}
+
+// Tutup modal ubah password
+function closePasswordModal() {
+    const modal = document.getElementById('passwordModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Tutup modal jika klik di luar area modal
+window.addEventListener('click', function (event) {
+    const modal = document.getElementById('passwordModal');
+    const modalContent = document.querySelector('.modal-content');
+
+    if (event.target === modal) {
+        closePasswordModal();
+    }
+});
+
+// Tutup modal dengan tombol Escape
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        closePasswordModal();
+    }
+});
+
+// Toggle show/hide password
+function togglePassword(id, icon) {
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "🙈";
+    } else {
+        input.type = "password";
+        icon.textContent = "👁️";
+    }
+}
+
+// ====================== PROFILE DROPDOWN ======================
+
+document.addEventListener("DOMContentLoaded", () => {
+    const profileIcon = document.getElementById("profileIcon");
+    const dropdown = document.getElementById("profileDropdown");
+
+    if (profileIcon && dropdown) {
+        profileIcon.addEventListener("click", (e) => {
+            e.stopPropagation();
+            dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+        });
+
+        // Tutup dropdown kalau klik di luar
+        document.addEventListener("click", (e) => {
+            if (!profileIcon.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = "none";
+            }
+        });
+    }
+});
+
+// ====================== IMAGE MODAL ======================
+
 function openImageModal(imageSrc) {
     document.getElementById('modalImage').src = imageSrc;
     document.getElementById('imageModal').style.display = 'block';
@@ -8,7 +81,15 @@ function closeImageModal() {
     document.getElementById('imageModal').style.display = 'none';
 }
 
-// Apply gabungan filter kategori + status ke URL path
+// Close image modal dengan ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeImageModal();
+    }
+});
+
+// ====================== FILTERS ======================
+
 function applyFilters() {
     const status = document.getElementById('statusFilter').value;
     const kategori = document.getElementById('kategoriFilter').value;
@@ -16,19 +97,18 @@ function applyFilters() {
 
     let params = new URLSearchParams();
 
-     if (status && status !== 'all') params.set('status', status);
+    if (status && status !== 'all') params.set('status', status);
     if (kategori && kategori !== 'all') params.set('kategori', kategori);
     if (pengurus && pengurus !== 'all') params.set('pengurus', pengurus);
 
     window.location.href = "/dashboard-admin" + (params.toString() ? "?" + params.toString() : "");
 }
 
-// Reset ke default (semua → pending)
 function resetFilters() {
     window.location.href = "/dashboard-admin";
 }
 
-// Set filter dropdown sesuai URL path saat halaman load
+// Set filter dropdown sesuai URL saat halaman load
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -39,29 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (status) document.getElementById('statusFilter').value = status;
     if (kategori) document.getElementById('kategoriFilter').value = kategori;
     if (pengurus) document.getElementById('pengurusFilter').value = pengurus;
-});
 
+    // ====================== DELETE CONFIRMATION ======================
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Set filter values dari URL saat halaman load
-    const urlParams = new URLSearchParams(window.location.search);
-
-    // Set status filter berdasarkan URL
-    const status = urlParams.get('status');
-    const statusFilter = document.getElementById('statusFilter');
-    if (status && statusFilter) {
-        statusFilter.value = status;
-    }
-
-    // Set kategori filter berdasarkan URL
-    const kategori = urlParams.get('kategori');
-    const kategoriFilter = document.getElementById('kategoriFilter');
-    if (kategori && kategoriFilter) {
-        kategoriFilter.value = kategori;
-    }
-
-    // Konfirmasi hapus dengan SweetAlert
     document.querySelectorAll('.delete-form').forEach(form => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -84,7 +144,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Animasi untuk stat cards saat hover
+    // ====================== ANIMATIONS ======================
+
+    // Animasi stat cards
     const statCards = document.querySelectorAll('.stat-card');
     statCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
@@ -95,19 +157,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Auto-refresh animasi stats setiap 30 detik (opsional)
-    setInterval(() => {
-        const statNumbers = document.querySelectorAll('.stat-number');
-        statNumbers.forEach(stat => {
-            stat.style.transition = 'transform 0.3s ease';
-            stat.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                stat.style.transform = 'scale(1)';
-            }, 300);
-        });
-    }, 30000);
+    // Animasi fade-in untuk cards
+    const cards = document.querySelectorAll('.pengaduan-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
 
-    // Smooth scroll untuk navigasi internal
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -121,38 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Animasi fade-in untuk cards saat pertama load
-    const cards = document.querySelectorAll('.pengaduan-card');
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            card.style.transition = 'all 0.5s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 100);
-    });
-
-    // Tambahkan loading indicator saat form disubmit
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        // Skip delete forms (sudah punya handler sendiri)
-        if (!form.classList.contains('delete-form')) {
-            form.addEventListener('submit', function() {
-                const submitBtn = this.querySelector('button[type="submit"]');
-                if (submitBtn && !submitBtn.classList.contains('loading')) {
-                    const originalText = submitBtn.innerHTML;
-                    submitBtn.classList.add('loading');
-                    submitBtn.innerHTML = '<span class="loading"></span> Memproses...';
-                    submitBtn.disabled = true;
-                }
-            });
-        }
-    });
-
-    // Keyboard shortcut untuk filter
+    // Keyboard shortcut Ctrl+R untuk reset filter
     document.addEventListener('keydown', function(e) {
-        // Ctrl/Cmd + R untuk reset filter
         if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
             e.preventDefault();
             if (typeof resetFilters === 'function') {
@@ -161,78 +193,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-// Fungsi helper untuk menampilkan notifikasi
-function showNotification(message, type = 'success') {
-    Swal.fire({
-        icon: type,
-        title: type === 'success' ? 'Berhasil!' : 'Perhatian!',
-        text: message,
-        showConfirmButton: false,
-        timer: 2000,
-        toast: true,
-        position: 'top-end'
-    });
-}
-
-// Close modal dengan ESC key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeImageModal();
-    }
-});
-
-// ====================== PASSWORD MODAL ADMIN ======================
-
-// Buka modal ubah password
-function openPasswordModal() {
-    const modal = document.getElementById('passwordModal');
-    if (modal) modal.style.display = 'block';
-}
-
-// Tutup modal ubah password
-function closePasswordModal() {
-    const modal = document.getElementById('passwordModal');
-    if (modal) modal.style.display = 'none';
-}
-
-// Tutup modal jika klik di luar area modal
-window.addEventListener('click', function (event) {
-    const modal = document.getElementById('passwordModal');
-    if (event.target === modal) {
-        closePasswordModal();
-    }
-});
-
-// Tutup modal dengan tombol Escape
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-        closePasswordModal();
-    }
-});
-
-// Tampilkan notifikasi sukses/gagal dengan SweetAlert2
-function showPasswordAlert(message, type = 'success') {
-    Swal.fire({
-        icon: type,
-        title: type === 'success' ? 'Berhasil!' : 'Gagal!',
-        text: message,
-        toast: true,
-        timer: 2500,
-        position: 'top-end',
-        showConfirmButton: false
-    });
-}
-
-function togglePassword(id, icon) {
-    const input = document.getElementById(id);
-    if (input.type === "password") {
-        input.type = "text";
-        icon.textContent = "🙈"; // Ganti ikon kalau password sedang ditampilkan
-    } else {
-        input.type = "password";
-        icon.textContent = "👁️"; // Balik lagi
-    }
-}
-
-

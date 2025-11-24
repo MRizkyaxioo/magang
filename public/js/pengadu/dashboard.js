@@ -70,3 +70,21 @@ document.querySelectorAll('.simara-section, .complaint-section, .faq-section').f
         this.style.boxShadow = '0 15px 35px rgba(255, 193, 7, 0.2)';
     });
 });
+
+// Dropdown Profil
+document.addEventListener("DOMContentLoaded", () => {
+    const profileIcon = document.getElementById("profileIcon");
+    const dropdown = document.getElementById("profileDropdown");
+
+    profileIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    });
+
+    // Tutup dropdown kalau klik di luar
+    document.addEventListener("click", (e) => {
+        if (!profileIcon.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = "none";
+        }
+    });
+});

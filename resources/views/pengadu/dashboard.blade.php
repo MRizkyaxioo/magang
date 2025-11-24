@@ -17,8 +17,17 @@
                 <div class="title-section">
                     <h1 class="title">Selamat Datang, {{ Auth::guard('pengadu')->user()->nama_pengadu }} </h1>
                 </div>
-            <div class="profile-icon" style="cursor:pointer;" onclick="window.location.href='{{ route('pengadu.edit-profil') }}'">
-    👤
+
+            <div class="profile-container">
+    <div class="profile-icon" id="profileIcon">👤</div>
+    <!-- Pop-up menu -->
+    <div class="profile-dropdown" id="profileDropdown">
+        <a href="{{ route('pengadu.edit-profil') }}">✏️ Edit Profil</a>
+         <form action="{{ route('pengadu.logout') }}" method="POST">
+                @csrf
+                <button type="submit">🚪 Logout</button>
+        </form>
+    </div>
 </div>
 
         </header>

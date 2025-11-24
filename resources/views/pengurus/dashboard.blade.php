@@ -23,11 +23,19 @@
     <span class="toggle-password" onclick="togglePassword('current_password', this)">👁️</span>
 </div>
 
+@error('current_password')
+        <small style="display: block; color: red; font-size: 12px; margin-top: 5px;">{{ $message }}</small>
+@enderror
+
 <label>Password Baru</label>
 <div class="password-field">
     <input type="password" name="new_password" id="new_password" required minlength="6">
     <span class="toggle-password" onclick="togglePassword('new_password', this)">👁️</span>
 </div>
+
+@error('new_password')
+    <small style="display: block; color: red; font-size: 12px; margin-top: 5px;">{{ $message }}</small>
+@enderror
 
 <label>Konfirmasi Password Baru</label>
 <div class="password-field">
@@ -35,6 +43,9 @@
     <span class="toggle-password" onclick="togglePassword('new_password_confirmation', this)">👁️</span>
 </div>
 
+@error('new_password_confirmation')
+        <small style="display: block; color: red; font-size: 12px; margin-top: 5px;">{{ $message }}</small>
+@enderror
 
             <button type="submit">Ubah Password</button>
         </form>
@@ -145,6 +156,13 @@
         <img class="modal-content" id="modalImage">
     </div>
 
+    <script>
+        @if($errors->has('current_password') || $errors->has('new_password') || $errors->has('new_password_confirmation'))
+            window.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('passwordModal').style.display = 'block';
+            });
+        @endif
+    </script>
     <script src="{{ asset('js/pengurus/dashboard.js') }}"></script>
 </body>
 </html>
