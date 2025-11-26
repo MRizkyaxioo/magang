@@ -51,7 +51,7 @@
           </div>
           <div class="col-md-4">
             <label for="bukti_foto" class="form-label">Bukti foto</label>
-            <input type="file" name="bukti_foto" id="bukti_foto" accept="image/*">
+            <input type="file" name="bukti_foto" id="bukti_foto" accept="image/*" required>
             <small class="text-muted">Format: JPG, PNG (Maks. 3MB)</small>
           </div>
         </div>
