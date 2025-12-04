@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HasilPengaduan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DashboardAdminController extends Controller
 {
@@ -32,11 +33,32 @@ class DashboardAdminController extends Controller
         });
     }
 
+    // FILTER BULAN
+if ($request->filled('bulan')) {
+    $bulan = date('m', strtotime($request->bulan));
+    $tahun = date('Y', strtotime($request->bulan));
+
+    $query->whereMonth('created_at', $bulan)
+          ->whereYear('created_at', $tahun);
+}
+
+
         // Paginate dengan 5 item per halaman
         $hasil = $query->latest('created_at')->paginate(5)->appends($request->query());
 
-        // PERBAIKAN: Ambil SEMUA data untuk statistik (tanpa filter dan pagination)
-        $allHasil = HasilPengaduan::with(['pengadu', 'pengaduan.pengurus'])->get();
+        $allQuery = HasilPengaduan::with(['pengadu', 'pengaduan.pengurus']);
+
+// Jika ada filter bulan → statistik ikut difilter
+if ($request->filled('bulan')) {
+    $bulan = date('m', strtotime($request->bulan));
+    $tahun = date('Y', strtotime($request->bulan));
+
+    $allQuery->whereMonth('created_at', $bulan)
+             ->whereYear('created_at', $tahun);
+}
+
+$allHasil = $allQuery->get();
+
 
         return view('admin.dashboard', [
         'hasil' => $hasil,
@@ -87,4 +109,40 @@ public function updateKeterangan(Request $request, $id)
     return redirect()->back()->with('success', 'Keterangan berhasil diperbarui!');
 }
 
+
+
+public function statistikPDF(Request $request)
+{
+    $request->validate([
+        'bulan' => 'required'
+    ]);
+
+    $bulan = date('m', strtotime($request->bulan));
+    $tahun = date('Y', strtotime($request->bulan));
+
+    \Carbon\Carbon::setLocale('id');
+
+    $namaBulan = \Carbon\Carbon::parse($request->bulan)->translatedFormat('F');
+    $bulanLabel = $namaBulan . ' Tahun ' . $tahun;
+
+
+    $data = HasilPengaduan::whereMonth('created_at', $bulan)
+        ->whereYear('created_at', $tahun)
+        ->get();
+
+    $statistik = [
+        'pending' => $data->where('status', 'pending')->count(),
+        'sedang'  => $data->where('status', 'sedang dikerjakan')->count(),
+        'selesai' => $data->where('status', 'selesai')->count(),
+        'ditolak' => $data->where('status', 'ditolak')->count(),
+        'total'   => $data->count(),
+    ];
+
+    return Pdf::loadView('admin.statistik', [
+    'statistik'   => $statistik,
+    'bulan'       => $request->bulan,
+    'bulanLabel' => $bulanLabel
+])->download('statistik_pengaduan_' . $request->bulan . '.pdf');
+
 }
+    }

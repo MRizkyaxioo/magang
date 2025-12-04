@@ -82,6 +82,8 @@ Route::get('/pengurus/hasil/{id}', [PengurusController::class, 'show'])
 
 // Admin
 Route::middleware(RedirectIfNotAdmin::class)->group(function () {
+    Route::get('/admin/statistik-pdf', [DashboardAdminController::class, 'statistikPDF'])
+    ->name('admin.statistik.pdf');
     Route::get('/kategori', [PengaduanController::class, 'index'])->name('pengaduan.index');
     Route::get('/kategori/create', [PengaduanController::class, 'create'])->name('pengaduan.create');
     Route::post('/kategori', [PengaduanController::class, 'store'])->name('pengaduan.store');
@@ -105,6 +107,7 @@ Route::middleware(RedirectIfNotAdmin::class)->group(function () {
     Route::get('/pengurus', [AuthPengurusController::class, 'index'])->name('pengurus.index');
     Route::get('/pengurus/create', [AuthPengurusController::class, 'create'])->name('pengurus.create');
     Route::post('/pengurus', [AuthPengurusController::class, 'store'])->name('pengurus.store');
+
 });
 
 

@@ -259,6 +259,9 @@
                             @endif
                         @endforeach
                     </select>
+
+                    <label class="filter-label">Filter Bulan:</label>
+                    <input type="month" class="filter-select" id="bulanFilter" onchange="applyFilters()">
                 </div>
 
                 <div class="action-buttons">
@@ -271,6 +274,12 @@
                         <span>👥</span>
                         Buat Akun Pengurus
                     </a>
+
+                    <a href="#" onclick="cetakPDF()" class="action-btn">
+                        <span>🖨️</span> Cetak Statistik
+                    </a>
+
+
                 </div>
             </div>
         </div>

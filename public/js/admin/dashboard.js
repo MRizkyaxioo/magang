@@ -94,12 +94,14 @@ function applyFilters() {
     const status = document.getElementById('statusFilter').value;
     const kategori = document.getElementById('kategoriFilter').value;
     const pengurus = document.getElementById('pengurusFilter').value;
+    const bulan    = document.getElementById('bulanFilter').value;
 
     let params = new URLSearchParams();
 
     if (status && status !== 'all') params.set('status', status);
     if (kategori && kategori !== 'all') params.set('kategori', kategori);
     if (pengurus && pengurus !== 'all') params.set('pengurus', pengurus);
+    if (bulan) params.set('bulan', bulan);
 
     window.location.href = "/dashboard-admin" + (params.toString() ? "?" + params.toString() : "");
 }
@@ -115,10 +117,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const status = urlParams.get('status');
     const kategori = urlParams.get('kategori');
     const pengurus = urlParams.get('pengurus');
+    const bulan = urlParams.get('bulan');
+
 
     if (status) document.getElementById('statusFilter').value = status;
     if (kategori) document.getElementById('kategoriFilter').value = kategori;
     if (pengurus) document.getElementById('pengurusFilter').value = pengurus;
+    if (bulan) document.getElementById('bulanFilter').value = bulan;
+
 
     // ====================== DELETE CONFIRMATION ======================
 
@@ -193,3 +199,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
+function cetakPDF() {
+    const bulan = document.getElementById('bulanFilter').value;
+
+    if (!bulan) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops!',
+            text: 'Silakan pilih bulan terlebih dahulu!',
+        });
+        return;
+    }
+
+    window.open(`/admin/statistik-pdf?bulan=${bulan}`, '_blank');
+}
+
